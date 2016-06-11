@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <com.zhy.autolayout.AutoRelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/size_256px">
+
+        <TextView
+            android:id="@+id/pictureAdd"
+            fontPath="iconfont/iconfont.ttf"
+            android:layout_width="@dimen/size_200px"
+            android:layout_height="@dimen/size_200px"
+            android:layout_centerInParent="true"
+            android:background="@drawable/item_picture_conner_bg"
+            android:gravity="center"
+            android:text="@string/ic_add"
+            android:textColor="@color/colorPrimary"
+            android:textSize="@dimen/text_120px"
+            app:layout_auto_basewidth="height" />
+
+    </com.zhy.autolayout.AutoRelativeLayout>
+</layout>

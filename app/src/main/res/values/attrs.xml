@@ -1,0 +1,8 @@
+<resources>
+
+    <declare-styleable name="LoadingLayout">
+        <attr name="loadingView" format="reference" />
+        <attr name="errorView" format="reference" />
+    </declare-styleable>
+
+</resources>

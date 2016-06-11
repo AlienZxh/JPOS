@@ -1,0 +1,145 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context=".features.ui.IndexActivity">
+
+    <data>
+
+        <variable
+            name="shopInfo"
+            type="com.j1j2.jposmvvm.data.model.ShopInfo" />
+    </data>
+
+    <com.zhy.autolayout.AutoRelativeLayout
+        android:id="@+id/root_layout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/colorLayoutBackground"
+        android:fitsSystemWindows="true"
+        android:orientation="vertical">
+
+        <com.zhy.autolayout.AutoRelativeLayout
+            android:id="@+id/toolbar"
+            style="@style/actionbar_layout_style"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/switch_btn"
+                style="@style/actionbar_icon_btn_style"
+                fontPath="iconfont/iconfont.ttf"
+                android:onClick="switchAccount"
+                android:text="@string/ic_switch_account" />
+
+            <com.zhy.autolayout.AutoLinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_toEndOf="@id/switch_btn"
+                android:layout_toRightOf="@id/switch_btn"
+                android:gravity="center_vertical"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@{shopInfo.ShopName}"
+                    android:textColor="@color/colorWhite"
+                    android:textSize="@dimen/text_32px" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/size_10px"
+                    android:text="@{shopInfo.ClerkName}"
+                    android:textColor="@color/colorWhite"
+                    android:textSize="@dimen/text_24px" />
+
+            </com.zhy.autolayout.AutoLinearLayout>
+
+            <TextView
+                style="@style/actionbar_icon_btn_style"
+                fontPath="iconfont/iconfont.ttf"
+                android:layout_alignParentEnd="true"
+                android:layout_alignParentRight="true"
+                android:onClick="exitApp"
+                android:text="@string/ic_exit" />
+
+        </com.zhy.autolayout.AutoRelativeLayout>
+
+        <com.j1j2.jposmvvm.common.widgets.AutoCardView
+            android:layout_width="@dimen/size_300px"
+            android:layout_height="@dimen/size_300px"
+            android:layout_below="@id/toolbar"
+            android:layout_marginLeft="@dimen/size_56px"
+            android:layout_marginStart="@dimen/size_56px"
+            android:layout_marginTop="@dimen/size_56px"
+            android:onClick="navigateToStock"
+            app:cardBackgroundColor="#ff62c7ff"
+            app:cardCornerRadius="5dp">
+
+            <com.zhy.autolayout.AutoLinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:orientation="vertical">
+
+                <TextView
+                    fontPath="iconfont/iconfont.ttf"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/ic_stock"
+                    android:textColor="@color/colorWhite"
+                    android:textSize="@dimen/text_120px" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginTop="10dp"
+                    android:text="库存管理"
+                    android:textColor="#ffffff"
+                    android:textSize="@dimen/text_32px" />
+            </com.zhy.autolayout.AutoLinearLayout>
+
+        </com.j1j2.jposmvvm.common.widgets.AutoCardView>
+
+        <com.j1j2.jposmvvm.common.widgets.AutoCardView
+            android:layout_width="@dimen/size_300px"
+            android:layout_height="@dimen/size_300px"
+            android:layout_below="@id/toolbar"
+            android:layout_marginLeft="@dimen/size_412px"
+            android:layout_marginStart="@dimen/size_412px"
+            android:layout_marginTop="@dimen/size_56px"
+            android:onClick="navigateToPhoto"
+            app:cardBackgroundColor="#ffffad33"
+            app:cardCornerRadius="5dp">
+
+            <com.zhy.autolayout.AutoLinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:orientation="vertical">
+
+                <TextView
+                    fontPath="iconfont/iconfont.ttf"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/ic_camera"
+                    android:textColor="@color/colorWhite"
+                    android:textSize="@dimen/text_120px" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginTop="10dp"
+                    android:text="商品拍照"
+                    android:textColor="#ffffff"
+                    android:textSize="@dimen/text_32px" />
+            </com.zhy.autolayout.AutoLinearLayout>
+
+        </com.j1j2.jposmvvm.common.widgets.AutoCardView>
+
+
+    </com.zhy.autolayout.AutoRelativeLayout>
+</layout>

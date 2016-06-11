@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:fresco="http://schemas.android.com/apk/res-auto">
+
+    <data>
+
+        <variable
+            name="stockImg"
+            type="com.j1j2.jposmvvm.data.model.StockImg" />
+    </data>
+
+    <com.zhy.autolayout.AutoRelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/size_256px">
+
+        <com.facebook.drawee.view.SimpleDraweeView
+            android:id="@+id/productImg"
+            android:layout_width="@dimen/size_200px"
+            android:layout_height="@dimen/size_200px"
+            android:layout_centerInParent="true"
+            app:imgHeight="@{200}"
+            app:imgUrl="@{stockImg.ThumbUrl}"
+            app:imgWidth="@{200}"
+            app:layout_auto_basewidth="height"
+            fresco:failureImage="@drawable/img_loaderror"
+            fresco:placeholderImage="@drawable/img_loading"
+            fresco:roundedCornerRadius="3dp"
+            fresco:roundingBorderColor="@color/colord4d4d4"
+            fresco:roundingBorderWidth="@dimen/size_1px" />
+
+        <TextView
+            android:id="@+id/productImgDelete"
+            fontPath="iconfont/iconfont.ttf"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentRight="true"
+            android:layout_marginEnd="@dimen/size_10px"
+            android:layout_marginRight="@dimen/size_10px"
+            android:layout_marginTop="@dimen/size_10px"
+            android:text="@string/ic_close"
+            android:textColor="@color/colorRed"
+            android:textSize="@dimen/text_60px"
+            app:layout_auto_basewidth="height" />
+
+    </com.zhy.autolayout.AutoRelativeLayout>
+</layout>

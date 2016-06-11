@@ -1,0 +1,133 @@
+apply plugin: 'com.android.application'
+apply plugin: 'com.getkeepsafe.dexcount'
+apply plugin: 'com.neenbedankt.android-apt'
+apply plugin: 'com.frogermcs.androiddevmetrics'
+apply plugin: 'realm-android'
+
+dexcount {
+    format = "list"
+    includeClasses = false
+    includeFieldCount = true
+    includeTotalMethodCount = true
+    orderByMethodCount = false
+    verbose = false
+    maxTreeDepth = Integer.MAX_VALUE
+    teamCityIntegration = false
+}
+
+android {
+    compileSdkVersion rootProject.ext.compileSdkVersion
+    buildToolsVersion rootProject.ext.buildToolsVersion
+
+    defaultConfig {
+        multiDexEnabled true
+
+        minSdkVersion rootProject.ext.minSdkVersion
+        targetSdkVersion rootProject.ext.targetSdkVersion
+        applicationId rootProject.ext.androidApplicationId
+        versionCode rootProject.ext.androidVersionCode
+        versionName rootProject.ext.androidVersionName
+    }
+
+    dataBinding {
+        enabled true
+    }
+
+    signingConfigs {
+        release {
+            storeFile file("../sign/j1j2_zxh.keystore")
+            storePassword "zxh19910528"
+            keyAlias "j1j2_zxh_keystore"
+            keyPassword "zxh19910528"
+        }
+
+        debug {
+            storeFile file("../sign/j1j2_zxh.keystore")
+            storePassword "zxh19910528"
+            keyAlias "j1j2_zxh_keystore"
+            keyPassword "zxh19910528"
+        }
+    }
+
+    buildTypes {
+        debug {
+            signingConfig signingConfigs.debug
+            minifyEnabled false
+            zipAlignEnabled false
+            shrinkResources false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+
+            buildConfigField "String", "API_URL", "\"http://218.244.128.140:8080/\""
+        }
+
+        release {
+            signingConfig signingConfigs.release
+            minifyEnabled true
+            zipAlignEnabled true
+            shrinkResources true
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+
+            buildConfigField "String", "API_URL", "\"http://218.244.128.140:8080/\""
+        }
+    }
+}
+
+dependencies {
+    compile fileTree(dir: 'libs', include: ['*.jar'])
+    //support
+    compile "com.android.support:appcompat-v7:$rootProject.supportLibraryVersion"
+    compile "com.android.support:support-v4:$rootProject.supportLibraryVersion"
+    compile "com.android.support:recyclerview-v7:$rootProject.supportLibraryVersion"
+    compile "com.android.support:cardview-v7:$rootProject.supportLibraryVersion"
+    compile "com.android.support:design:$rootProject.supportLibraryVersion"
+    compile "com.android.support:support-annotations:$rootProject.supportLibraryVersion"
+    compile  "com.android.support:multidex:$rootProject.multidexVersion"
+    //data
+    compile "com.hardsoftstudio:rxflux:$rootProject.rxfluxVersion"
+    compile "io.reactivex:rxjava:$rootProject.rxjavaVersion"
+    compile "io.reactivex:rxandroid:$rootProject.rxandroidVersion"
+    compile "com.squareup.okhttp3:logging-interceptor:$rootProject.okhttpVersion"
+    compile "com.squareup.okhttp3:okhttp:$rootProject.okhttpVersion"
+    compile "com.squareup.retrofit2:retrofit:$rootProject.retrofitVersion"
+    compile "com.squareup.retrofit2:adapter-rxjava:$rootProject.retrofitVersion"
+    compile "com.squareup.retrofit2:converter-gson:$rootProject.retrofitVersion"
+    compile "com.google.code.gson:gson:$rootProject.gsonVersion"
+    compile "com.github.yjfnypeu:UpdatePlugin:$rootProject.updatePluginVersion"
+//    compile "com.zhy:okhttputils:$rootProject.okhttputilsVersion"
+    //data
+    apt "com.github.yatatsu:autobundle-processor:$rootProject.autobundleVersion"
+    compile "com.github.yatatsu:autobundle:$rootProject.autobundleVersion"
+    //time
+    compile "com.jakewharton.threetenabp:threetenabp:$rootProject.threetenabpVersion"
+    //dagger
+    compile "com.google.dagger:dagger:$rootProject.daggerVersion"
+    apt "com.google.dagger:dagger-compiler:$rootProject.daggerVersion"
+    provided "org.glassfish:javax.annotation:$rootProject.javaxAnnotationVersion"
+    apt "com.google.guava:guava:$rootProject.guavaVersion"
+    //font
+    compile "uk.co.chrisjenx:calligraphy:$rootProject.calligraphyVersion"
+    //debug
+    compile "com.github.orhanobut:logger:$rootProject.loggerVersion"
+    //debug
+    debugCompile "com.squareup.leakcanary:leakcanary-android:$rootProject.leakCanaryVersion"
+    releaseCompile "com.squareup.leakcanary:leakcanary-android-no-op:$rootProject.leakCanaryVersion"
+    testCompile "com.squareup.leakcanary:leakcanary-android-no-op:$rootProject.leakCanaryVersion"
+    //debug
+    compile "com.facebook.stetho:stetho:$rootProject.stethoVersion"
+    compile "com.facebook.stetho:stetho-okhttp3:$rootProject.stethoVersion"
+    compile "com.uphyca:stetho_realm:$rootProject.stethorealmVersion"
+    //imageloader
+    compile "com.facebook.fresco:fresco:$rootProject.frescoVersion"
+    //qrcode
+    compile "com.google.zxing:core:$rootProject.zxingVersion"
+    //ui
+    compile "com.zhy:autolayout:$rootProject.autolayoutVersion" //autolayout
+    compile "com.github.dmytrodanylyk.android-process-button:library:$rootProject.androidProcessButtonVersion"
+    compile "com.andreabaccega:android-form-edittext:$rootProject.formEdittextVersion"
+    compile "com.jude:easyrecyclerview:$rootProject.easyrecyclerviewVersion"
+    compile "com.github.castorflex.smoothprogressbar:library-circular:$rootProject.smoothprogressbarVersion"
+    compile "cn.finalteam:galleryfinal:$rootProject.galleryfinalVersion"
+    //test
+    testCompile "junit:junit:$rootProject.ext.junitVersion"
+}
+
