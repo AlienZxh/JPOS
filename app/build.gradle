@@ -92,7 +92,7 @@ dependencies {
     compile "com.squareup.retrofit2:adapter-rxjava:$rootProject.retrofitVersion"
     compile "com.squareup.retrofit2:converter-gson:$rootProject.retrofitVersion"
     compile "com.google.code.gson:gson:$rootProject.gsonVersion"
-    compile "com.github.yjfnypeu:UpdatePlugin:$rootProject.updatePluginVersion"
+    compile "org.lzh.nonview.updateplugin:UpdatePlugin:$rootProject.updatePluginVersion"
 //    compile "com.zhy:okhttputils:$rootProject.okhttputilsVersion"
     //data
     apt "com.github.yatatsu:autobundle-processor:$rootProject.autobundleVersion"
@@ -127,6 +127,9 @@ dependencies {
     compile "com.jude:easyrecyclerview:$rootProject.easyrecyclerviewVersion"
     compile "com.github.castorflex.smoothprogressbar:library-circular:$rootProject.smoothprogressbarVersion"
     compile "cn.finalteam:galleryfinal:$rootProject.galleryfinalVersion"
+    compile "me.yokeyword:fragmentation:$rootProject.fragmentationVersion"
+    compile "com.jzxiang.pickerview:TimePickerDialog:$rootProject.timePickerDialogVersion"
+    compile "net.cachapa.expandablelayout:expandablelayout:$rootProject.expandablelayoutVersion"
     //test
     testCompile "junit:junit:$rootProject.ext.junitVersion"
 }

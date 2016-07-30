@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.zhy.autolayout.AutoRelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <com.zhy.autolayout.AutoLinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/item_picture_conner_bg"
+        android:orientation="vertical"
+        android:paddingLeft="@dimen/size_20px"
+        android:paddingRight="@dimen/size_20px">
+
+        <TextView
+            android:id="@+id/orderId"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/size_60px"
+            android:gravity="center_vertical"
+            android:textColor="@color/color333333"
+            android:textSize="@dimen/text_24px" />
+
+        <TextView
+            android:id="@+id/supplier"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/size_60px"
+            android:gravity="center_vertical"
+            android:textColor="@color/color333333"
+            android:textSize="@dimen/text_24px" />
+
+        <TextView
+            android:id="@+id/orderTime"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/size_60px"
+            android:gravity="center_vertical"
+            android:textColor="@color/color333333"
+            android:textSize="@dimen/text_24px" />
+
+        <TextView
+            android:id="@+id/orderAmout"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/size_60px"
+            android:gravity="center_vertical"
+            android:textColor="@color/colorRed"
+            android:textSize="@dimen/text_32px" />
+
+    </com.zhy.autolayout.AutoLinearLayout>
+
+    <TextView
+        android:id="@+id/completeTag"
+        fontPath="iconfont/iconfont.ttf"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_centerVertical="true"
+        android:layout_marginRight="@dimen/size_80px"
+        android:text="@string/ic_complete"
+        android:textColor="@color/colorPrimary"
+        android:textSize="@dimen/text_120px" />
+
+    <TextView
+        fontPath="iconfont/iconfont.ttf"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_centerVertical="true"
+        android:layout_marginRight="@dimen/size_20px"
+        android:text="@string/ic_arrow_right"
+        android:textColor="@color/coloraaaaaa"
+        android:textSize="@dimen/text_48px" />
+</com.zhy.autolayout.AutoRelativeLayout>

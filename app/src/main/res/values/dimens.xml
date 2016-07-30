@@ -5,18 +5,22 @@
     <dimen name="text_24px">24px</dimen>
     <dimen name="text_28px">28px</dimen>
     <dimen name="text_32px">32px</dimen>
+    <dimen name="text_40px">40px</dimen>
     <dimen name="text_48px">48px</dimen>
     <dimen name="text_60px">60px</dimen>
     <dimen name="text_120px">120px</dimen>
     <dimen name="text_200px">200px</dimen>
 
+    <dimen name="size_900px">900px</dimen>
     <dimen name="size_480px">480px</dimen>
     <dimen name="size_412px">412px</dimen>
     <dimen name="size_300px">300px</dimen>
     <dimen name="size_256px">256px</dimen>
+    <dimen name="size_240px">240px</dimen>
     <dimen name="size_200px">200px</dimen>
     <dimen name="size_160px">160px</dimen>
     <dimen name="size_130px">130px</dimen>
+    <dimen name="size_120px">120px</dimen>
     <dimen name="size_100px">100px</dimen>
     <dimen name="size_80px">80px</dimen>
     <dimen name="size_60px">60px</dimen>

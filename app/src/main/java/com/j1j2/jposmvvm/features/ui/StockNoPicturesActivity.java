@@ -6,7 +6,6 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.Snackbar;
-import android.support.v4.app.Fragment;
 import android.text.Editable;
 import android.text.TextUtils;
 import android.text.TextWatcher;
@@ -14,7 +13,6 @@ import android.view.View;
 
 import com.hardsoftstudio.rxflux.action.RxError;
 import com.hardsoftstudio.rxflux.dispatcher.Dispatcher;
-import com.hardsoftstudio.rxflux.dispatcher.RxViewDispatch;
 import com.hardsoftstudio.rxflux.store.RxStore;
 import com.hardsoftstudio.rxflux.store.RxStoreChange;
 import com.j1j2.jposmvvm.R;
@@ -26,6 +24,7 @@ import com.j1j2.jposmvvm.features.base.JPOSApplication;
 import com.j1j2.jposmvvm.features.base.Navigate;
 import com.j1j2.jposmvvm.features.di.components.StockNoPicturesComponent;
 import com.j1j2.jposmvvm.features.di.modules.StockNoPicturesModule;
+import com.j1j2.jposmvvm.features.scanner.camera.activity.CaptureActivity;
 import com.j1j2.jposmvvm.features.stores.StockStore;
 import com.j1j2.jposmvvm.features.viewmodel.UIViewModel;
 import com.orhanobut.logger.Logger;
@@ -38,9 +37,8 @@ import javax.inject.Inject;
 /**
  * Created by alienzxh on 16-6-7.
  */
-public class StockNoPicturesActivity extends BaseActivity implements StockNoPicturesSortFragment.StockNoPicturesSortFragmentListener, StockNoPicturesSearchFragment.StockNoPicturesSearchFragmentListener, TextWatcher, View.OnFocusChangeListener {
+public class StockNoPicturesActivity extends BaseActivity implements StockNoPicturesSortFragment.StockNoPicturesSortFragmentListener, StockProductSearchFragment.StockNoPicturesSearchFragmentListener, TextWatcher, View.OnFocusChangeListener {
 
-    public static final int SCANNER_REQUESTCODE = 0;
 
     ActivityStockNopicturesBinding binding;
 
@@ -58,7 +56,7 @@ public class StockNoPicturesActivity extends BaseActivity implements StockNoPict
     Dispatcher dispatcher;
 
     private StockNoPicturesSortFragment stockNoPicturesSortFragment;
-    private StockNoPicturesSearchFragment stockNoPicturesSearchFragment;
+    private StockProductSearchFragment stockProductSearchFragment;
 
     @Override
     protected void setupActivityComponent() {
@@ -84,10 +82,9 @@ public class StockNoPicturesActivity extends BaseActivity implements StockNoPict
         binding.editSearch.addTextChangedListener(this);
         binding.editSearch.setOnFocusChangeListener(this);
 
-        stockNoPicturesSearchFragment = new StockNoPicturesSearchFragment();
+        stockProductSearchFragment = StockProductSearchFragmentAutoBundle.createFragmentBuilder(StockProductSearchFragment.FROM_TAKEPICTURE).build();
         stockNoPicturesSortFragment = new StockNoPicturesSortFragment();
-        changeFragment(R.id.fragmentLayout, stockNoPicturesSortFragment);
-
+        loadRootFragment(R.id.fragmentLayout, stockNoPicturesSortFragment);
 
         stockActionCreator.queryStockCategory(String.valueOf(true));
     }
@@ -123,8 +120,8 @@ public class StockNoPicturesActivity extends BaseActivity implements StockNoPict
     public void onRxViewRegistered() {
         if (stockNoPicturesSortFragment != null)
             dispatcher.subscribeRxView(stockNoPicturesSortFragment);
-        if (stockNoPicturesSearchFragment != null)
-            dispatcher.subscribeRxView(stockNoPicturesSearchFragment);
+        if (stockProductSearchFragment != null)
+            dispatcher.subscribeRxView(stockProductSearchFragment);
 
     }
 
@@ -132,8 +129,8 @@ public class StockNoPicturesActivity extends BaseActivity implements StockNoPict
     public void onRxViewUnRegistered() {
 //        if (stockNoPicturesSortFragment != null)
 //            dispatcher.unsubscribeRxView(stockNoPicturesSortFragment);
-//        if (stockNoPicturesSearchFragment != null)
-//            dispatcher.unsubscribeRxView(stockNoPicturesSearchFragment);
+//        if (stockProductSearchFragment != null)
+//            dispatcher.unsubscribeRxView(stockProductSearchFragment);
     }
 
     @Override
@@ -141,8 +138,8 @@ public class StockNoPicturesActivity extends BaseActivity implements StockNoPict
         super.onDestroy();
         if (stockNoPicturesSortFragment != null)
             dispatcher.unsubscribeRxView(stockNoPicturesSortFragment);
-        if (stockNoPicturesSearchFragment != null)
-            dispatcher.unsubscribeRxView(stockNoPicturesSearchFragment);
+        if (stockProductSearchFragment != null)
+            dispatcher.unsubscribeRxView(stockProductSearchFragment);
     }
 
     @Nullable
@@ -162,13 +159,13 @@ public class StockNoPicturesActivity extends BaseActivity implements StockNoPict
     public void refreshList(View v) {
         if (stockNoPicturesSortFragment.isVisible())
             stockNoPicturesSortFragment.onRefresh();
-        if (stockNoPicturesSearchFragment.isVisible())
-            stockNoPicturesSearchFragment.onRefresh();
+        if (stockProductSearchFragment.isVisible())
+            stockProductSearchFragment.onRefresh();
     }
 
     public void navigateToCaptureActivityForResult(View v) {
         binding.editSearch.requestFocus();
-        navigate.navigateToCaptureActivityForResult(this, null, false, SCANNER_REQUESTCODE);
+        navigate.navigateToCaptureActivityForResult(this, null, false, CaptureActivity.SCANNER_REQUESTCODE);
     }
 
     @Override
@@ -186,11 +183,8 @@ public class StockNoPicturesActivity extends BaseActivity implements StockNoPict
         if (TextUtils.isEmpty(s)) {
 
         } else {
-            stockNoPicturesSearchFragment.setKeyWord(s.toString());
-//            changeFragment(R.id.fragmentLayout, stockNoPicturesSearchFragment);
-//            if (stockNoPicturesSearchFragment.isVisible())
-//                stockNoPicturesSearchFragment.onRefresh();
-            stockNoPicturesSearchFragment.onRefresh();
+            stockProductSearchFragment.setKeyWord(s.toString());
+            stockProductSearchFragment.onRefresh();
         }
 
 
@@ -204,27 +198,25 @@ public class StockNoPicturesActivity extends BaseActivity implements StockNoPict
     @Override
     public void onFocusChange(View v, boolean hasFocus) {
         if (hasFocus) {
-            changeFragment(R.id.fragmentLayout, stockNoPicturesSearchFragment);
-        } else {
-            changeFragment(R.id.fragmentLayout, stockNoPicturesSortFragment);
+            if (!getTopFragment().equals(stockProductSearchFragment)) {
+                start(stockProductSearchFragment);
+            }
+
         }
     }
 
+
     @Override
-    public void onBackPressed() {
-//        super.onBackPressed();
-        if (currentFragment.equals(stockNoPicturesSearchFragment) && stockNoPicturesSearchFragment.isVisible()) {
-            binding.editSearch.setText("");
-            binding.editSearch.clearFocus();
-        } else
-            finish();
+    public void onSearchFinish() {
+        binding.editSearch.setText("");
+        binding.editSearch.clearFocus();
     }
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
 
-        if (requestCode == SCANNER_REQUESTCODE && resultCode == RESULT_OK) {
+        if (requestCode == CaptureActivity.SCANNER_REQUESTCODE && resultCode == RESULT_OK) {
             binding.editSearch.setText(data.getStringExtra("result"));
         } else {
             binding.editSearch.clearFocus();

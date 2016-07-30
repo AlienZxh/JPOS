@@ -11,8 +11,13 @@ import com.j1j2.jposmvvm.features.scanner.camera.activity.CaptureActivity;
 import com.j1j2.jposmvvm.features.ui.IndexActivityAutoBundle;
 import com.j1j2.jposmvvm.features.ui.LoginActivity;
 import com.j1j2.jposmvvm.features.ui.StockNoPicturesActivity;
+import com.j1j2.jposmvvm.features.ui.StockProductDetailActivity;
+import com.j1j2.jposmvvm.features.ui.StockProductDetailActivityAutoBundle;
+import com.j1j2.jposmvvm.features.ui.StockSortActivity;
 import com.j1j2.jposmvvm.features.ui.StockTakePicturesActivity;
 import com.j1j2.jposmvvm.features.ui.StockTakePicturesActivityAutoBundle;
+import com.j1j2.jposmvvm.features.ui.StorageOrderActivity;
+import com.j1j2.jposmvvm.features.ui.StorageProductsActivityAutoBundle;
 
 /**
  * Created by alienzxh on 16-5-5.
@@ -57,8 +62,60 @@ public class Navigate {
         }
     }
 
+    public void navigateToStockSortActivity(Activity context, ActivityOptionsCompat options, boolean isFinish) {
+        Intent intent = new Intent(context, StockSortActivity.class);
+        if (null == options || Build.VERSION.SDK_INT < 16) {
+            context.startActivity(intent);
+            context.overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+        } else {
+            ActivityCompat.startActivity(context, intent, options.toBundle());
+        }
+        if (isFinish) {
+            ActivityCompat.finishAfterTransition(context);
+        }
+    }
+
     public void navigateToStockTakePicturesActivity(Activity context, ActivityOptionsCompat options, boolean isFinish, int stockId, int fromType, int position) {
         Intent intent = StockTakePicturesActivityAutoBundle.createIntentBuilder(stockId, fromType, position).build(context);
+        if (null == options || Build.VERSION.SDK_INT < 16) {
+            context.startActivity(intent);
+            context.overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+        } else {
+            ActivityCompat.startActivity(context, intent, options.toBundle());
+        }
+        if (isFinish) {
+            ActivityCompat.finishAfterTransition(context);
+        }
+    }
+
+    public void navigateToStockProductDetailActivity(Activity context, ActivityOptionsCompat options, boolean isFinish, int stockId, int fromType, int position) {
+        Intent intent = StockProductDetailActivityAutoBundle.createIntentBuilder(stockId, fromType, position).build(context);
+        if (null == options || Build.VERSION.SDK_INT < 16) {
+            context.startActivity(intent);
+            context.overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+        } else {
+            ActivityCompat.startActivity(context, intent, options.toBundle());
+        }
+        if (isFinish) {
+            ActivityCompat.finishAfterTransition(context);
+        }
+    }
+
+    public void navigateToStorageOrderActivity(Activity context, ActivityOptionsCompat options, boolean isFinish) {
+        Intent intent = new Intent(context, StorageOrderActivity.class);
+        if (null == options || Build.VERSION.SDK_INT < 16) {
+            context.startActivity(intent);
+            context.overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+        } else {
+            ActivityCompat.startActivity(context, intent, options.toBundle());
+        }
+        if (isFinish) {
+            ActivityCompat.finishAfterTransition(context);
+        }
+    }
+
+    public void navigateToStorageProductsActivity(Activity context, ActivityOptionsCompat options, boolean isFinish, int orderId) {
+        Intent intent = StorageProductsActivityAutoBundle.createIntentBuilder(orderId).build(context);
         if (null == options || Build.VERSION.SDK_INT < 16) {
             context.startActivity(intent);
             context.overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
@@ -82,4 +139,6 @@ public class Navigate {
             ActivityCompat.finishAfterTransition(context);
         }
     }
+
+
 }

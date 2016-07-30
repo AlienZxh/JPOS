@@ -89,5 +89,6 @@
         android:layout_marginStart="@dimen/size_100px"
         android:text="@string/ic_complete"
         android:textColor="@color/colorPrimary"
-        android:textSize="@dimen/text_200px" />
+        android:textSize="@dimen/text_200px"
+        android:visibility="invisible" />
 </com.zhy.autolayout.AutoRelativeLayout>

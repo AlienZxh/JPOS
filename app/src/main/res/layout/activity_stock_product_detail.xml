@@ -1,0 +1,491 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+
+        <variable
+            name="mUIViewModel"
+            type="com.j1j2.jposmvvm.features.viewmodel.UIViewModel" />
+
+
+        <variable
+            name="productViewModel"
+            type="com.j1j2.jposmvvm.features.viewmodel.ProductViewModel" />
+    </data>
+
+    <com.zhy.autolayout.AutoLinearLayout
+        android:id="@+id/root_layout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/colorLayoutBackground"
+        android:fitsSystemWindows="true"
+        android:orientation="vertical">
+
+        <com.zhy.autolayout.AutoRelativeLayout
+            android:id="@+id/toolbar"
+            style="@style/actionbar_layout_style"
+            android:orientation="horizontal">
+
+            <TextView
+                style="@style/actionbar_icon_btn_style"
+                fontPath="iconfont/iconfont.ttf"
+                android:onClick="onBack"
+                android:text="@string/ic_arrow_left" />
+
+            <TextView
+                style="@style/actionbar_title_style"
+                android:text="商品详情" />
+
+            <TextView
+                style="@style/actionbar_text_btn_style"
+                android:layout_alignParentEnd="true"
+                android:layout_alignParentRight="true"
+                android:onClick="save"
+                android:text="保存" />
+
+        </com.zhy.autolayout.AutoRelativeLayout>
+
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <com.j1j2.jposmvvm.common.widgets.LoadingLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                app:errorMessage="@{mUIViewModel.errorMessage}"
+                app:errorView="@layout/view_error"
+                app:loadingMessage="@{mUIViewModel.loadingMessage}"
+                app:loadingView="@layout/view_loading"
+                app:viewState="@{mUIViewModel.uiState}">
+
+                <com.zhy.autolayout.AutoLinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="@dimen/size_20px"
+                        android:layout_marginLeft="@dimen/size_20px"
+                        android:layout_marginStart="@dimen/size_20px"
+                        android:layout_marginTop="@dimen/size_40px"
+                        android:text="商品信息"
+                        android:textColor="@color/color666666"
+                        android:textSize="@dimen/text_28px" />
+
+                    <com.zhy.autolayout.AutoLinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/item_top_bottom_divider_bg"
+                        android:orientation="vertical"
+                        android:paddingLeft="@dimen/size_20px"
+                        android:paddingRight="@dimen/size_20px">
+
+                        <com.zhy.autolayout.AutoLinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="@dimen/size_80px"
+                            android:orientation="horizontal">
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="@dimen/size_80px"
+                                android:gravity="center_vertical"
+                                android:text="品　名："
+                                android:textColor="@color/color333333"
+                                android:textSize="@dimen/text_28px" />
+
+                            <EditText
+                                android:layout_width="0dp"
+                                android:layout_height="@dimen/size_80px"
+                                android:layout_weight="1"
+                                android:background="@color/colorTransparent"
+                                android:ellipsize="end"
+                                android:gravity="center_vertical"
+                                android:hint="请输入品名，必填"
+                                android:imeOptions="actionNext"
+                                android:inputType="text"
+                                android:maxLines="1"
+                                android:text="@={productViewModel.name}"
+                                android:textColor="@color/color333333"
+                                android:textColorHint="@color/coloraaaaaa"
+                                android:textSize="@dimen/text_28px" />
+                        </com.zhy.autolayout.AutoLinearLayout>
+
+                        <View
+                            android:layout_width="match_parent"
+                            android:layout_height="@dimen/size_1px"
+                            android:background="@color/colord4d4d4" />
+
+                        <com.zhy.autolayout.AutoLinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="@dimen/size_80px"
+                            android:orientation="horizontal">
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="@dimen/size_80px"
+                                android:gravity="center_vertical"
+                                android:text="规　格："
+                                android:textColor="@color/color333333"
+                                android:textSize="@dimen/text_28px" />
+
+                            <EditText
+                                android:layout_width="0dp"
+                                android:layout_height="@dimen/size_80px"
+                                android:layout_weight="1"
+                                android:background="@color/colorTransparent"
+                                android:ellipsize="end"
+                                android:gravity="center_vertical"
+                                android:hint="请输入规格，选填"
+                                android:imeOptions="actionNext"
+                                android:inputType="text"
+                                android:maxLines="1"
+                                android:text="@={productViewModel.spec}"
+                                android:textColor="@color/color333333"
+                                android:textColorHint="@color/coloraaaaaa"
+                                android:textSize="@dimen/text_28px" />
+                        </com.zhy.autolayout.AutoLinearLayout>
+
+                        <View
+                            android:layout_width="match_parent"
+                            android:layout_height="@dimen/size_1px"
+                            android:background="@color/colord4d4d4" />
+
+                        <com.zhy.autolayout.AutoLinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="@dimen/size_80px"
+                            android:orientation="horizontal">
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="@dimen/size_80px"
+                                android:gravity="center_vertical"
+                                android:text="单　位："
+                                android:textColor="@color/color333333"
+                                android:textSize="@dimen/text_28px" />
+
+                            <EditText
+                                android:layout_width="0dp"
+                                android:layout_height="@dimen/size_80px"
+                                android:layout_weight="1"
+                                android:background="@color/colorTransparent"
+                                android:ellipsize="end"
+                                android:gravity="center_vertical"
+                                android:hint="请输入单位，必填"
+                                android:imeOptions="actionNext"
+                                android:inputType="text"
+                                android:maxLines="1"
+                                android:text="@={productViewModel.unit}"
+                                android:textColor="@color/color333333"
+                                android:textColorHint="@color/coloraaaaaa"
+                                android:textSize="@dimen/text_28px" />
+                        </com.zhy.autolayout.AutoLinearLayout>
+
+                        <View
+                            android:layout_width="match_parent"
+                            android:layout_height="@dimen/size_1px"
+                            android:background="@color/colord4d4d4" />
+
+                        <com.zhy.autolayout.AutoLinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="@dimen/size_80px"
+                            android:orientation="horizontal">
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="@dimen/size_80px"
+                                android:gravity="center_vertical"
+                                android:text="条　码："
+                                android:textColor="@color/color333333"
+                                android:textSize="@dimen/text_28px" />
+
+                            <EditText
+                                android:id="@+id/barcodeEdit"
+                                android:layout_width="0dp"
+                                android:layout_height="@dimen/size_80px"
+                                android:layout_weight="1"
+                                android:background="@color/colorTransparent"
+                                android:ellipsize="end"
+                                android:gravity="center_vertical"
+                                android:hint="请输入条码，选填"
+                                android:imeOptions="actionNext"
+                                android:inputType="number"
+                                android:maxLines="1"
+                                android:text="@={productViewModel.barCode}"
+                                android:textColor="@color/color333333"
+                                android:textColorHint="@color/coloraaaaaa"
+                                android:textSize="@dimen/text_28px" />
+
+                            <TextView
+                                fontPath="iconfont/iconfont.ttf"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="center_vertical"
+                                android:gravity="center"
+                                android:onClick="navigateToCaptureActivityForResult"
+                                android:paddingEnd="@dimen/size_30px"
+                                android:paddingRight="@dimen/size_30px"
+                                android:text="@string/ic_barcode"
+                                android:textColor="@color/color7b7b7b"
+                                android:textSize="@dimen/text_48px" />
+
+                        </com.zhy.autolayout.AutoLinearLayout>
+
+                        <View
+                            android:layout_width="match_parent"
+                            android:layout_height="@dimen/size_1px"
+                            android:background="@color/colord4d4d4" />
+
+                        <com.zhy.autolayout.AutoLinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="@dimen/size_80px"
+                            android:orientation="horizontal">
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="@dimen/size_80px"
+                                android:gravity="center_vertical"
+                                android:text="助记码："
+                                android:textColor="@color/color333333"
+                                android:textSize="@dimen/text_28px" />
+
+                            <EditText
+                                android:layout_width="0dp"
+                                android:layout_height="@dimen/size_80px"
+                                android:layout_weight="1"
+                                android:background="@color/colorTransparent"
+                                android:ellipsize="end"
+                                android:gravity="center_vertical"
+                                android:hint="请输入助记码，选填"
+                                android:imeOptions="actionNext"
+                                android:inputType="text"
+                                android:maxLines="1"
+                                android:text="@={productViewModel.mnemonic}"
+                                android:textColor="@color/color333333"
+                                android:textColorHint="@color/coloraaaaaa"
+                                android:textSize="@dimen/text_28px" />
+                        </com.zhy.autolayout.AutoLinearLayout>
+
+                        <View
+                            android:layout_width="match_parent"
+                            android:layout_height="@dimen/size_1px"
+                            android:background="@color/colord4d4d4" />
+
+                        <com.zhy.autolayout.AutoLinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="@dimen/size_80px"
+                            android:orientation="horizontal">
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="@dimen/size_80px"
+                                android:gravity="center_vertical"
+                                android:text="品　牌："
+                                android:textColor="@color/color333333"
+                                android:textSize="@dimen/text_28px" />
+
+                            <EditText
+                                android:layout_width="0dp"
+                                android:layout_height="@dimen/size_80px"
+                                android:layout_weight="1"
+                                android:background="@color/colorTransparent"
+                                android:ellipsize="end"
+                                android:gravity="center_vertical"
+                                android:hint="请输入品牌，选填"
+                                android:imeOptions="actionNext"
+                                android:inputType="text"
+                                android:maxLines="1"
+                                android:text="@={productViewModel.brand}"
+                                android:textColor="@color/color333333"
+                                android:textColorHint="@color/coloraaaaaa"
+                                android:textSize="@dimen/text_28px" />
+                        </com.zhy.autolayout.AutoLinearLayout>
+
+                    </com.zhy.autolayout.AutoLinearLayout>
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="@dimen/size_20px"
+                        android:layout_marginLeft="@dimen/size_20px"
+                        android:layout_marginStart="@dimen/size_20px"
+                        android:layout_marginTop="@dimen/size_40px"
+                        android:text="商品价格"
+                        android:textColor="@color/color666666"
+                        android:textSize="@dimen/text_28px" />
+
+                    <com.zhy.autolayout.AutoLinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/item_top_bottom_divider_bg"
+                        android:orientation="vertical"
+                        android:paddingLeft="@dimen/size_20px"
+                        android:paddingRight="@dimen/size_20px">
+
+                        <com.zhy.autolayout.AutoLinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="@dimen/size_80px"
+                            android:orientation="horizontal">
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="@dimen/size_80px"
+                                android:gravity="center_vertical"
+                                android:text="进货价："
+                                android:textColor="@color/color333333"
+                                android:textSize="@dimen/text_28px" />
+
+                            <EditText
+                                android:layout_width="0dp"
+                                android:layout_height="@dimen/size_80px"
+                                android:layout_weight="1"
+                                android:background="@color/colorTransparent"
+                                android:ellipsize="end"
+                                android:gravity="center_vertical"
+                                android:hint="选填"
+                                android:imeOptions="actionNext"
+                                android:inputType="numberDecimal"
+                                android:maxLines="1"
+                                android:text="@={productViewModel.lastCost}"
+                                android:textColor="@color/color333333"
+                                android:textColorHint="@color/coloraaaaaa"
+                                android:textSize="@dimen/text_28px" />
+
+
+                        </com.zhy.autolayout.AutoLinearLayout>
+
+                        <View
+                            android:layout_width="match_parent"
+                            android:layout_height="@dimen/size_1px"
+                            android:background="@color/colord4d4d4" />
+
+                        <com.zhy.autolayout.AutoLinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="@dimen/size_80px"
+                            android:orientation="horizontal">
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="@dimen/size_80px"
+                                android:gravity="center_vertical"
+                                android:text="零售价："
+                                android:textColor="@color/color333333"
+                                android:textSize="@dimen/text_28px" />
+
+                            <EditText
+                                android:layout_width="0dp"
+                                android:layout_height="@dimen/size_80px"
+                                android:layout_weight="1"
+                                android:background="@color/colorTransparent"
+                                android:ellipsize="end"
+                                android:gravity="center_vertical"
+                                android:hint="选填"
+                                android:imeOptions="actionNext"
+                                android:inputType="numberDecimal"
+                                android:maxLines="1"
+                                android:text="@={productViewModel.retailPrice}"
+                                android:textColor="@color/color333333"
+                                android:textColorHint="@color/coloraaaaaa"
+                                android:textSize="@dimen/text_28px" />
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="@dimen/size_80px"
+                                android:gravity="center_vertical"
+                                android:text="毛利率："
+                                android:textColor="@color/color333333"
+                                android:textSize="@dimen/text_28px" />
+
+                            <TextView
+                                android:layout_width="0dp"
+                                android:layout_height="@dimen/size_80px"
+                                android:layout_weight="1"
+                                android:background="@color/colorTransparent"
+                                android:ellipsize="end"
+                                android:gravity="center_vertical"
+                                android:maxLines="1"
+                                android:text="@{productViewModel.retailPriceGrossMargin}"
+                                android:textColor="@color/color333333"
+                                android:textSize="@dimen/text_28px" />
+                        </com.zhy.autolayout.AutoLinearLayout>
+
+                        <View
+                            android:layout_width="match_parent"
+                            android:layout_height="@dimen/size_1px"
+                            android:background="@color/colord4d4d4" />
+
+                        <com.zhy.autolayout.AutoLinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="@dimen/size_80px"
+                            android:orientation="horizontal">
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="@dimen/size_80px"
+                                android:gravity="center_vertical"
+                                android:text="会员价："
+                                android:textColor="@color/color333333"
+                                android:textSize="@dimen/text_28px" />
+
+                            <EditText
+                                android:layout_width="0dp"
+                                android:layout_height="@dimen/size_80px"
+                                android:layout_weight="1"
+                                android:background="@color/colorTransparent"
+                                android:ellipsize="end"
+                                android:gravity="center_vertical"
+                                android:hint="选填"
+                                android:imeOptions="actionDone"
+                                android:inputType="numberDecimal"
+                                android:maxLines="1"
+                                android:text="@={productViewModel.memberPrice}"
+                                android:textColor="@color/color333333"
+                                android:textColorHint="@color/coloraaaaaa"
+                                android:textSize="@dimen/text_28px" />
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="@dimen/size_80px"
+                                android:gravity="center_vertical"
+                                android:text="毛利率："
+                                android:textColor="@color/color333333"
+                                android:textSize="@dimen/text_28px" />
+
+                            <TextView
+                                android:layout_width="0dp"
+                                android:layout_height="@dimen/size_80px"
+                                android:layout_weight="1"
+                                android:background="@color/colorTransparent"
+                                android:ellipsize="end"
+                                android:gravity="center_vertical"
+                                android:maxLines="1"
+                                android:text="@{productViewModel.memberPriceGrossMargin}"
+                                android:textColor="@color/color333333"
+                                android:textSize="@dimen/text_28px" />
+                        </com.zhy.autolayout.AutoLinearLayout>
+
+                    </com.zhy.autolayout.AutoLinearLayout>
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="@dimen/size_20px"
+                        android:layout_marginLeft="@dimen/size_20px"
+                        android:layout_marginStart="@dimen/size_20px"
+                        android:layout_marginTop="@dimen/size_40px"
+                        android:text="商品图片"
+                        android:textColor="@color/color666666"
+                        android:textSize="@dimen/text_28px" />
+
+                    <android.support.v7.widget.RecyclerView
+                        android:id="@+id/imgList"
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/size_900px"
+                        android:background="@drawable/item_top_bottom_divider_bg" />
+                </com.zhy.autolayout.AutoLinearLayout>
+            </com.j1j2.jposmvvm.common.widgets.LoadingLayout>
+        </ScrollView>
+    </com.zhy.autolayout.AutoLinearLayout>
+</layout>

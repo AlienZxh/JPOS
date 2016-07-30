@@ -19,7 +19,7 @@ import com.j1j2.jposmvvm.R;
 import com.j1j2.jposmvvm.common.widgets.recyclerviewadapter.BaseViewHolder;
 import com.j1j2.jposmvvm.common.widgets.recyclerviewadapter.RecyclerArrayAdapter;
 import com.j1j2.jposmvvm.data.model.Product;
-import com.orhanobut.logger.Logger;
+import com.j1j2.jposmvvm.features.ui.StockProductSearchFragment;
 import com.zhy.autolayout.utils.AutoUtils;
 
 import javax.annotation.Nullable;
@@ -28,17 +28,21 @@ import javax.annotation.Nullable;
  * Created by alienzxh on 16-6-7.
  */
 public class StockNoPictureProductAdapter extends RecyclerArrayAdapter<Product> {
+    private int fromType;
 
-    public StockNoPictureProductAdapter(Context context) {
+    public StockNoPictureProductAdapter(Context context, int fromType) {
         super(context);
+        this.fromType = fromType;
     }
 
     @Override
     public BaseViewHolder OnCreateViewHolder(ViewGroup parent, int viewType) {
-        return new StockNoPictureProductViewHolder(parent);
+        return new StockNoPictureProductViewHolder(parent, fromType);
     }
 
     public class StockNoPictureProductViewHolder extends BaseViewHolder<Product> {
+        private int fromType;
+
         private SimpleDraweeView productImg;
         private TextView productName;
         private TextView productUnit;
@@ -46,8 +50,11 @@ public class StockNoPictureProductAdapter extends RecyclerArrayAdapter<Product> 
         private TextView productBarCode;
         private TextView productImgTag;
 
-        public StockNoPictureProductViewHolder(ViewGroup parent) {
+        public StockNoPictureProductViewHolder(ViewGroup parent, int fromType) {
             super(parent, R.layout.item_nopicture_product);
+
+            this.fromType = fromType;
+
             productImg = $(R.id.productImg);
             productName = $(R.id.productName);
             productUnit = $(R.id.productUnit);
@@ -70,7 +77,8 @@ public class StockNoPictureProductAdapter extends RecyclerArrayAdapter<Product> 
                         @Override
                         public void onFinalImageSet(String id, @Nullable ImageInfo imageInfo, @Nullable Animatable animatable) {
                             super.onFinalImageSet(id, imageInfo, animatable);
-                            productImgTag.setVisibility(View.VISIBLE);
+                            if (fromType == StockProductSearchFragment.FROM_TAKEPICTURE)
+                                productImgTag.setVisibility(View.VISIBLE);
                         }
 
                         @Override

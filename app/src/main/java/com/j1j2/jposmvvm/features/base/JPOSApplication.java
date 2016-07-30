@@ -4,23 +4,22 @@ import android.content.Context;
 import android.graphics.Bitmap;
 import android.support.multidex.MultiDexApplication;
 import android.text.TextUtils;
-import android.widget.Toast;
 
 import com.facebook.drawee.backends.pipeline.Fresco;
 import com.facebook.imagepipeline.core.ImagePipelineConfig;
 import com.facebook.stetho.Stetho;
 import com.frogermcs.androiddevmetrics.AndroidDevMetrics;
-import com.google.common.collect.ImmutableMap;
 import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 import com.hardsoftstudio.rxflux.RxFlux;
 import com.j1j2.jposmvvm.BuildConfig;
 import com.j1j2.jposmvvm.R;
 import com.j1j2.jposmvvm.common.utils.AndroidUtil;
-import com.j1j2.jposmvvm.common.utils.AppUtil;
 import com.j1j2.jposmvvm.common.utils.HttpHelper;
 import com.j1j2.jposmvvm.common.utils.ScreenUtils;
 import com.j1j2.jposmvvm.common.utils.Toastor;
 import com.j1j2.jposmvvm.data.model.ShopInfo;
+import com.j1j2.jposmvvm.data.model.WebReturn;
 import com.j1j2.jposmvvm.features.base.di.components.AppComponent;
 import com.j1j2.jposmvvm.features.base.di.components.DaggerAppComponent;
 import com.j1j2.jposmvvm.features.base.di.components.ShopComponent;
@@ -34,6 +33,8 @@ import com.squareup.leakcanary.LeakCanary;
 import com.squareup.leakcanary.RefWatcher;
 import com.uphyca.stetho_realm.RealmInspectorModulesProvider;
 
+import org.json.JSONException;
+import org.json.JSONObject;
 import org.lzh.framework.updatepluginlib.UpdateConfig;
 import org.lzh.framework.updatepluginlib.callback.EmptyCheckCB;
 import org.lzh.framework.updatepluginlib.callback.EmptyDownloadCB;
@@ -271,7 +272,40 @@ public class JPOSApplication extends MultiDexApplication {
 //                        update.setForced(false);
 //                        // 是否忽略此次版本更新
 //                        update.setIgnore(false);
-                        return gson.fromJson(response, Update.class);
+
+//                        Logger.e("errorMsg " + response);
+//                        WebReturn<Update> updateWebReturn = gson.fromJson(response, new TypeToken<WebReturn<Update>>() {
+//                        }.getType());
+//                        Logger.e("errorMsg " + updateWebReturn.getDetail().toString());
+//                        return updateWebReturn.getDetail();
+                        try {
+
+                            JSONObject wenReturnJsonObject = new JSONObject(response);
+
+                            Update update = new Update(wenReturnJsonObject.getString("Detail"));
+                            JSONObject jsonObject = wenReturnJsonObject.getJSONObject("Detail");
+                            // 此apk包的更新时间
+                            update.setUpdateTime(System.currentTimeMillis());
+                            // 此apk包的下载地址
+                            update.setUpdateUrl(jsonObject.optString("ApkDownloadUrl"));
+                            // 此apk包的版本号
+                            update.setVersionCode(jsonObject.optInt("NewVersionTag"));
+                            // 此apk包的版本名称
+                            update.setVersionName(jsonObject.optString("NewVersionName"));
+                            // 此apk包的更新内容
+                            update.setUpdateContent(jsonObject.optString("UpdatedContents"));
+                            // 此apk包是否为强制更新
+                            update.setForced(jsonObject.optBoolean("ForceUpdate"));
+                            // 是否忽略此次版本更新
+                            update.setIgnore(jsonObject.optBoolean("Invalid"));
+
+                            return update;
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                            return null;
+                        }
+
+
                     }
                 })
                 // TODO: 2016/5/11 除了以上两个参数为必填。以下的参数均为非必填项。
@@ -298,6 +332,7 @@ public class JPOSApplication extends MultiDexApplication {
                         toastor.showSingletonToast("下载失败");
                     }
                 })
+                .downloadWorker(new APKDownloadWorker())
                 /* // 自定义更新接口的访问任务
                 .checkWorker(new UpdateWorker() {
                     @Override

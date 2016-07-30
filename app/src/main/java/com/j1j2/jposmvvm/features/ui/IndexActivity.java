@@ -105,7 +105,7 @@ public class IndexActivity extends BaseActivity {
 
     @Override
     public void onBackPressed() {
-        super.onBackPressed();
+//        super.onBackPressed();
         showExitDialog();
     }
 
@@ -142,17 +142,21 @@ public class IndexActivity extends BaseActivity {
                 .setPositiveButton("确定", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-                        onBackPressed();
+                        finish();
                     }
                 })
                 .create().show();
     }
 
     public void navigateToStock(View v) {
-
+        navigate.navigateToStockSortActivity(this, null, false);
     }
 
     public void navigateToPhoto(View v) {
         navigate.navigateToStockNoPicturesActivity(this, null, false);
+    }
+
+    public void navigateToStorage(View v) {
+        navigate.navigateToStorageOrderActivity(this, null, false);
     }
 }

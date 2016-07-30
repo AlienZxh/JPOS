@@ -23,7 +23,7 @@ public class UpdateDeserializer implements JsonDeserializer<Update> {
         // 此apk包的下载地址
         update.setUpdateUrl(jsonObject.get("ApkDownloadUrl").getAsString());
         // 此apk包的版本号
-        update.setVersionCode(jsonObject.get("VersionTag").getAsInt());
+        update.setVersionCode(jsonObject.get("NewVersionTag").getAsInt());
         // 此apk包的版本名称
         update.setVersionName(jsonObject.get("NewVersionName").getAsString());
         // 此apk包的更新内容
@@ -34,4 +34,6 @@ public class UpdateDeserializer implements JsonDeserializer<Update> {
         update.setIgnore(jsonObject.get("Invalid").getAsBoolean());
         return update;
     }
+
+
 }

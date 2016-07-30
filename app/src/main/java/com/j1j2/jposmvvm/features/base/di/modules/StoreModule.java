@@ -4,6 +4,8 @@ import com.hardsoftstudio.rxflux.dispatcher.Dispatcher;
 import com.j1j2.jposmvvm.features.base.JPOSApplication;
 import com.j1j2.jposmvvm.features.stores.ShopStore;
 import com.j1j2.jposmvvm.features.stores.StockStore;
+import com.j1j2.jposmvvm.features.stores.StorageStore;
+import com.j1j2.jposmvvm.features.stores.SupplierStore;
 
 import javax.inject.Singleton;
 
@@ -27,4 +29,17 @@ public class StoreModule {
     StockStore stockStore(Dispatcher dispatcher) {
         return StockStore.get(dispatcher);
     }
+
+    @Provides
+    @Singleton
+    StorageStore storageStore(Dispatcher dispatcher) {
+        return StorageStore.get(dispatcher);
+    }
+
+    @Provides
+    @Singleton
+    SupplierStore supplierStore(Dispatcher dispatcher) {
+        return SupplierStore.get(dispatcher);
+    }
+
 }

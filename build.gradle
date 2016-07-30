@@ -5,7 +5,7 @@ buildscript {
         jcenter()
     }
     dependencies {
-        classpath 'com.android.tools.build:gradle:2.1.0'
+        classpath 'com.android.tools.build:gradle:2.1.2'
         classpath 'com.getkeepsafe.dexcount:dexcount-gradle-plugin:0.5.0'
         classpath 'com.neenbedankt.gradle.plugins:android-apt:1.8'
         classpath 'com.frogermcs.androiddevmetrics:androiddevmetrics-plugin:0.4'
@@ -28,8 +28,8 @@ allprojects {
     ext {
         //android
         androidApplicationId = 'com.j1j2.jposmvvm'
-        androidVersionCode = 1
-        androidVersionName = "1.0"
+        androidVersionCode = 2
+        androidVersionName = "2.0.0"
 
         // Sdk and tools
         minSdkVersion = 15
@@ -59,14 +59,17 @@ allprojects {
         junitVersion = '4.12'
         stethorealmVersion = '0.9.0'
         threetenabpVersion = '1.0.3'
-        easyrecyclerviewVersion = '4.0.1'
+        easyrecyclerviewVersion = '4.0.5'
         smoothprogressbarVersion = '1.2.0'
         okhttputilsVersion = '2.6.1'
-        frescoVersion = '0.10.0'
+        frescoVersion = '0.12.0'
         zxingVersion = '3.2.1'
         galleryfinalVersion = '1.4.8.7'
         multidexVersion = '1.0.1'
-        updatePluginVersion = '0.3'
+        updatePluginVersion = '0.4'
+        fragmentationVersion = '0.7.8'
+        timePickerDialogVersion = '1.0.1'
+        expandablelayoutVersion = '1.4'
     }
 }
 

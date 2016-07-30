@@ -16,8 +16,12 @@ import com.hardsoftstudio.rxflux.util.SubscriptionManager;
 import com.j1j2.jposmvvm.BuildConfig;
 import com.j1j2.jposmvvm.common.utils.TinyDB;
 import com.j1j2.jposmvvm.common.utils.Toastor;
+import com.j1j2.jposmvvm.data.model.StorageOrder;
+import com.j1j2.jposmvvm.data.model.WebReturn;
 import com.j1j2.jposmvvm.data.model.serializertypeadapter.ShopInfoSerializer;
+import com.j1j2.jposmvvm.data.model.serializertypeadapter.StorageOrderSerializer;
 import com.j1j2.jposmvvm.data.model.serializertypeadapter.UpdateDeserializer;
+import com.j1j2.jposmvvm.data.model.serializertypeadapter.UpdateWebReturnDeserializer;
 import com.j1j2.jposmvvm.features.base.JPOSApplication;
 import com.j1j2.jposmvvm.features.base.Navigate;
 import com.orhanobut.logger.Logger;
@@ -97,8 +101,11 @@ public class AppModule {
                         return false;
                     }
                 })
+                .registerTypeAdapter(StorageOrder.class,new StorageOrderSerializer())
                 .registerTypeAdapter(ShopInfoRealmProxy.class, new ShopInfoSerializer())
                 .registerTypeAdapter(Update.class, new UpdateDeserializer())
+                .registerTypeAdapter(new TypeToken<WebReturn<Update>>() {
+                }.getType(), new UpdateWebReturnDeserializer())
                 .create();
     }
 

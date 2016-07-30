@@ -9,15 +9,16 @@ import android.view.View;
 
 import com.hardsoftstudio.rxflux.dispatcher.RxViewDispatch;
 
+import me.yokeyword.fragmentation.SupportActivity;
 import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
 
 /**
  * Created by alienzxh on 16-3-4.
  */
-public abstract class BaseActivity extends AppCompatActivity  implements RxViewDispatch{
+public abstract class BaseActivity extends SupportActivity implements RxViewDispatch {
 
 
-    protected Fragment currentFragment;
+//    protected Fragment currentFragment;
 
     protected abstract void setupActivityComponent();
 
@@ -41,26 +42,26 @@ public abstract class BaseActivity extends AppCompatActivity  implements RxViewD
         initViews();
     }
 
-    protected void changeFragment(int resView, Fragment targetFragment) {
-        if (targetFragment.equals(currentFragment)) {
-            return;
-        }
-        FragmentTransaction transaction = getSupportFragmentManager()
-                .beginTransaction();
-        if (!targetFragment.isAdded()) {
-            transaction.add(resView, targetFragment, targetFragment.getClass()
-                    .getName());
-        }
-        if (targetFragment.isHidden()) {
-            transaction.show(targetFragment);
-        }
-        if (currentFragment != null
-                && currentFragment.isVisible()) {
-            transaction.hide(currentFragment);
-        }
-        currentFragment = targetFragment;
-        transaction.commit();
-    }
+//    protected void changeFragment(int resView, Fragment targetFragment) {
+//        if (targetFragment.equals(currentFragment)) {
+//            return;
+//        }
+//        FragmentTransaction transaction = getSupportFragmentManager()
+//                .beginTransaction();
+//        if (!targetFragment.isAdded()) {
+//            transaction.add(resView, targetFragment, targetFragment.getClass()
+//                    .getName());
+//        }
+//        if (targetFragment.isHidden()) {
+//            transaction.show(targetFragment);
+//        }
+//        if (currentFragment != null
+//                && currentFragment.isVisible()) {
+//            transaction.hide(currentFragment);
+//        }
+//        currentFragment = targetFragment;
+//        transaction.commit();
+//    }
 
 
     public void onBack(View v) {

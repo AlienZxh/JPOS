@@ -3,7 +3,7 @@
     <string name="launch_legal_statement">©2013-2016 聚一聚二版权所有</string>
 
     <string name="ic_arrow_left">&#xe61a;</string>
-
+    <string name="ic_arrow_right">&#xe61b;</string>
 
     <string name="ic_shop">&#xe60a;</string>
     <string name="ic_user">&#xe61c;</string>
@@ -18,4 +18,7 @@
     <string name="ic_search">&#xe622;</string>
     <string name="ic_add">&#xe609;</string>
     <string name="ic_complete">&#xe621;</string>
+    <string name="ic_storage">&#xe604;</string>
+
+
 </resources>

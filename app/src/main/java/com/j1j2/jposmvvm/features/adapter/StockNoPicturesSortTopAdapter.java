@@ -14,8 +14,6 @@ import com.j1j2.jposmvvm.data.model.Category;
 import com.j1j2.jposmvvm.databinding.ItemStockNopicturesSortTopBinding;
 
 import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
 
 /**
  * Created by alienzxh on 16-6-7.

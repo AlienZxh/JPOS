@@ -101,7 +101,7 @@ public class StockNoPicturesSortFragment extends BaseFragment implements RxViewD
 
         binding.stockList.setRefreshingColorResources(R.color.colorPrimary);
         binding.stockList.setLayoutManager(new LinearLayoutManager(getContext()));
-        binding.stockList.setAdapterWithProgress(adapter = new StockNoPictureProductAdapter(getContext()));
+        binding.stockList.setAdapterWithProgress(adapter = new StockNoPictureProductAdapter(getContext(), StockProductSearchFragment.FROM_TAKEPICTURE));
         adapter.setMore(R.layout.view_more_footer, this);
         adapter.setNoMore(R.layout.view_nomore_footer);
         adapter.setError(R.layout.view_error).setOnClickListener(new View.OnClickListener() {

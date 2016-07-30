@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <data>
+
+        <variable
+            name="category"
+            type="com.j1j2.jposmvvm.data.model.SubCategory" />
+    </data>
+
+    <com.zhy.autolayout.AutoLinearLayout
+        android:id="@+id/itemLayout"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/size_100px"
+        android:gravity="center"
+        android:orientation="vertical">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@{(category.CategoryName??&quot;未知分类&quot;)+&quot;(&quot;+category.ProductCount+&quot;)&quot;}"
+            android:textColor="@color/color333333"
+            android:textSize="@dimen/text_32px" />
+
+    </com.zhy.autolayout.AutoLinearLayout>
+</layout>

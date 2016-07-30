@@ -63,6 +63,8 @@ public final class CaptureActivity extends AppCompatActivity implements SurfaceH
 
     private static final String TAG = CaptureActivity.class.getSimpleName();
 
+    public static final int SCANNER_REQUESTCODE = 0;
+
     private CameraManager cameraManager;
     private CaptureActivityHandler handler;
     private InactivityTimer inactivityTimer;

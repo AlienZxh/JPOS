@@ -8,7 +8,6 @@ import android.support.annotation.Nullable;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,56 +17,66 @@ import com.hardsoftstudio.rxflux.dispatcher.RxViewDispatch;
 import com.hardsoftstudio.rxflux.store.RxStore;
 import com.hardsoftstudio.rxflux.store.RxStoreChange;
 import com.j1j2.jposmvvm.R;
+import com.j1j2.jposmvvm.common.utils.Toastor;
 import com.j1j2.jposmvvm.common.widgets.RecyclerItemClickListener;
 import com.j1j2.jposmvvm.common.widgets.recyclerviewadapter.RecyclerArrayAdapter;
 import com.j1j2.jposmvvm.data.model.PageManager;
-import com.j1j2.jposmvvm.data.model.Product;
-import com.j1j2.jposmvvm.data.model.ProductDetail;
+import com.j1j2.jposmvvm.data.model.StorageOrderItem;
+import com.j1j2.jposmvvm.data.model.StorageStock;
 import com.j1j2.jposmvvm.data.model.WebReturn;
-import com.j1j2.jposmvvm.databinding.FragmentStockNopicturesSearchBinding;
+import com.j1j2.jposmvvm.databinding.FragmentStorageSearchBinding;
 import com.j1j2.jposmvvm.features.actions.Keys;
-import com.j1j2.jposmvvm.features.actions.StockActionCreator;
-import com.j1j2.jposmvvm.features.actions.StockActions;
-import com.j1j2.jposmvvm.features.adapter.StockNoPictureProductAdapter;
+import com.j1j2.jposmvvm.features.actions.StorageActionCreator;
+import com.j1j2.jposmvvm.features.actions.StorageActions;
+import com.j1j2.jposmvvm.features.adapter.StorageSearchAdapter;
 import com.j1j2.jposmvvm.features.base.BaseFragment;
-import com.j1j2.jposmvvm.features.base.Navigate;
 import com.j1j2.jposmvvm.features.base.di.HasComponent;
-import com.j1j2.jposmvvm.features.di.components.StockNoPicturesComponent;
-import com.j1j2.jposmvvm.features.stores.StockStore;
+import com.j1j2.jposmvvm.features.di.components.StorageComponent;
+import com.j1j2.jposmvvm.features.stores.StorageStore;
 
 import java.util.List;
 
 import javax.inject.Inject;
 
 /**
- * Created by alienzxh on 16-6-7.
+ * Created by alienzxh on 16-7-27.
  */
-public class StockNoPicturesSearchFragment extends BaseFragment implements RxViewDispatch, RecyclerItemClickListener.OnItemClickListener, RecyclerArrayAdapter.OnLoadMoreListener, SwipeRefreshLayout.OnRefreshListener {
+public class StorageSearchFragment extends BaseFragment implements RxViewDispatch, RecyclerArrayAdapter.OnLoadMoreListener, SwipeRefreshLayout.OnRefreshListener, StorageSearchAdapter.StorageSearchAdapterListener {
 
-    public interface StockNoPicturesSearchFragmentListener extends HasComponent<StockNoPicturesComponent> {
+    public interface StorageSearchFragmentListener extends HasComponent<StorageComponent> {
+        String getKey();
 
+        int getOrderId();
+
+        void showSearchActionBar();
+
+        void onSearchFinish();
+
+        List<Integer> getStockIdList();
     }
 
-    FragmentStockNopicturesSearchBinding binding;
+    private StorageSearchFragmentListener listener;
 
-    private StockNoPictureProductAdapter adapter;
-
-    private StockNoPicturesSearchFragmentListener listener;
+    FragmentStorageSearchBinding binding;
 
     @Inject
-    StockActionCreator stockActionCreator;
+    StorageActionCreator storageActionCreator;
     @Inject
-    Navigate navigate;
+    StorageStore storageStore;
+    @Inject
+    Toastor toastor;
 
-    private String keyWord = "";
+    StorageSearchAdapter adapter;
+
     private int pageIndex = 1;
     private int pageCount = 0;
 
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
-        listener = (StockNoPicturesSearchFragmentListener) context;
+        listener = (StorageSearchFragmentListener) context;
     }
+
 
     @Override
     protected void setupActivityComponent() {
@@ -80,10 +89,15 @@ public class StockNoPicturesSearchFragment extends BaseFragment implements RxVie
         super.onCreate(savedInstanceState);
     }
 
+    @Override
+    public void onResume() {
+        super.onResume();
+        listener.showSearchActionBar();
+    }
 
     @Override
     protected View initBinding(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        binding = DataBindingUtil.inflate(inflater, R.layout.fragment_stock_nopictures_search, container, false);
+        binding = DataBindingUtil.inflate(inflater, R.layout.fragment_storage_search, container, false);
         return binding.getRoot();
     }
 
@@ -91,7 +105,7 @@ public class StockNoPicturesSearchFragment extends BaseFragment implements RxVie
     protected void initViews() {
         binding.stockList.setRefreshingColorResources(R.color.colorPrimary);
         binding.stockList.setLayoutManager(new LinearLayoutManager(getContext()));
-        binding.stockList.setAdapterWithProgress(adapter = new StockNoPictureProductAdapter(getContext()));
+        binding.stockList.setAdapterWithProgress(adapter = new StorageSearchAdapter(getContext(), listener.getStockIdList()));
         adapter.setMore(R.layout.view_more_footer, this);
         adapter.setNoMore(R.layout.view_nomore_footer);
         adapter.setError(R.layout.view_error).setOnClickListener(new View.OnClickListener() {
@@ -101,43 +115,32 @@ public class StockNoPicturesSearchFragment extends BaseFragment implements RxVie
             }
         });
         binding.stockList.setRefreshListener(this);
-        binding.stockList.addOnItemTouchListener(new RecyclerItemClickListener(binding.stockList.getRecyclerView(), this));
-
+        adapter.setStorageSearchAdapterListener(this);
         onRefresh();
     }
 
-    @Override
-    public void onItemClick(RecyclerView parent, View view, int position, int id) {
-        navigate.navigateToStockTakePicturesActivity(getActivity(), null, false, adapter.getItem(position).getStockId(), StockTakePicturesActivity.From_SEARCH, position);
-    }
 
     @Override
     public void onLoadMore() {
-        stockActionCreator.searchStocks(pageIndex, keyWord, 2
-                , ""
-                , ""
-                , String.valueOf(true));
+        storageActionCreator.queryStocks(pageIndex, listener.getKey(), listener.getOrderId());
     }
 
     @Override
     public void onRefresh() {
         pageIndex = 1;
         adapter.clear();
-        stockActionCreator.searchStocks(pageIndex, keyWord, 2
-                , ""
-                , ""
-                , String.valueOf(true));
+        storageActionCreator.queryStocks(pageIndex, listener.getKey(), listener.getOrderId());
+
     }
 
     @Override
     public void onRxStoreChanged(@NonNull RxStoreChange change) {
         switch (change.getStoreId()) {
-            case StockStore.ID:
+            case StorageStore.ID:
                 switch (change.getRxAction().getType()) {
-
-                    case StockActions.SEARCHSTOCKS:
-                        WebReturn<PageManager<List<Product>>> productsWebReturn =
-                                (WebReturn<PageManager<List<Product>>>) change.getRxAction().get(Keys.PRODUCTS_WEBRETURN);
+                    case StorageActions.QUERYSTOCKS:
+                        WebReturn<PageManager<List<StorageStock>>> productsWebReturn =
+                                (WebReturn<PageManager<List<StorageStock>>>) change.getRxAction().get(Keys.QUERYSTOCKS_WEBRETURN);
                         if (productsWebReturn.isValue()) {
                             pageCount = productsWebReturn.getDetail().getPageCount();
                             if (productsWebReturn.getDetail().getTotalCount() <= 0) {
@@ -152,20 +155,8 @@ public class StockNoPicturesSearchFragment extends BaseFragment implements RxVie
                         } else {
                             adapter.pauseMore();
                         }
+                        break;
 
-                        break;
-                    case StockActions.REFRESHLIST:
-                        int fromType = change.getRxAction().get(Keys.REFRESHLISTFROMTYPE);
-                        if (fromType == StockTakePicturesActivity.From_SEARCH) {
-                            int position = change.getRxAction().get(Keys.REFRESHLISTPOSITION);
-                            ProductDetail productDetail = change.getRxAction().get(Keys.REFRESHLISTPRODUCTDETAIL);
-                            if(!TextUtils.isEmpty(productDetail.getThumbImgUrl())){
-                                Product product = adapter.getItem(position);
-                                product.setThumbImgUrl(productDetail.getThumbImgUrl());
-                                adapter.notifyItemChanged(position);
-                            }
-                        }
-                        break;
                 }
                 break;
         }
@@ -198,7 +189,21 @@ public class StockNoPicturesSearchFragment extends BaseFragment implements RxVie
         return null;
     }
 
-    public void setKeyWord(String keyWord) {
-        this.keyWord = keyWord;
+    @Override
+    public void onSelectStockAction(int position, StorageStock storageStock) {
+        StorageOrderItem storageOrderItem = new StorageOrderItem();
+        storageOrderItem.setOrderId(listener.getOrderId());
+        storageOrderItem.setStockId(storageStock.getStockId());
+        storageOrderItem.setQuantity(0);
+        storageActionCreator.createOrUpdateStoreageOrderDetailItem(storageOrderItem, true);
+        onBackPressedSupport();
+    }
+
+    @Override
+    public boolean onBackPressedSupport() {
+        listener.onSearchFinish();
+        hideSoftInput();
+        pop();
+        return true;
     }
 }

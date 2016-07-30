@@ -5,9 +5,12 @@ import com.hardsoftstudio.rxflux.dispatcher.Dispatcher;
 import com.hardsoftstudio.rxflux.util.SubscriptionManager;
 import com.j1j2.jposmvvm.data.api.ShopAPI;
 import com.j1j2.jposmvvm.data.api.StockAPI;
+import com.j1j2.jposmvvm.data.api.StorageAPI;
+import com.j1j2.jposmvvm.data.api.SupplierAPI;
 import com.j1j2.jposmvvm.features.actions.ShopActionCreator;
 import com.j1j2.jposmvvm.features.actions.StockActionCreator;
-import com.j1j2.jposmvvm.features.actions.StockActions;
+import com.j1j2.jposmvvm.features.actions.StorageActionCreator;
+import com.j1j2.jposmvvm.features.actions.SupplierActionCreator;
 
 import javax.inject.Singleton;
 
@@ -33,6 +36,19 @@ public class ActionModule {
         return retrofit.create(StockAPI.class);
     }
 
+
+    @Provides
+    @Singleton
+    StorageAPI storageAPI(Retrofit retrofit) {
+        return retrofit.create(StorageAPI.class);
+    }
+
+    @Provides
+    @Singleton
+    SupplierAPI supplierAPI(Retrofit retrofit) {
+        return retrofit.create(SupplierAPI.class);
+    }
+
     @Provides
     @Singleton
     ShopActionCreator shopActionCreator(Dispatcher dispatcher, SubscriptionManager subscriptionManager, ShopAPI shopAPI) {
@@ -43,5 +59,18 @@ public class ActionModule {
     @Singleton
     StockActionCreator stockActionCreator(Dispatcher dispatcher, SubscriptionManager subscriptionManager, StockAPI stockAPI, Gson gson) {
         return new StockActionCreator(dispatcher, subscriptionManager, stockAPI, gson);
+    }
+
+
+    @Provides
+    @Singleton
+    StorageActionCreator storageActionCreator(Dispatcher dispatcher, SubscriptionManager subscriptionManager, StorageAPI storageAPI) {
+        return new StorageActionCreator(dispatcher, subscriptionManager, storageAPI);
+    }
+
+    @Provides
+    @Singleton
+    SupplierActionCreator supplierActionCreator(Dispatcher dispatcher, SubscriptionManager subscriptionManager, SupplierAPI supplierAPI) {
+        return new SupplierActionCreator(dispatcher, subscriptionManager, supplierAPI);
     }
 }

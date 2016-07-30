@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+
+        <import type="com.zhy.autolayout.utils.AutoUtils" />
+
+
+    </data>
+
+    <com.zhy.autolayout.AutoLinearLayout
+        android:id="@+id/root_layout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/coloreeeeee"
+        android:fitsSystemWindows="true"
+        android:orientation="vertical">
+
+        <com.zhy.autolayout.AutoRelativeLayout
+            android:id="@+id/toolbar"
+            style="@style/actionbar_layout_style"
+            android:orientation="horizontal">
+
+            <TextView
+                style="@style/actionbar_icon_btn_style"
+                fontPath="iconfont/iconfont.ttf"
+                android:onClick="onBack"
+                android:text="@string/ic_arrow_left" />
+
+            <TextView
+                android:id="@+id/actionBarTitle"
+                style="@style/actionbar_title_style"
+                android:text="入库记录" />
+
+            <TextView
+                android:id="@+id/createStorageOrderBtn"
+                style="@style/actionbar_text_btn_style"
+                android:layout_alignParentEnd="true"
+                android:layout_alignParentRight="true"
+                android:onClick="createStorageOrder"
+                android:text="确认"
+                android:visibility="gone" />
+
+            <TextView
+                android:id="@+id/createSupplierBtn"
+                style="@style/actionbar_text_btn_style"
+                android:layout_alignParentEnd="true"
+                android:layout_alignParentRight="true"
+                android:onClick="createSupplier"
+                android:text="新增"
+                android:visibility="gone" />
+
+        </com.zhy.autolayout.AutoRelativeLayout>
+
+        <com.zhy.autolayout.AutoLinearLayout
+            android:id="@+id/fragmentLayout"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+
+
+    </com.zhy.autolayout.AutoLinearLayout>
+</layout>

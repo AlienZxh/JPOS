@@ -6,6 +6,7 @@ import android.databinding.DataBindingUtil;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.design.widget.Snackbar;
 import android.view.View;
 
 import com.hardsoftstudio.rxflux.action.RxError;
@@ -16,14 +17,21 @@ import com.j1j2.jposmvvm.R;
 import com.j1j2.jposmvvm.databinding.ActivityLanuchBinding;
 import com.j1j2.jposmvvm.features.base.BaseActivity;
 import com.j1j2.jposmvvm.features.base.JPOSApplication;
+import com.j1j2.jposmvvm.features.base.JPOSUpdateCheckCB;
 import com.j1j2.jposmvvm.features.base.Navigate;
 import com.j1j2.jposmvvm.features.base.di.modules.ActivityModule;
+import com.orhanobut.logger.Logger;
 
 import org.lzh.framework.updatepluginlib.UpdateBuilder;
+import org.lzh.framework.updatepluginlib.business.DownloadWorker;
+import org.lzh.framework.updatepluginlib.business.UpdateWorker;
+import org.lzh.framework.updatepluginlib.callback.DefaultDownloadCB;
 import org.lzh.framework.updatepluginlib.callback.UpdateCheckCB;
+import org.lzh.framework.updatepluginlib.callback.UpdateDownloadCB;
 import org.lzh.framework.updatepluginlib.model.Update;
 import org.lzh.framework.updatepluginlib.strategy.UpdateStrategy;
 
+import java.io.File;
 import java.util.List;
 
 import javax.inject.Inject;
@@ -38,6 +46,7 @@ public class LanuchActivity extends BaseActivity {
     @Inject
     Navigate navigate;
 
+
     @Override
     protected void setupActivityComponent() {
         JPOSApplication.get(this).getAppComponent().plus(new ActivityModule(this)).inject(this);
@@ -48,50 +57,26 @@ public class LanuchActivity extends BaseActivity {
         setupActivityComponent();
         super.onCreate(savedInstanceState);
 
-//        UpdateBuilder.create()
-//                .strategy(new UpdateStrategy() {
-//                    @Override
-//                    public boolean isShowUpdateDialog(Update update) {
-//                        return true;
-//                    }
-//
-//                    @Override
-//                    public boolean isAutoInstall() {
-//                        return false;
-//                    }
-//
-//                    @Override
-//                    public boolean isShowInstallDialog() {
-//                        return false;
-//                    }
-//
-//                    @Override
-//                    public boolean isShowDownloadDialog() {
-//                        return false;
-//                    }
-//                })
-//                .checkCB(new UpdateCheckCB() {
-//                    @Override
-//                    public void hasUpdate(Update update) {
-//
-//                    }
-//
-//                    @Override
-//                    public void noUpdate() {
-//                        navigate.navigateToLoginActivity(LanuchActivity.this, null, true);
-//                    }
-//
-//                    @Override
-//                    public void onCheckError(int code, String errorMsg) {
-//                        navigate.navigateToLoginActivity(LanuchActivity.this, null, true);
-//                    }
-//
-//                    @Override
-//                    public void onUserCancel() {
-//                        navigate.navigateToLoginActivity(LanuchActivity.this, null, true);
-//                    }
-//                })
-//                .check(this);
+        UpdateBuilder.create()
+                .strategy(new UpdateStrategy() {
+                    @Override
+                    public boolean isShowUpdateDialog(Update update) {
+                        return true;
+                    }
+
+                    @Override
+                    public boolean isAutoInstall() {
+                        return false;
+                    }
+
+
+                    @Override
+                    public boolean isShowDownloadDialog() {
+                        return true;
+                    }
+                })
+                .checkCB(new JPOSUpdateCheckCB(this, navigate))
+                .check(this);
     }
 
     @Override
@@ -101,7 +86,7 @@ public class LanuchActivity extends BaseActivity {
 
     @Override
     protected void initViews() {
-        navigate.navigateToLoginActivity(LanuchActivity.this, null, true);
+//        navigate.navigateToLoginActivity(LanuchActivity.this, null, true);
     }
 
     @SuppressLint("InlinedApi")

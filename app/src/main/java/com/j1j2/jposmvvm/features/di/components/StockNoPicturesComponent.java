@@ -3,8 +3,10 @@ package com.j1j2.jposmvvm.features.di.components;
 import com.j1j2.jposmvvm.features.base.di.ActivityScope;
 import com.j1j2.jposmvvm.features.di.modules.StockNoPicturesModule;
 import com.j1j2.jposmvvm.features.ui.StockNoPicturesActivity;
-import com.j1j2.jposmvvm.features.ui.StockNoPicturesSearchFragment;
+import com.j1j2.jposmvvm.features.ui.StockProductSearchFragment;
 import com.j1j2.jposmvvm.features.ui.StockNoPicturesSortFragment;
+import com.j1j2.jposmvvm.features.ui.StockProductDetailActivity;
+import com.j1j2.jposmvvm.features.ui.StockSortActivity;
 
 import dagger.Subcomponent;
 
@@ -14,9 +16,13 @@ import dagger.Subcomponent;
 @ActivityScope
 @Subcomponent(modules = StockNoPicturesModule.class)
 public interface StockNoPicturesComponent {
+    void inject(StockSortActivity stockSortActivity);
+
     void inject(StockNoPicturesActivity stockNoPicturesActivity);
 
     void inject(StockNoPicturesSortFragment stockNoPicturesSortFragment);
 
-    void inject(StockNoPicturesSearchFragment stockNoPicturesSearchFragment);
+    void inject(StockProductSearchFragment stockProductSearchFragment);
+
+    void inject(StockProductDetailActivity stockProductDetailActivity);
 }

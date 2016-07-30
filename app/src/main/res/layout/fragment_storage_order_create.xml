@@ -1,0 +1,147 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
+
+
+    <com.zhy.autolayout.AutoLinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/colorLayoutBackground"
+        android:orientation="vertical">
+
+        <com.zhy.autolayout.AutoLinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/size_40px"
+            android:background="@drawable/item_top_bottom_divider_bg"
+            android:orientation="vertical"
+            android:paddingLeft="@dimen/size_20px"
+            android:paddingRight="@dimen/size_20px">
+
+
+            <com.zhy.autolayout.AutoLinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/size_100px"
+                android:onClick="navigateToSuppliers"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="@dimen/size_100px"
+                    android:gravity="center_vertical"
+                    android:text="供货单位："
+                    android:textColor="@color/color333333"
+                    android:textSize="@dimen/text_28px" />
+
+                <TextView
+                    android:id="@+id/supplierName"
+                    android:layout_width="0dp"
+                    android:layout_height="@dimen/size_100px"
+                    android:layout_weight="1"
+                    android:background="@color/colorTransparent"
+                    android:ellipsize="end"
+                    android:gravity="center_vertical"
+                    android:maxLines="1"
+                    android:text="请选择供应商名称"
+                    android:textColor="@color/coloraaaaaa"
+                    android:textSize="@dimen/text_28px" />
+
+                <TextView
+
+                    fontPath="iconfont/iconfont.ttf"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:gravity="center"
+                    android:paddingEnd="@dimen/size_30px"
+                    android:paddingRight="@dimen/size_30px"
+                    android:text="@string/ic_arrow_right"
+                    android:textColor="@color/coloraaaaaa"
+                    android:textSize="@dimen/text_48px" />
+            </com.zhy.autolayout.AutoLinearLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/size_1px"
+                android:background="@color/colord4d4d4" />
+
+            <com.zhy.autolayout.AutoLinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/size_100px"
+                android:onClick="showSelectTimeDialog"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="@dimen/size_100px"
+                    android:gravity="center_vertical"
+                    android:text="入库时间："
+                    android:textColor="@color/color333333"
+                    android:textSize="@dimen/text_28px" />
+
+                <TextView
+                    android:id="@+id/createTime"
+                    android:layout_width="0dp"
+                    android:layout_height="@dimen/size_100px"
+                    android:layout_weight="1"
+                    android:background="@color/colorTransparent"
+                    android:ellipsize="end"
+                    android:gravity="center_vertical"
+                    android:maxLines="1"
+                    android:text="请选择入库时间"
+                    android:textColor="@color/coloraaaaaa"
+                    android:textSize="@dimen/text_28px" />
+
+                <TextView
+                    fontPath="iconfont/iconfont.ttf"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:gravity="center"
+                    android:paddingEnd="@dimen/size_30px"
+                    android:paddingRight="@dimen/size_30px"
+                    android:text="@string/ic_arrow_right"
+                    android:textColor="@color/coloraaaaaa"
+                    android:textSize="@dimen/text_48px" />
+            </com.zhy.autolayout.AutoLinearLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/size_1px"
+                android:background="@color/colord4d4d4" />
+
+            <com.zhy.autolayout.AutoLinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/size_100px"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="@dimen/size_100px"
+                    android:gravity="center_vertical"
+                    android:text="备　　注："
+                    android:textColor="@color/color333333"
+                    android:textSize="@dimen/text_28px" />
+
+                <EditText
+                    android:id="@+id/remarkEdit"
+                    android:layout_width="0dp"
+                    android:layout_height="@dimen/size_100px"
+                    android:layout_weight="1"
+                    android:background="@color/colorTransparent"
+                    android:ellipsize="end"
+                    android:gravity="center_vertical"
+                    android:hint="请输入备注，选填"
+                    android:imeOptions="actionDone"
+                    android:inputType="text"
+                    android:maxLines="1"
+                    android:textColor="@color/color333333"
+                    android:textColorHint="@color/coloraaaaaa"
+                    android:textSize="@dimen/text_28px" />
+
+            </com.zhy.autolayout.AutoLinearLayout>
+
+
+        </com.zhy.autolayout.AutoLinearLayout>
+
+    </com.zhy.autolayout.AutoLinearLayout>
+</layout>

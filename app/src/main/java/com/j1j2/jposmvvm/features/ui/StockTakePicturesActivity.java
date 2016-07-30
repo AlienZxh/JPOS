@@ -128,6 +128,8 @@ public class StockTakePicturesActivity extends BaseActivity implements StockTake
                     case StockActions.QUERYSTOCKDETAIL:
                         WebReturn<ProductDetail> productDetailWebReturn =
                                 (WebReturn<ProductDetail>) change.getRxAction().get(Keys.PRODUCTDETAIL_WEBRETURN);
+
+
                         binding.setProductDetail(productDetailWebReturn.getDetail());
                         adapter = new StockTakePictureProductAdapter(productDetailWebReturn.getDetail().getStockImgs());
                         adapter.setListener(this);

@@ -7,10 +7,12 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import me.yokeyword.fragmentation.SupportFragment;
+
 /**
  * Created by alienzxh on 16-5-5.
  */
-public abstract class BaseFragment extends Fragment {
+public abstract class BaseFragment extends SupportFragment {
 
     protected abstract void setupActivityComponent();
 

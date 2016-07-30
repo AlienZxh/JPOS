@@ -140,6 +140,42 @@
 
         </com.j1j2.jposmvvm.common.widgets.AutoCardView>
 
+        <com.j1j2.jposmvvm.common.widgets.AutoCardView
+            android:layout_width="@dimen/size_300px"
+            android:layout_height="@dimen/size_300px"
+            android:layout_below="@id/toolbar"
+            android:layout_marginLeft="@dimen/size_56px"
+            android:layout_marginStart="@dimen/size_56px"
+            android:layout_marginTop="@dimen/size_412px"
+            android:onClick="navigateToStorage"
+            app:cardBackgroundColor="#fff87350"
+            app:cardCornerRadius="5dp">
+
+            <com.zhy.autolayout.AutoLinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:orientation="vertical">
+
+                <TextView
+                    fontPath="iconfont/iconfont.ttf"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/ic_storage"
+                    android:textColor="@color/colorWhite"
+                    android:textSize="@dimen/text_120px" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginTop="10dp"
+                    android:text="商品入库"
+                    android:textColor="#ffffff"
+                    android:textSize="@dimen/text_32px" />
+            </com.zhy.autolayout.AutoLinearLayout>
+
+        </com.j1j2.jposmvvm.common.widgets.AutoCardView>
 
     </com.zhy.autolayout.AutoRelativeLayout>
 </layout>
