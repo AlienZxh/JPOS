@@ -18,6 +18,8 @@ import com.hardsoftstudio.rxflux.dispatcher.RxViewDispatch;
 import com.hardsoftstudio.rxflux.store.RxStore;
 import com.hardsoftstudio.rxflux.store.RxStoreChange;
 import com.j1j2.jposmvvm.R;
+import com.j1j2.jposmvvm.common.constants.Constants;
+import com.j1j2.jposmvvm.common.utils.Toastor;
 import com.j1j2.jposmvvm.common.widgets.RecyclerItemClickListener;
 import com.j1j2.jposmvvm.common.widgets.recyclerviewadapter.RecyclerArrayAdapter;
 import com.j1j2.jposmvvm.common.widgets.recyclerviewchoicemode.SingleSelector;
@@ -64,6 +66,8 @@ public class StockNoPicturesSortFragment extends BaseFragment implements RxViewD
 
     @Inject
     StockActionCreator stockActionCreator;
+    @Inject
+    Toastor toastor;
     @Inject
     Navigate navigate;
 
@@ -114,7 +118,7 @@ public class StockNoPicturesSortFragment extends BaseFragment implements RxViewD
         adapter.setOnItemClickListener(new RecyclerArrayAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(int position) {
-                navigate.navigateToStockTakePicturesActivity(getActivity(), null, false, adapter.getItem(position).getStockId(), StockTakePicturesActivity.From_SORT, position);
+                navigate.navigateToStockTakePicturesActivity(getActivity(), null, false, adapter.getItem(position).getStockId(), Constants.FROM_STOCK_SORT, position);
             }
         });
 
@@ -155,7 +159,7 @@ public class StockNoPicturesSortFragment extends BaseFragment implements RxViewD
                             }
 
                         } else {
-
+                            toastor.showSingletonToast(categoryWebReturn.getErrorMessage());
                         }
                         break;
                     case StockActions.QUERYSTOCKSIFNOTFOUNDTHENCREATE:
@@ -174,11 +178,12 @@ public class StockNoPicturesSortFragment extends BaseFragment implements RxViewD
                             }
                         } else {
                             adapter.pauseMore();
+                            toastor.showSingletonToast(productsWebReturn.getErrorMessage());
                         }
                         break;
                     case StockActions.REFRESHLIST:
                         int fromType = change.getRxAction().get(Keys.REFRESHLISTFROMTYPE);
-                        if (fromType == StockTakePicturesActivity.From_SORT) {
+                        if (fromType == Constants.FROM_STOCK_SORT) {
                             int position = change.getRxAction().get(Keys.REFRESHLISTPOSITION);
                             ProductDetail productDetail = change.getRxAction().get(Keys.REFRESHLISTPRODUCTDETAIL);
                             if (!TextUtils.isEmpty(productDetail.getThumbImgUrl())) {
@@ -246,7 +251,6 @@ public class StockNoPicturesSortFragment extends BaseFragment implements RxViewD
         }
         pageIndex = 1;
         adapter.clear();
-
         stockActionCreator.queryStocksIfNotFoundThenCreate(pageIndex, "", 2
                 , categories.get(selectPosition).getParentCategoryName() == null ? "未知分类" : categories.get(selectPosition).getParentCategoryName()
                 , categories.get(selectPosition).getCategoryName() == null ? "未知分类" : categories.get(selectPosition).getCategoryName()

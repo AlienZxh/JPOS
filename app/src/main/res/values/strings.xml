@@ -2,6 +2,8 @@
     <string name="app_name">JPOS</string>
     <string name="launch_legal_statement">©2013-2016 聚一聚二版权所有</string>
 
+    <string name="logo_share_name">logoShareName</string>
+
     <string name="ic_arrow_left">&#xe61a;</string>
     <string name="ic_arrow_right">&#xe61b;</string>
 
@@ -19,6 +21,11 @@
     <string name="ic_add">&#xe609;</string>
     <string name="ic_complete">&#xe621;</string>
     <string name="ic_storage">&#xe604;</string>
+    <string name="ic_cash">&#xe608;</string>
+    <string name="ic_report">&#xe610;</string>
+    <string name="ic_stockcheck">&#xe603;</string>
+    <string name="ic_label">&#xe617;</string>
+
 
 
 </resources>

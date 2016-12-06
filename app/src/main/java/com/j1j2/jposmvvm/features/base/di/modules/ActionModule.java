@@ -3,12 +3,20 @@ package com.j1j2.jposmvvm.features.base.di.modules;
 import com.google.gson.Gson;
 import com.hardsoftstudio.rxflux.dispatcher.Dispatcher;
 import com.hardsoftstudio.rxflux.util.SubscriptionManager;
+import com.j1j2.jposmvvm.data.api.CashAPI;
+import com.j1j2.jposmvvm.data.api.PrintProductPriceLabelAPI;
+import com.j1j2.jposmvvm.data.api.SaleStatisticAPI;
 import com.j1j2.jposmvvm.data.api.ShopAPI;
 import com.j1j2.jposmvvm.data.api.StockAPI;
+import com.j1j2.jposmvvm.data.api.StockCheckAPI;
 import com.j1j2.jposmvvm.data.api.StorageAPI;
 import com.j1j2.jposmvvm.data.api.SupplierAPI;
+import com.j1j2.jposmvvm.features.actions.CashActionCreator;
+import com.j1j2.jposmvvm.features.actions.PrintProductPriceLabelActionCreator;
+import com.j1j2.jposmvvm.features.actions.SaleStatisticActionCreator;
 import com.j1j2.jposmvvm.features.actions.ShopActionCreator;
 import com.j1j2.jposmvvm.features.actions.StockActionCreator;
+import com.j1j2.jposmvvm.features.actions.StockCheckActionCreator;
 import com.j1j2.jposmvvm.features.actions.StorageActionCreator;
 import com.j1j2.jposmvvm.features.actions.SupplierActionCreator;
 
@@ -36,6 +44,12 @@ public class ActionModule {
         return retrofit.create(StockAPI.class);
     }
 
+    @Provides
+    @Singleton
+    StockCheckAPI stockCheckAPI(Retrofit retrofit) {
+        return retrofit.create(StockCheckAPI.class);
+    }
+
 
     @Provides
     @Singleton
@@ -51,6 +65,24 @@ public class ActionModule {
 
     @Provides
     @Singleton
+    CashAPI cashAPI(Retrofit retrofit) {
+        return retrofit.create(CashAPI.class);
+    }
+
+    @Provides
+    @Singleton
+    SaleStatisticAPI saleStatisticAPI(Retrofit retrofit) {
+        return retrofit.create(SaleStatisticAPI.class);
+    }
+
+    @Provides
+    @Singleton
+    PrintProductPriceLabelAPI printProductPriceLabelAPI(Retrofit retrofit) {
+        return retrofit.create(PrintProductPriceLabelAPI.class);
+    }
+
+    @Provides
+    @Singleton
     ShopActionCreator shopActionCreator(Dispatcher dispatcher, SubscriptionManager subscriptionManager, ShopAPI shopAPI) {
         return new ShopActionCreator(dispatcher, subscriptionManager, shopAPI);
     }
@@ -59,6 +91,12 @@ public class ActionModule {
     @Singleton
     StockActionCreator stockActionCreator(Dispatcher dispatcher, SubscriptionManager subscriptionManager, StockAPI stockAPI, Gson gson) {
         return new StockActionCreator(dispatcher, subscriptionManager, stockAPI, gson);
+    }
+
+    @Provides
+    @Singleton
+    StockCheckActionCreator stockCheckActionCreator(Dispatcher dispatcher, SubscriptionManager subscriptionManager, StockCheckAPI stockCheckAPI) {
+        return new StockCheckActionCreator(dispatcher, subscriptionManager, stockCheckAPI);
     }
 
 
@@ -72,5 +110,23 @@ public class ActionModule {
     @Singleton
     SupplierActionCreator supplierActionCreator(Dispatcher dispatcher, SubscriptionManager subscriptionManager, SupplierAPI supplierAPI) {
         return new SupplierActionCreator(dispatcher, subscriptionManager, supplierAPI);
+    }
+
+    @Provides
+    @Singleton
+    CashActionCreator cashActionCreator(Dispatcher dispatcher, SubscriptionManager subscriptionManager, CashAPI cashAPI) {
+        return new CashActionCreator(dispatcher, subscriptionManager, cashAPI);
+    }
+
+    @Provides
+    @Singleton
+    SaleStatisticActionCreator saleStaticActionCreator(Dispatcher dispatcher, SubscriptionManager subscriptionManager, SaleStatisticAPI saleStatisticAPI) {
+        return new SaleStatisticActionCreator(dispatcher, subscriptionManager, saleStatisticAPI);
+    }
+
+    @Provides
+    @Singleton
+    PrintProductPriceLabelActionCreator printProductPriceLabelActionCreator(Dispatcher dispatcher, SubscriptionManager subscriptionManager, PrintProductPriceLabelAPI printProductPriceLabelAPI) {
+        return new PrintProductPriceLabelActionCreator(dispatcher, subscriptionManager, printProductPriceLabelAPI);
     }
 }

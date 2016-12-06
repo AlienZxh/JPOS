@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:android="http://schemas.android.com/apk/res/android">
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
 
     <com.zhy.autolayout.AutoLinearLayout
@@ -142,6 +143,32 @@
 
 
         </com.zhy.autolayout.AutoLinearLayout>
+
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1" />
+
+        <com.dd.processbutton.iml.ActionProcessButton
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/size_80px"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginBottom="@dimen/size_200px"
+            android:layout_marginLeft="@dimen/size_20px"
+            android:layout_marginRight="@dimen/size_20px"
+            android:layout_marginTop="@dimen/size_20px"
+            android:onClick="createStorageOrder"
+            android:text="确　　认"
+            android:textColor="@color/colorWhite"
+            android:textSize="@dimen/text_32px"
+            app:pb_colorComplete="@color/blue_normal"
+            app:pb_colorNormal="@color/colorAccent"
+            app:pb_colorPressed="@color/colorAccentDark"
+            app:pb_colorProgress="@color/purple_progress"
+            app:pb_textComplete="申请成功"
+            app:pb_textError="申请失败"
+            app:pb_textProgress="申请中" />
 
     </com.zhy.autolayout.AutoLinearLayout>
 </layout>

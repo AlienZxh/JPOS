@@ -22,7 +22,7 @@ import com.zhy.autolayout.utils.AutoUtils;
  * Created by alienzxh on 16-6-6.
  */
 public class CustomBinding {
-    @BindingAdapter("bind:viewState")
+    @BindingAdapter("viewState")
     public static void setViewState(View view, int viewState) {
 
         switch (viewState) {
@@ -37,7 +37,7 @@ public class CustomBinding {
         }
     }
 
-    @BindingAdapter({"bind:viewState", "bind:uiViewModel"})
+    @BindingAdapter({"viewState", "uiViewModel"})
     public static void setActionProcessButtonState(ActionProcessButton view, int viewState, UIViewModel uiViewModel) {
         if (uiViewModel == null)
             return;
@@ -59,14 +59,14 @@ public class CustomBinding {
         }
     }
 
-    @BindingAdapter({"bind:viewState", "bind:uiViewModel"})
+    @BindingAdapter({"viewState", "uiViewModel"})
     public static void setViewState(LoadingLayout view, int viewState, UIViewModel uiViewModel) {
         if (uiViewModel == null)
             return;
         view.setUIViewModel(uiViewModel);
     }
 
-    @BindingAdapter("bind:viewState")
+    @BindingAdapter("viewState")
     public static void setViewState(LoadingLayout view, int viewState) {
         switch (viewState) {
             case UIState.STATE_ERROR:
@@ -83,14 +83,14 @@ public class CustomBinding {
         }
     }
 
-    @BindingAdapter("bind:errorMessage")
+    @BindingAdapter("errorMessage")
     public static void setErrorMessage(LoadingLayout view, String errorMessage) {
         if (!TextUtils.isEmpty(errorMessage)) {
             view.setErrorText(errorMessage);
         }
     }
 
-    @BindingAdapter("bind:loadingMessage")
+    @BindingAdapter("loadingMessage")
     public static void setLoadingMessage(LoadingLayout view, String loadingMessage) {
         if (!TextUtils.isEmpty(loadingMessage)) {
             view.setLoadingText(loadingMessage);
@@ -98,7 +98,7 @@ public class CustomBinding {
     }
 
 
-    @BindingAdapter({"bind:imgUrl", "bind:imgWidth", "bind:imgHeight"})
+    @BindingAdapter({"imgUrl", "imgWidth", "imgHeight"})
     public static void setImgUrl(SimpleDraweeView view, String imgUrl, int width, int height) {
         Uri uri = Uri.parse(imgUrl == null ? "" : imgUrl);
         ImageRequest request = ImageRequestBuilder.newBuilderWithSource(uri)

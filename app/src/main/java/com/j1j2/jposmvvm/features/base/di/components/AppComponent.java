@@ -1,6 +1,6 @@
 package com.j1j2.jposmvvm.features.base.di.components;
 
-import com.j1j2.jposmvvm.features.base.JPOSApplication;
+import com.j1j2.jposmvvm.JPOSApplication;
 import com.j1j2.jposmvvm.features.base.di.modules.ActionModule;
 import com.j1j2.jposmvvm.features.base.di.modules.ActivityModule;
 import com.j1j2.jposmvvm.features.base.di.modules.AppModule;

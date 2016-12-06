@@ -20,6 +20,7 @@ public interface Keys {
     String STORAGEORDERS_WEBRETURN = "storageOrdersWebReturn";
     String CREATEUPDATESTORAGEORDER_WEBRETURN = "createUpdateStorageOrderWebReturn";
     String QUERYSTOCKS_WEBRETURN = "queryStocksWebReturn";
+    String SCANSTOCKS_WEBRETURN = "scanStocksWebReturn";
     String CREATEORUPDATESTOREAGEORDERDETAILITEM_ISREFRESH = "createOrUpdateStoreageOrderDetailItemIsRefresh";
     String CREATEORUPDATESTOREAGEORDERDETAILITEM_WEBRETURN = "createOrUpdateStoreageOrderDetailItemWebReturn";
     String REMOVESTOREAGEORDERDETAILITEM_WEBRETURN = "removeStoreageOrderDetailItemWebReturn";
@@ -28,4 +29,31 @@ public interface Keys {
 
     String SUPPLIERS_WEBRETURN = "suppliersWebReturn";
     String ADDSUPPLIER_WEBRETURN = "addSuppliersWebReturn";
+
+
+    String PUZZYQUERYSCAN_WEBRETURN = "puzzyQueryScanWebReturn";
+    String SCANQUERY_WEBRETURN = "scanQueryWebReturn";
+    String QUERYSALEORDERNO_WEBRETURN = "querySaleOrderNOWebReturn";
+    String SETTLESALEORDER_WEBRETURN = "settleSaleOrderWebReturn";
+
+    String LOADSALESTATICBYMONTH_WEBRETURN = "loadSaleStaticByMonthWebReturn";
+    String LOADSALESTATICINMONTHBYCATEGORY_WEBRETURN = "loadSaleStaticInMonthByCategory";
+    String LOADSALEORDERS_WEBRETURN = "loadSaleOrdersWebReturn";
+    String QUERYSALEORDERDETAILS_WEBRETURN = "querySaleOrderDetailsWebReturn";
+
+    String QUERYSTOCKCHECKORDERS_WEBRETURN = "queryStockCheckOrdersWebReturn";
+    String CREATESTOCKCHECKORDER_WEBRETURN = "createStockCheckOrderWebReturn";
+    String QUERYSTOCKCHECKORDERDETAILS_WEBRETURN = "queryStockCheckOrderDetailsWebReturn";
+    String QUERYCHECKSTOCKS_WEBRETURN = "queryStocksWebReturn";
+    String CREATEORUPDATESTOCKCHECKITEM_WEBRETURN = "createOrUpdateStockCheckItemWebReturn";
+
+
+    String CREATEPRODUCTPRICELABELORDER_WEBRETUN = "createProductPriceLabelOrderWebReturn";
+    String QUERYPRODUCTPRICELABELORDERS_WEBRETURN = "queryProductPriceLabelOrdersWebReturn";
+    String QUERYPRODUCTINPRINTPRICELABEL_WEBRETURN = "queryProductInPrintPriceLabelWebReturn";
+    String QUERYPRINTPRICELABELORDERDETAILS_WEBRETURN = "queryPrintPriceLabelOrderDetailsWebReturn";
+    String CREATEPRINTPRICELABELPRODUCT_WEBRETURN = "createPrintPriceLabelProductWebReturn";
+    String REMOVEPRINTPRICELABELPRDOUCT_WEBRETURN = "removePrintPriceLabelPrdouctWebReturn";
+
+    String PRINTPRICELABELSCANSTOCK_WEBRETURN = "printPriceLabelScanStockWebReturn";
 }

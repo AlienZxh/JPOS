@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <com.zhy.autolayout.AutoLinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/colorLayoutBackground"
+        android:orientation="vertical">
+
+        <com.zhy.autolayout.AutoRelativeLayout
+            android:id="@+id/toolbar"
+            style="@style/actionbar_layout_style"
+            android:orientation="horizontal">
+
+            <TextView
+                style="@style/actionbar_icon_btn_style"
+                fontPath="iconfont/iconfont.ttf"
+                android:onClick="onBack"
+                android:text="@string/ic_arrow_left" />
+
+            <TextView
+                style="@style/actionbar_title_style"
+                android:text="销售单" />
+
+        </com.zhy.autolayout.AutoRelativeLayout>
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/detail"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+
+
+    </com.zhy.autolayout.AutoLinearLayout>
+</layout>

@@ -8,7 +8,7 @@ import com.j1j2.jposmvvm.data.model.ShopInfo;
 import com.j1j2.jposmvvm.data.model.WebReturn;
 import com.j1j2.jposmvvm.features.actions.Keys;
 import com.j1j2.jposmvvm.features.actions.ShopActions;
-import com.j1j2.jposmvvm.features.base.JPOSApplication;
+import com.j1j2.jposmvvm.JPOSApplication;
 
 import java.util.Date;
 
@@ -65,6 +65,7 @@ public class ShopStore extends RxStore implements ShopStoreInterface {
                 }
 
                 break;
+
             default: // IMPORTANT if we don't modify the store just ignore
                 return;
         }

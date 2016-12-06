@@ -17,12 +17,16 @@ import com.hardsoftstudio.rxflux.dispatcher.RxViewDispatch;
 import com.hardsoftstudio.rxflux.store.RxStore;
 import com.hardsoftstudio.rxflux.store.RxStoreChange;
 import com.j1j2.jposmvvm.R;
+import com.j1j2.jposmvvm.common.constants.Constants;
 import com.j1j2.jposmvvm.common.utils.Toastor;
 import com.j1j2.jposmvvm.common.widgets.RecyclerItemClickListener;
 import com.j1j2.jposmvvm.common.widgets.recyclerviewadapter.RecyclerArrayAdapter;
+import com.j1j2.jposmvvm.data.model.CashPuzzyQueryStock;
 import com.j1j2.jposmvvm.data.model.PageManager;
+import com.j1j2.jposmvvm.data.model.ProductDetail;
 import com.j1j2.jposmvvm.data.model.StorageOrderItem;
 import com.j1j2.jposmvvm.data.model.StorageStock;
+import com.j1j2.jposmvvm.data.model.StorageStockDetail;
 import com.j1j2.jposmvvm.data.model.WebReturn;
 import com.j1j2.jposmvvm.databinding.FragmentStorageSearchBinding;
 import com.j1j2.jposmvvm.features.actions.Keys;
@@ -30,6 +34,7 @@ import com.j1j2.jposmvvm.features.actions.StorageActionCreator;
 import com.j1j2.jposmvvm.features.actions.StorageActions;
 import com.j1j2.jposmvvm.features.adapter.StorageSearchAdapter;
 import com.j1j2.jposmvvm.features.base.BaseFragment;
+import com.j1j2.jposmvvm.features.base.Navigate;
 import com.j1j2.jposmvvm.features.base.di.HasComponent;
 import com.j1j2.jposmvvm.features.di.components.StorageComponent;
 import com.j1j2.jposmvvm.features.stores.StorageStore;
@@ -53,6 +58,9 @@ public class StorageSearchFragment extends BaseFragment implements RxViewDispatc
         void onSearchFinish();
 
         List<Integer> getStockIdList();
+
+        void onSelectStockAction(StorageStock storageStock);
+
     }
 
     private StorageSearchFragmentListener listener;
@@ -65,6 +73,8 @@ public class StorageSearchFragment extends BaseFragment implements RxViewDispatc
     StorageStore storageStore;
     @Inject
     Toastor toastor;
+    @Inject
+    Navigate navigate;
 
     StorageSearchAdapter adapter;
 
@@ -145,15 +155,35 @@ public class StorageSearchFragment extends BaseFragment implements RxViewDispatc
                             pageCount = productsWebReturn.getDetail().getPageCount();
                             if (productsWebReturn.getDetail().getTotalCount() <= 0) {
                                 binding.stockList.showEmpty();
-                            } else if (pageIndex == pageCount) {
-                                adapter.addAll(productsWebReturn.getDetail().getList());
-                                adapter.stopMore();
+                            } else if (productsWebReturn.getDetail().getTotalCount() == 1) {
+                                onSelectStockAction(productsWebReturn.getDetail().getList().get(0));
                             } else {
-                                adapter.addAll(productsWebReturn.getDetail().getList());
-                                pageIndex++;
+                                if (pageIndex == pageCount) {
+                                    adapter.addAll(productsWebReturn.getDetail().getList());
+                                    adapter.stopMore();
+                                } else {
+                                    adapter.addAll(productsWebReturn.getDetail().getList());
+                                    pageIndex++;
+                                }
                             }
                         } else {
                             adapter.pauseMore();
+                            toastor.showSingletonToast(productsWebReturn.getErrorMessage());
+                        }
+                        break;
+                    case StorageActions.REFRESHLISTITEM:
+                        int fromType = change.getRxAction().get(Keys.REFRESHLISTFROMTYPE);
+                        if (fromType == Constants.FROM_STORAGE_SEARCH) {
+                            int position = change.getRxAction().get(Keys.REFRESHLISTPOSITION);
+                            ProductDetail productDetail = change.getRxAction().get(Keys.REFRESHLISTPRODUCTDETAIL);
+                            StorageStock storageStock = adapter.getItem(position);
+                            storageStock.setUnit(productDetail.getUnit());
+                            storageStock.setBarCode(productDetail.getBarCode());
+                            storageStock.setImg(productDetail.getSmallImgUrl());
+                            storageStock.setSmallImgUrl(productDetail.getSmallImgUrl());
+                            storageStock.setLastCost(productDetail.getLastCost());
+                            storageStock.setSpec(productDetail.getSpec());
+                            adapter.notifyItemChanged(position);
                         }
                         break;
 
@@ -190,13 +220,15 @@ public class StorageSearchFragment extends BaseFragment implements RxViewDispatc
     }
 
     @Override
-    public void onSelectStockAction(int position, StorageStock storageStock) {
-        StorageOrderItem storageOrderItem = new StorageOrderItem();
-        storageOrderItem.setOrderId(listener.getOrderId());
-        storageOrderItem.setStockId(storageStock.getStockId());
-        storageOrderItem.setQuantity(0);
-        storageActionCreator.createOrUpdateStoreageOrderDetailItem(storageOrderItem, true);
+    public void onSelectStockAction(StorageStock storageStock) {
+
+        listener.onSelectStockAction(storageStock);
         onBackPressedSupport();
+    }
+
+    @Override
+    public void onItemClickAction(int position, StorageStock storageStock) {
+        navigate.navigateToStockProductDetailActivity(getActivity(), null, false, storageStock.getStockId(), false, Constants.FROM_STORAGE_SEARCH, position, 0, "");
     }
 
     @Override

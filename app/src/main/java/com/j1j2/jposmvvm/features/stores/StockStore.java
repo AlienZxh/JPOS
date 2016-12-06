@@ -43,11 +43,6 @@ public class StockStore extends RxStore implements StockStoreInterface {
     public void onRxAction(RxAction action) {
         switch (action.getType()) {
             case StockActions.QUERYSTOCKCATEGORY:
-                WebReturn<List<TopCategory>> userInfoWebReturn = (WebReturn<List<TopCategory>>) action.get(Keys.CATEGORY_WEBRETURN);
-                if (userInfoWebReturn.isValue()) {
-                    topCategorys = userInfoWebReturn.getDetail();
-                }
-
                 break;
             case StockActions.QUERYSTOCKSIFNOTFOUNDTHENCREATE:
                 break;
@@ -69,8 +64,4 @@ public class StockStore extends RxStore implements StockStoreInterface {
         postChange(new RxStoreChange(ID, action));
     }
 
-    @Override
-    public List<TopCategory> getStockCategory() {
-        return this.topCategorys;
-    }
 }

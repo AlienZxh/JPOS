@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+
+        <import type="com.zhy.autolayout.utils.AutoUtils" />
+        <variable
+            name="mUIViewModel"
+            type="com.j1j2.jposmvvm.features.viewmodel.UIViewModel" />
+
+    </data>
+
+    <com.zhy.autolayout.AutoLinearLayout
+        android:id="@+id/root_layout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/colorLayoutBackground"
+        android:fitsSystemWindows="true"
+        android:orientation="vertical">
+
+        <com.zhy.autolayout.AutoRelativeLayout
+            android:id="@+id/toolbar"
+            style="@style/actionbar_layout_style"
+            android:orientation="horizontal">
+
+            <TextView
+                style="@style/actionbar_icon_btn_style"
+                fontPath="iconfont/iconfont.ttf"
+                android:onClick="onBack"
+                android:text="@string/ic_arrow_left" />
+
+            <TextView
+                android:id="@+id/actionBarTitle"
+                style="@style/actionbar_title_style"
+                android:text="盘点记录" />
+
+        </com.zhy.autolayout.AutoRelativeLayout>
+
+        <com.zhy.autolayout.AutoLinearLayout
+
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <com.dd.processbutton.iml.ActionProcessButton
+                android:id="@+id/login_btn"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/size_80px"
+                android:layout_gravity="center_horizontal"
+                android:layout_margin="@dimen/size_20px"
+                android:onClick="createStockCheckOrder"
+                android:text="申请盘点单"
+                android:textColor="@color/colorWhite"
+                android:textSize="@dimen/text_32px"
+                app:pb_colorComplete="@color/blue_normal"
+                app:pb_colorNormal="@color/colorAccent"
+                app:pb_colorPressed="@color/colorAccentDark"
+                app:pb_colorProgress="@color/purple_progress"
+                app:pb_textComplete="申请成功"
+                app:pb_textError="申请失败"
+                app:pb_textProgress="申请中"
+                app:uiViewModel="@{mUIViewModel}"
+                app:viewState="@{mUIViewModel.uiState}" />
+
+
+            <com.jude.easyrecyclerview.EasyRecyclerView
+                android:id="@+id/storageOrderList"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                app:layout_empty="@layout/view_empty"
+                app:layout_error="@layout/view_error"
+                app:layout_progress="@layout/view_loading"
+                app:recyclerClipToPadding="false" />
+
+        </com.zhy.autolayout.AutoLinearLayout>
+
+
+    </com.zhy.autolayout.AutoLinearLayout>
+</layout>

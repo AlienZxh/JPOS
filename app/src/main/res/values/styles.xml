@@ -13,7 +13,6 @@
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
         <item name="android:windowBackground">@color/colorWhite</item>
-        <item name="android:textColorPrimary">@color/colorWhite</item>
         <item name="windowActionBar">false</item>
         <item name="windowNoTitle">true</item>
     </style>
@@ -31,7 +30,7 @@
         <item name="android:gravity">center</item>
         <item name="android:textColor">@color/colorWhite</item>
         <item name="android:textSize">@dimen/text_32px</item>
-        <item name="android:maxLength">12</item>
+        <item name="android:maxLength">18</item>
         <item name="android:ellipsize">end</item>
     </style>
 

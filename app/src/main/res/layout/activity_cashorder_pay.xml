@@ -1,0 +1,428 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <data>
+
+        <import type="android.view.View" />
+
+        <variable
+            name="orderVM"
+            type="com.j1j2.jposmvvm.features.viewmodel.SaleOrderViewModel" />
+    </data>
+
+    <com.zhy.autolayout.AutoLinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/colorLayoutBackground"
+        android:orientation="vertical">
+
+        <com.zhy.autolayout.AutoRelativeLayout
+            android:id="@+id/toolbar"
+            style="@style/actionbar_layout_style"
+            android:orientation="horizontal">
+
+            <TextView
+                style="@style/actionbar_icon_btn_style"
+                fontPath="iconfont/iconfont.ttf"
+                android:onClick="onBack"
+                android:text="@string/ic_arrow_left" />
+
+            <TextView
+                android:id="@+id/actionBarTitle"
+                style="@style/actionbar_title_style"
+                android:text="@{orderVM.payTitle}" />
+
+        </com.zhy.autolayout.AutoRelativeLayout>
+
+        <com.zhy.autolayout.AutoLinearLayout
+            android:id="@+id/contentLayout"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <com.zhy.autolayout.AutoLinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/size_20px"
+                android:layout_marginRight="@dimen/size_20px"
+                android:layout_marginTop="@dimen/size_20px"
+                android:background="@color/colorWhite"
+                android:orientation="vertical"
+                android:padding="@dimen/size_20px">
+
+                <com.zhy.autolayout.AutoLinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/size_80px"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:gravity="center_vertical"
+                        android:text="商品合计"
+                        android:textColor="@color/color333333"
+                        android:textSize="@dimen/text_32px" />
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:gravity="right|center_vertical"
+                        android:text="@{&quot;￥&quot;+orderVM.productAmount}"
+                        android:textColor="@color/color333333"
+                        android:textSize="@dimen/text_32px" />
+
+                </com.zhy.autolayout.AutoLinearLayout>
+
+
+                <com.zhy.autolayout.AutoLinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/size_80px"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:gravity="center_vertical"
+                        android:text="优惠减免"
+                        android:textColor="@color/color333333"
+                        android:textSize="@dimen/text_32px" />
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:gravity="right|center_vertical"
+                        android:text="@{&quot;￥&quot;+orderVM.saveAmount}"
+                        android:textColor="@color/color333333"
+                        android:textSize="@dimen/text_32px" />
+
+                </com.zhy.autolayout.AutoLinearLayout>
+
+                <com.j1j2.jposmvvm.common.widgets.DashLineView
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/size_2px"
+                    android:layout_marginTop="@dimen/size_20px" />
+
+                <com.zhy.autolayout.AutoLinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/size_80px"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:gravity="center_vertical"
+                        android:text="实际应收"
+                        android:textColor="@color/color333333"
+                        android:textSize="@dimen/text_32px" />
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:gravity="right|center_vertical"
+                        android:text="@{&quot;￥&quot;+orderVM.receivableAmount}"
+                        android:textColor="@color/color333333"
+                        android:textSize="@dimen/text_32px" />
+
+                </com.zhy.autolayout.AutoLinearLayout>
+
+            </com.zhy.autolayout.AutoLinearLayout>
+
+
+            <com.zhy.autolayout.AutoLinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/size_20px"
+                android:layout_marginRight="@dimen/size_20px"
+                android:layout_marginTop="@dimen/size_20px"
+                android:background="@color/colorWhite"
+                android:orientation="vertical"
+                android:padding="@dimen/size_20px"
+                android:visibility="@{orderVM.member?View.VISIBLE:View.GONE}">
+
+                <com.zhy.autolayout.AutoLinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/size_80px"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:gravity="center_vertical"
+                        android:text="会员用户"
+                        android:textColor="@color/color333333"
+                        android:textSize="@dimen/text_32px" />
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:gravity="right|center_vertical"
+                        android:text="@{orderVM.userName}"
+                        android:textColor="@color/color333333"
+                        android:textSize="@dimen/text_32px" />
+
+                </com.zhy.autolayout.AutoLinearLayout>
+
+
+                <com.zhy.autolayout.AutoLinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/size_80px"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:gravity="center_vertical"
+                        android:text="账户余额"
+                        android:textColor="@color/color333333"
+                        android:textSize="@dimen/text_32px" />
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:gravity="right|center_vertical"
+                        android:text="@{&quot;￥&quot;+orderVM.memberBalance}"
+                        android:textColor="@color/color333333"
+                        android:textSize="@dimen/text_32px" />
+
+                </com.zhy.autolayout.AutoLinearLayout>
+
+            </com.zhy.autolayout.AutoLinearLayout>
+
+            <com.zhy.autolayout.AutoLinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/size_20px"
+                android:layout_marginRight="@dimen/size_20px"
+                android:layout_marginTop="@dimen/size_20px"
+                android:background="@color/colorWhite"
+                android:orientation="vertical"
+                android:padding="@dimen/size_20px"
+                android:visibility="@{orderVM.payType==1?View.VISIBLE:View.GONE}">
+
+                <com.zhy.autolayout.AutoLinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/size_80px"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:gravity="center_vertical"
+                        android:text="收款金额"
+                        android:textColor="@color/color333333"
+                        android:textSize="@dimen/text_32px" />
+
+                    <EditText
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_marginLeft="@dimen/size_80px"
+                        android:layout_weight="1"
+                        android:background="@drawable/item_picture_conner_bg"
+                        android:hint="请输入收款金额"
+                        android:imeOptions="actionDone"
+                        android:inputType="numberDecimal"
+                        android:maxLines="1"
+                        android:paddingLeft="@dimen/size_20px"
+                        android:paddingRight="@dimen/size_20px"
+                        android:text="@={orderVM.cashAmount}"
+                        android:textColor="@color/color333333"
+                        android:textColorHint="@color/coloraaaaaa"
+                        android:textSize="@dimen/text_32px" />
+
+                </com.zhy.autolayout.AutoLinearLayout>
+
+                <com.zhy.autolayout.AutoLinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/size_80px"
+                    android:orientation="horizontal"
+                    android:visibility="@{orderVM.member?View.VISIBLE:View.GONE}">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:gravity="center_vertical"
+                        android:text="使用余额"
+                        android:textColor="@color/color333333"
+                        android:textSize="@dimen/text_32px" />
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:gravity="right|center_vertical"
+                        android:text="手机暂时无法使用余额"
+                        android:textColor="@color/color333333"
+                        android:textSize="@dimen/text_32px" />
+
+                </com.zhy.autolayout.AutoLinearLayout>
+
+                <com.zhy.autolayout.AutoLinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/size_80px"
+                    android:orientation="horizontal"
+                    android:visibility="@{orderVM.member?View.VISIBLE:View.GONE}">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:gravity="center_vertical"
+                        android:text="存入余额"
+                        android:textColor="@color/color333333"
+                        android:textSize="@dimen/text_32px" />
+
+                    <EditText
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_marginLeft="@dimen/size_80px"
+                        android:layout_weight="1"
+                        android:background="@drawable/item_picture_conner_bg"
+                        android:hint="请输入存入余额"
+                        android:imeOptions="actionDone"
+                        android:inputType="numberDecimal"
+                        android:maxLines="1"
+                        android:paddingLeft="@dimen/size_20px"
+                        android:paddingRight="@dimen/size_20px"
+                        android:text="@={orderVM.saveBalance}"
+                        android:textColor="@color/color333333"
+                        android:textColorHint="@color/coloraaaaaa"
+                        android:textSize="@dimen/text_32px" />
+
+                </com.zhy.autolayout.AutoLinearLayout>
+
+
+                <com.zhy.autolayout.AutoLinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/size_80px"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:gravity="center_vertical"
+                        android:text="找零"
+                        android:textColor="@color/color333333"
+                        android:textSize="@dimen/text_32px" />
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:gravity="right|center_vertical"
+                        android:text="@{orderVM.change}"
+                        android:textColor="@color/color333333"
+                        android:textSize="@dimen/text_32px" />
+
+                </com.zhy.autolayout.AutoLinearLayout>
+
+            </com.zhy.autolayout.AutoLinearLayout>
+
+            <com.zhy.autolayout.AutoLinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/size_20px"
+                android:layout_marginRight="@dimen/size_20px"
+                android:layout_marginTop="@dimen/size_20px"
+                android:background="@color/colorWhite"
+                android:orientation="vertical"
+                android:padding="@dimen/size_20px"
+                android:visibility="@{orderVM.payType!=1?View.VISIBLE:View.GONE}">
+
+                <com.zhy.autolayout.AutoLinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/size_80px"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:gravity="center_vertical"
+                        android:text="收款码"
+                        android:textColor="@color/color333333"
+                        android:textSize="@dimen/text_32px" />
+
+                    <com.zhy.autolayout.AutoRelativeLayout
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_marginLeft="@dimen/size_80px"
+                        android:layout_weight="1"
+                        android:background="@drawable/item_picture_conner_bg">
+
+                        <EditText
+                            android:id="@+id/payAuthCodeEdit"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:background="@color/colorTransparent"
+                            android:hint="请输入收款码"
+                            android:imeOptions="actionDone"
+                            android:inputType="text"
+                            android:maxLines="1"
+                            android:paddingLeft="@dimen/size_20px"
+                            android:paddingRight="@dimen/size_50px"
+                            android:text="@={orderVM.payAuthCode}"
+                            android:textColor="@color/color333333"
+                            android:textColorHint="@color/coloraaaaaa"
+                            android:textSize="@dimen/text_32px" />
+
+                        <TextView
+                            fontPath="iconfont/iconfont.ttf"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_alignParentEnd="true"
+                            android:layout_alignParentRight="true"
+                            android:layout_centerVertical="true"
+                            android:onClick="navigateToCaptureActivityForResult"
+                            android:paddingEnd="@dimen/size_30px"
+                            android:paddingRight="@dimen/size_30px"
+                            android:text="@string/ic_barcode"
+                            android:textColor="@color/color7b7b7b"
+                            android:textSize="@dimen/text_48px" />
+                    </com.zhy.autolayout.AutoRelativeLayout>
+
+                </com.zhy.autolayout.AutoLinearLayout>
+
+            </com.zhy.autolayout.AutoLinearLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1" />
+
+            <com.zhy.autolayout.AutoLinearLayout
+                android:id="@+id/bottomLayout"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/size_100px"
+                android:layout_alignParentBottom="true"
+                android:background="@drawable/item_top_divider_bg"
+                android:orientation="horizontal">
+
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:onClick="cancelPay"
+                    android:text="取消结账"
+                    android:textColor="@color/colorblue"
+                    android:textSize="@dimen/text_32px" />
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:onClick="confirmPay"
+                    android:text="确认结账"
+                    android:textColor="@color/colorblue"
+                    android:textSize="@dimen/text_32px" />
+
+            </com.zhy.autolayout.AutoLinearLayout>
+        </com.zhy.autolayout.AutoLinearLayout>
+
+    </com.zhy.autolayout.AutoLinearLayout>
+</layout>

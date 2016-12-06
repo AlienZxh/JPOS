@@ -109,4 +109,6 @@ public class StorageStockDetail {
     public void setImg(String Img) {
         this.Img = Img;
     }
+
+
 }

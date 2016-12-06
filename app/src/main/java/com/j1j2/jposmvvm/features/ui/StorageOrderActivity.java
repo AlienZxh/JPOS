@@ -4,6 +4,7 @@ import android.databinding.DataBindingUtil;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.design.widget.Snackbar;
 import android.view.View;
 
 import com.hardsoftstudio.rxflux.action.RxError;
@@ -15,7 +16,7 @@ import com.j1j2.jposmvvm.databinding.ActivityStorageOrderBinding;
 import com.j1j2.jposmvvm.features.actions.StorageActionCreator;
 import com.j1j2.jposmvvm.features.actions.SupplierActionCreator;
 import com.j1j2.jposmvvm.features.base.BaseActivity;
-import com.j1j2.jposmvvm.features.base.JPOSApplication;
+import com.j1j2.jposmvvm.JPOSApplication;
 import com.j1j2.jposmvvm.features.base.Navigate;
 import com.j1j2.jposmvvm.features.di.components.StorageComponent;
 import com.j1j2.jposmvvm.features.di.modules.StorageModule;
@@ -120,7 +121,8 @@ public class StorageOrderActivity extends BaseActivity implements StorageOrderFr
 
     @Override
     public void onRxError(@NonNull RxError error) {
-
+        Snackbar.make(binding.rootLayout, error.getThrowable().getMessage(), Snackbar.LENGTH_SHORT)
+                .show();
     }
 
     @Override
@@ -137,25 +139,10 @@ public class StorageOrderActivity extends BaseActivity implements StorageOrderFr
     }
 
     @Override
-    protected void onResume() {
-        super.onResume();
-        if (storageOrderCreateFragment != null)
-            dispatcher.subscribeRxView(storageOrderCreateFragment);
-    }
-
-    @Override
-    protected void onStop() {
-        super.onStop();
-        if (storageOrderCreateFragment != null)
-            dispatcher.unsubscribeRxView(storageOrderCreateFragment);
-    }
-
-    @Override
     protected void onDestroy() {
         super.onDestroy();
         if (storageOrderFragment != null)
             dispatcher.unsubscribeRxView(storageOrderFragment);
-
         if (suppliersFragment != null)
             dispatcher.unsubscribeRxView(suppliersFragment);
     }
@@ -200,4 +187,12 @@ public class StorageOrderActivity extends BaseActivity implements StorageOrderFr
         suppliersFragment.showAddSupplierDialog();
     }
 
+    @Override
+    public void onBackPressedSupport() {
+        if (getTopFragment() == storageOrderCreateFragment) {
+            storageOrderCreateFragment.onBackPressedSupport();
+        } else {
+            super.onBackPressedSupport();
+        }
+    }
 }

@@ -1,37 +1,27 @@
 package com.j1j2.jposmvvm.features.ui;
 
 import android.annotation.SuppressLint;
-import android.app.LauncherActivity;
 import android.databinding.DataBindingUtil;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
-import android.support.design.widget.Snackbar;
 import android.view.View;
 
 import com.hardsoftstudio.rxflux.action.RxError;
-import com.hardsoftstudio.rxflux.dispatcher.RxViewDispatch;
 import com.hardsoftstudio.rxflux.store.RxStore;
 import com.hardsoftstudio.rxflux.store.RxStoreChange;
 import com.j1j2.jposmvvm.R;
 import com.j1j2.jposmvvm.databinding.ActivityLanuchBinding;
 import com.j1j2.jposmvvm.features.base.BaseActivity;
-import com.j1j2.jposmvvm.features.base.JPOSApplication;
+import com.j1j2.jposmvvm.JPOSApplication;
 import com.j1j2.jposmvvm.features.base.JPOSUpdateCheckCB;
 import com.j1j2.jposmvvm.features.base.Navigate;
 import com.j1j2.jposmvvm.features.base.di.modules.ActivityModule;
-import com.orhanobut.logger.Logger;
 
 import org.lzh.framework.updatepluginlib.UpdateBuilder;
-import org.lzh.framework.updatepluginlib.business.DownloadWorker;
-import org.lzh.framework.updatepluginlib.business.UpdateWorker;
-import org.lzh.framework.updatepluginlib.callback.DefaultDownloadCB;
-import org.lzh.framework.updatepluginlib.callback.UpdateCheckCB;
-import org.lzh.framework.updatepluginlib.callback.UpdateDownloadCB;
 import org.lzh.framework.updatepluginlib.model.Update;
 import org.lzh.framework.updatepluginlib.strategy.UpdateStrategy;
 
-import java.io.File;
 import java.util.List;
 
 import javax.inject.Inject;
@@ -45,7 +35,6 @@ public class LanuchActivity extends BaseActivity {
 
     @Inject
     Navigate navigate;
-
 
     @Override
     protected void setupActivityComponent() {

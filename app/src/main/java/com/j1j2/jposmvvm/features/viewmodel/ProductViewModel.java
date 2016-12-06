@@ -1,5 +1,7 @@
 package com.j1j2.jposmvvm.features.viewmodel;
 
+import android.text.TextUtils;
+
 import com.j1j2.jposmvvm.data.model.ProductDetail;
 
 import java.text.DecimalFormat;
@@ -77,48 +79,60 @@ public class ProductViewModel {
 
 
     public String getLastCost() {
-        return String.valueOf(this.productDetail.getLastCost());
+
+        return String.valueOf(this.productDetail.getLastCost() == null ? "" : this.productDetail.getLastCost());
     }
 
     public void setLastCost(String lastCost) {
-        this.productDetail.setLastCost(Double.parseDouble(lastCost));
+        if (!TextUtils.isEmpty(lastCost))
+            this.productDetail.setLastCost(Double.parseDouble(lastCost));
     }
 
 
     public String getRetailPrice() {
-        return String.valueOf(this.productDetail.getRetailPrice());
+
+        return String.valueOf(this.productDetail.getRetailPrice() == null ? "" : this.productDetail.getRetailPrice());
     }
 
     public void setRetailPrice(String retailPrice) {
-        this.productDetail.setRetailPrice(Double.parseDouble(retailPrice));
+        if (!TextUtils.isEmpty(retailPrice))
+            this.productDetail.setRetailPrice(Double.parseDouble(retailPrice));
     }
 
 
     public String getMemberPrice() {
-        return String.valueOf(this.productDetail.getMemberPrice());
+
+        return String.valueOf(this.productDetail.getMemberPrice() == null ? "" : this.productDetail.getMemberPrice());
     }
 
     public void setMemberPrice(String memberPrice) {
-        this.productDetail.setMemberPrice(Double.parseDouble(memberPrice));
+        if (!TextUtils.isEmpty(memberPrice))
+            this.productDetail.setMemberPrice(Double.parseDouble(memberPrice));
     }
 
 
     public String getRetailPriceGrossMargin() {
-        if (this.productDetail.getLastCost() <= 0) {
+        if (this.productDetail.getRetailPrice() != null && this.productDetail.getLastCost() != null)
+            if (this.productDetail.getLastCost() <= 0) {
+                return "";
+            } else {
+                DecimalFormat decimalFormat = new DecimalFormat("0.00");
+                return decimalFormat.format(((this.productDetail.getRetailPrice() - this.productDetail.getLastCost()) / this.productDetail.getRetailPrice()) * 100) + "%";
+            }
+        else
             return "";
-        } else {
-            DecimalFormat decimalFormat = new DecimalFormat("0.00");
-            return decimalFormat.format(((this.productDetail.getRetailPrice() - this.productDetail.getLastCost()) / this.productDetail.getRetailPrice()) * 100) + "%";
-        }
     }
 
 
     public String getMemberPriceGrossMargin() {
-        if (this.productDetail.getLastCost() <= 0) {
+        if (this.productDetail.getMemberPrice() != null && this.productDetail.getLastCost() != null)
+            if (this.productDetail.getLastCost() <= 0) {
+                return "";
+            } else {
+                DecimalFormat decimalFormat = new DecimalFormat("0.00");
+                return decimalFormat.format(((this.productDetail.getMemberPrice() - this.productDetail.getLastCost()) / this.productDetail.getMemberPrice()) * 100) + "%";
+            }
+        else
             return "";
-        } else {
-            DecimalFormat decimalFormat = new DecimalFormat("0.00");
-            return decimalFormat.format(((this.productDetail.getMemberPrice() - this.productDetail.getLastCost()) / this.productDetail.getMemberPrice()) * 100) + "%";
-        }
     }
 }

@@ -26,11 +26,21 @@
                 android:text="库存管理" />
 
             <TextView
+                android:id="@+id/actionbarNoPicBtn"
                 style="@style/actionbar_text_btn_style"
                 android:layout_alignParentEnd="true"
                 android:layout_alignParentRight="true"
                 android:onClick="switchState"
                 android:text="无图" />
+
+            <TextView
+                android:id="@+id/actionbarNewProductBtn"
+                style="@style/actionbar_text_btn_style"
+                android:layout_alignParentEnd="true"
+                android:layout_alignParentRight="true"
+                android:onClick="createProduct"
+                android:text="新增"
+                android:visibility="gone" />
 
         </com.zhy.autolayout.AutoRelativeLayout>
 

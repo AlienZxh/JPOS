@@ -7,6 +7,7 @@ import com.hardsoftstudio.rxflux.util.SubscriptionManager;
 import com.j1j2.jposmvvm.data.api.StorageAPI;
 import com.j1j2.jposmvvm.data.model.PageManager;
 import com.j1j2.jposmvvm.data.model.Product;
+import com.j1j2.jposmvvm.data.model.ProductDetail;
 import com.j1j2.jposmvvm.data.model.StorageOrder;
 import com.j1j2.jposmvvm.data.model.StorageOrderItem;
 import com.j1j2.jposmvvm.data.model.StorageStock;
@@ -84,6 +85,27 @@ public class StorageActionCreator extends RxActionCreator implements StorageActi
                     @Override
                     public void call(WebReturn<PageManager<List<StorageStock>>> pageManagerWebReturn) {
                         action.getData().put(Keys.QUERYSTOCKS_WEBRETURN, pageManagerWebReturn);
+                        postRxAction(action);
+                    }
+                }, new Action1<Throwable>() {
+                    @Override
+                    public void call(Throwable throwable) {
+                        postError(action, throwable);
+                    }
+                }));
+    }
+
+    @Override
+    public void scanStocks(int pageIndex, String key, int orderId) {
+        final RxAction action = newRxAction(SCANSTOCKS);
+        if (hasRxAction(action)) return;
+        addRxAction(action, storageAPI.queryStocks(pageIndex, key, orderId)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Action1<WebReturn<PageManager<List<StorageStock>>>>() {
+                    @Override
+                    public void call(WebReturn<PageManager<List<StorageStock>>> pageManagerWebReturn) {
+                        action.getData().put(Keys.SCANSTOCKS_WEBRETURN, pageManagerWebReturn);
                         postRxAction(action);
                     }
                 }, new Action1<Throwable>() {
@@ -182,6 +204,15 @@ public class StorageActionCreator extends RxActionCreator implements StorageActi
     @Override
     public void refreshStorageOrders() {
         final RxAction action = newRxAction(REFRESHSTORAGEORDERS);
+        postRxAction(action);
+    }
+
+    @Override
+    public void refreshListItem(int fromType, int position, ProductDetail productDetail) {
+        final RxAction action = newRxAction(REFRESHLISTITEM);
+        action.getData().put(Keys.REFRESHLISTFROMTYPE, fromType);
+        action.getData().put(Keys.REFRESHLISTPOSITION, position);
+        action.getData().put(Keys.REFRESHLISTPRODUCTDETAIL, productDetail);
         postRxAction(action);
     }
 }

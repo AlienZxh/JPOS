@@ -1,13 +1,23 @@
 package com.j1j2.jposmvvm.features.base;
 
+import android.annotation.TargetApi;
 import android.content.Context;
+import android.os.Build;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 
 import com.hardsoftstudio.rxflux.dispatcher.RxViewDispatch;
+import com.hardsoftstudio.rxflux.store.RxStoreChange;
+import com.j1j2.jposmvvm.features.event.BarCodeEvent;
+import com.j1j2.jposmvvm.features.event.BaseEvent;
+
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
 
 import me.yokeyword.fragmentation.SupportActivity;
 import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
@@ -18,13 +28,14 @@ import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
 public abstract class BaseActivity extends SupportActivity implements RxViewDispatch {
 
 
-//    protected Fragment currentFragment;
-
     protected abstract void setupActivityComponent();
 
     protected abstract void initBinding();
 
     protected void initActionBar() {
+    }
+
+    protected void initActivityAnimations() {
     }
 
     protected abstract void initViews();
@@ -38,34 +49,30 @@ public abstract class BaseActivity extends SupportActivity implements RxViewDisp
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         initBinding();
+        initActivityAnimations();
         initActionBar();
         initViews();
     }
 
-//    protected void changeFragment(int resView, Fragment targetFragment) {
-//        if (targetFragment.equals(currentFragment)) {
-//            return;
-//        }
-//        FragmentTransaction transaction = getSupportFragmentManager()
-//                .beginTransaction();
-//        if (!targetFragment.isAdded()) {
-//            transaction.add(resView, targetFragment, targetFragment.getClass()
-//                    .getName());
-//        }
-//        if (targetFragment.isHidden()) {
-//            transaction.show(targetFragment);
-//        }
-//        if (currentFragment != null
-//                && currentFragment.isVisible()) {
-//            transaction.hide(currentFragment);
-//        }
-//        currentFragment = targetFragment;
-//        transaction.commit();
-//    }
+    @Override
+    protected void onStart() {
+        super.onStart();
+        EventBus.getDefault().register(this);
+    }
 
+    @Override
+    protected void onStop() {
+        super.onStop();
+        EventBus.getDefault().unregister(this);
+    }
+
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void onBaseEvent(BaseEvent baseEvent) {
+
+    }
 
     public void onBack(View v) {
-        onBackPressed();
+        onBackPressedSupport();
     }
 
 }

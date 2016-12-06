@@ -9,5 +9,5 @@ import java.util.List;
  */
 public interface StockStoreInterface {
 
-    List<TopCategory> getStockCategory();
+
 }

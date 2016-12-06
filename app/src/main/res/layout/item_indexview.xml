@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.j1j2.jposmvvm.common.widgets.AutoCardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/cardView"
+    android:layout_width="match_parent"
+    android:layout_margin="@dimen/size_20px"
+    android:layout_height="@dimen/size_300px"
+    app:cardBackgroundColor="#ff5194ff"
+    app:cardCornerRadius="5dp">
+
+    <com.zhy.autolayout.AutoLinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/icon"
+            fontPath="iconfont/iconfont.ttf"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/ic_stockcheck"
+            android:textColor="@color/colorWhite"
+            android:textSize="@dimen/text_120px" />
+
+        <TextView
+            android:id="@+id/text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="10dp"
+            android:text="库存盘点"
+            android:textColor="#ffffff"
+            android:textSize="@dimen/text_32px" />
+    </com.zhy.autolayout.AutoLinearLayout>
+
+</com.j1j2.jposmvvm.common.widgets.AutoCardView>
+

@@ -14,6 +14,7 @@ public class LoginBody {
     private String Account;
     private String UserName;
     private String Password;
+    private int LoginTerminalType = 2;
 
 
     public void setAccount(String Account) {
@@ -40,12 +41,11 @@ public class LoginBody {
         return Password;
     }
 
-    @Override
-    public String toString() {
-        return "LoginBody{" +
-                "Account='" + Account + '\'' +
-                ", UserName='" + UserName + '\'' +
-                ", Password='" + Password + '\'' +
-                '}';
+    public int getLoginTerminalType() {
+        return LoginTerminalType;
+    }
+
+    public void setLoginTerminalType(int loginTerminalType) {
+        LoginTerminalType = loginTerminalType;
     }
 }

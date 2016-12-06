@@ -1,0 +1,145 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:fresco="http://schemas.android.com/apk/res-auto">
+
+    <data>
+
+        <variable
+            name="member"
+            type="com.j1j2.jposmvvm.data.model.CashPuzzyQueryUser" />
+    </data>
+
+    <com.zhy.autolayout.AutoLinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/colorLayoutBackground"
+        android:orientation="vertical">
+
+        <com.zhy.autolayout.AutoRelativeLayout
+            android:id="@+id/toolbar"
+            style="@style/actionbar_layout_style"
+            android:orientation="horizontal">
+
+            <TextView
+                style="@style/actionbar_icon_btn_style"
+                fontPath="iconfont/iconfont.ttf"
+                android:onClick="onBack"
+                android:text="@string/ic_arrow_left" />
+
+            <TextView
+                android:id="@+id/actionBarTitle"
+                style="@style/actionbar_title_style"
+                android:text="会员信息" />
+
+        </com.zhy.autolayout.AutoRelativeLayout>
+
+        <com.zhy.autolayout.AutoLinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/size_20px"
+            android:background="@color/colorWhite"
+            android:orientation="vertical">
+
+            <com.zhy.autolayout.AutoLinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <com.facebook.drawee.view.SimpleDraweeView
+                    android:id="@+id/productImg"
+                    android:layout_width="@dimen/size_200px"
+                    android:layout_height="@dimen/size_200px"
+                    android:layout_margin="@dimen/size_20px"
+                    app:layout_auto_basewidth="height"
+                    fresco:failureImage="@drawable/img_loaderror"
+                    fresco:placeholderImage="@drawable/img_loading"
+                    fresco:roundedCornerRadius="1dp"
+                    fresco:roundingBorderColor="@color/colord4d4d4"
+                    fresco:roundingBorderWidth="@dimen/size_1px" />
+
+                <com.zhy.autolayout.AutoLinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/size_200px"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:id="@+id/memberName"
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/size_100px"
+                        android:gravity="center_vertical"
+                        android:text="@{member.name}"
+                        android:textColor="@color/color333333"
+                        android:textSize="@dimen/text_32px" />
+
+
+                    <TextView
+                        android:id="@+id/memberType"
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/size_100px"
+                        android:gravity="center_vertical"
+                        android:text="普通会员"
+                        android:textColor="@color/color333333"
+                        android:textSize="@dimen/text_32px" />
+
+                </com.zhy.autolayout.AutoLinearLayout>
+            </com.zhy.autolayout.AutoLinearLayout>
+
+
+            <TextView
+                android:id="@+id/memberMobile"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/size_20px"
+                android:layout_marginRight="@dimen/size_20px"
+                android:text="@{&quot;联系电话：&quot;+member.mobile}"
+                android:textColor="@color/color333333"
+                android:textSize="@dimen/text_32px" />
+
+            <TextView
+                android:id="@+id/memberPoint"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/size_20px"
+                android:layout_marginRight="@dimen/size_20px"
+                android:layout_marginTop="@dimen/size_20px"
+                android:text="@{&quot;会员积分：&quot;+member.points}"
+                android:textColor="@color/color333333"
+                android:textSize="@dimen/text_32px" />
+
+            <TextView
+                android:id="@+id/memberBalance"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/size_20px"
+                android:layout_marginRight="@dimen/size_20px"
+                android:layout_marginTop="@dimen/size_20px"
+                android:text="@{&quot;会员余额：&quot;+member.balance}"
+                android:textColor="@color/color333333"
+                android:textSize="@dimen/text_32px" />
+
+            <TextView
+                android:id="@+id/memberCostSum"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/size_20px"
+                android:layout_marginRight="@dimen/size_20px"
+                android:layout_marginTop="@dimen/size_20px"
+                android:text="@{&quot;累计消费：&quot;+member.costSum}"
+                android:textColor="@color/color333333"
+                android:textSize="@dimen/text_32px" />
+
+            <TextView
+                android:id="@+id/memberSaveSum"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/size_20px"
+                android:layout_marginLeft="@dimen/size_20px"
+                android:layout_marginRight="@dimen/size_20px"
+                android:layout_marginTop="@dimen/size_20px"
+                android:text="@{&quot;累计节省：&quot;+member.saveSum}"
+                android:textColor="@color/color333333"
+                android:textSize="@dimen/text_32px" />
+        </com.zhy.autolayout.AutoLinearLayout>
+    </com.zhy.autolayout.AutoLinearLayout>
+</layout>

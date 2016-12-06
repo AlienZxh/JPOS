@@ -16,13 +16,14 @@ import com.hardsoftstudio.rxflux.util.SubscriptionManager;
 import com.j1j2.jposmvvm.BuildConfig;
 import com.j1j2.jposmvvm.common.utils.TinyDB;
 import com.j1j2.jposmvvm.common.utils.Toastor;
-import com.j1j2.jposmvvm.data.model.StorageOrder;
 import com.j1j2.jposmvvm.data.model.WebReturn;
+import com.j1j2.jposmvvm.data.model.serializertypeadapter.CashPuzzyQueryStockSerializer;
+import com.j1j2.jposmvvm.data.model.serializertypeadapter.CashPuzzyQueryUserSerializer;
 import com.j1j2.jposmvvm.data.model.serializertypeadapter.ShopInfoSerializer;
 import com.j1j2.jposmvvm.data.model.serializertypeadapter.StorageOrderSerializer;
 import com.j1j2.jposmvvm.data.model.serializertypeadapter.UpdateDeserializer;
 import com.j1j2.jposmvvm.data.model.serializertypeadapter.UpdateWebReturnDeserializer;
-import com.j1j2.jposmvvm.features.base.JPOSApplication;
+import com.j1j2.jposmvvm.JPOSApplication;
 import com.j1j2.jposmvvm.features.base.Navigate;
 import com.orhanobut.logger.Logger;
 
@@ -36,8 +37,11 @@ import javax.inject.Singleton;
 
 import dagger.Module;
 import dagger.Provides;
+import io.realm.CashPuzzyQueryStockRealmProxy;
+import io.realm.CashPuzzyQueryUserRealmProxy;
 import io.realm.RealmObject;
 import io.realm.ShopInfoRealmProxy;
+import io.realm.StorageOrderRealmProxy;
 import okhttp3.Cookie;
 import okhttp3.CookieJar;
 import okhttp3.HttpUrl;
@@ -101,8 +105,10 @@ public class AppModule {
                         return false;
                     }
                 })
-                .registerTypeAdapter(StorageOrder.class,new StorageOrderSerializer())
+                .registerTypeAdapter(CashPuzzyQueryUserRealmProxy.class, new CashPuzzyQueryUserSerializer())
+                .registerTypeAdapter(StorageOrderRealmProxy.class, new StorageOrderSerializer())
                 .registerTypeAdapter(ShopInfoRealmProxy.class, new ShopInfoSerializer())
+                .registerTypeAdapter(CashPuzzyQueryStockRealmProxy.class, new CashPuzzyQueryStockSerializer())
                 .registerTypeAdapter(Update.class, new UpdateDeserializer())
                 .registerTypeAdapter(new TypeToken<WebReturn<Update>>() {
                 }.getType(), new UpdateWebReturnDeserializer())

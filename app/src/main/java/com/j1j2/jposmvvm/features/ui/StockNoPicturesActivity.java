@@ -20,7 +20,7 @@ import com.j1j2.jposmvvm.common.constants.UIState;
 import com.j1j2.jposmvvm.databinding.ActivityStockNopicturesBinding;
 import com.j1j2.jposmvvm.features.actions.StockActionCreator;
 import com.j1j2.jposmvvm.features.base.BaseActivity;
-import com.j1j2.jposmvvm.features.base.JPOSApplication;
+import com.j1j2.jposmvvm.JPOSApplication;
 import com.j1j2.jposmvvm.features.base.Navigate;
 import com.j1j2.jposmvvm.features.di.components.StockNoPicturesComponent;
 import com.j1j2.jposmvvm.features.di.modules.StockNoPicturesModule;
@@ -211,6 +211,12 @@ public class StockNoPicturesActivity extends BaseActivity implements StockNoPict
         binding.editSearch.setText("");
         binding.editSearch.clearFocus();
     }
+
+    @Override
+    public void showSearchActionBar() {
+
+    }
+
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {

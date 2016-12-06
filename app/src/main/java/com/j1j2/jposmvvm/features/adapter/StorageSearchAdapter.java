@@ -16,6 +16,7 @@ import com.j1j2.jposmvvm.R;
 import com.j1j2.jposmvvm.common.widgets.recyclerviewadapter.BaseViewHolder;
 import com.j1j2.jposmvvm.common.widgets.recyclerviewadapter.RecyclerArrayAdapter;
 import com.j1j2.jposmvvm.data.model.StorageStock;
+import com.zhy.autolayout.AutoLinearLayout;
 import com.zhy.autolayout.utils.AutoUtils;
 
 import java.util.List;
@@ -28,7 +29,9 @@ public class StorageSearchAdapter extends RecyclerArrayAdapter<StorageStock> {
     private List<Integer> stockIds;
 
     public interface StorageSearchAdapterListener {
-        void onSelectStockAction(int position, StorageStock storageStock);
+        void onSelectStockAction( StorageStock storageStock);
+
+        void onItemClickAction(int position, StorageStock storageStock);
     }
 
     private StorageSearchAdapterListener storageSearchAdapterListener;
@@ -54,6 +57,7 @@ public class StorageSearchAdapter extends RecyclerArrayAdapter<StorageStock> {
 
     public class StorageSearchViewHolder extends BaseViewHolder<StorageStock> {
 
+        private AutoLinearLayout layout;
 
         private SimpleDraweeView productImg;
         private TextView productName;
@@ -65,7 +69,7 @@ public class StorageSearchAdapter extends RecyclerArrayAdapter<StorageStock> {
         public StorageSearchViewHolder(ViewGroup parent) {
             super(parent, R.layout.item_storage_search);
 
-
+            layout = $(R.id.layout);
             productImg = $(R.id.productImg);
             productName = $(R.id.productName);
             productUnit = $(R.id.productUnit);
@@ -77,6 +81,14 @@ public class StorageSearchAdapter extends RecyclerArrayAdapter<StorageStock> {
         @Override
         public void setData(final StorageStock data) {
             super.setData(data);
+            layout.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    if (storageSearchAdapterListener != null)
+                        storageSearchAdapterListener.onItemClickAction(getAdapterPosition(), data);
+                }
+            });
+            //_________________________________________
             Uri uri = Uri.parse(data.getImg() == null ? "" : data.getImg());
             ResizeOptions resizeOptions;
             ImageRequest request = ImageRequestBuilder.newBuilderWithSource(uri)
@@ -103,7 +115,7 @@ public class StorageSearchAdapter extends RecyclerArrayAdapter<StorageStock> {
                     @Override
                     public void onClick(View v) {
                         if (storageSearchAdapterListener != null)
-                            storageSearchAdapterListener.onSelectStockAction(getAdapterPosition(), data);
+                            storageSearchAdapterListener.onSelectStockAction( data);
                     }
                 });
             }

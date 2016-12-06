@@ -11,13 +11,10 @@ import android.view.View;
 
 import com.hardsoftstudio.rxflux.action.RxError;
 import com.hardsoftstudio.rxflux.dispatcher.Dispatcher;
-import com.hardsoftstudio.rxflux.dispatcher.RxViewDispatch;
 import com.hardsoftstudio.rxflux.store.RxStore;
 import com.hardsoftstudio.rxflux.store.RxStoreChange;
 import com.j1j2.jposmvvm.R;
 import com.j1j2.jposmvvm.common.constants.UIState;
-import com.j1j2.jposmvvm.data.model.PageManager;
-import com.j1j2.jposmvvm.data.model.Product;
 import com.j1j2.jposmvvm.data.model.ProductDetail;
 import com.j1j2.jposmvvm.data.model.StockImg;
 import com.j1j2.jposmvvm.data.model.WebReturn;
@@ -27,14 +24,13 @@ import com.j1j2.jposmvvm.features.actions.StockActionCreator;
 import com.j1j2.jposmvvm.features.actions.StockActions;
 import com.j1j2.jposmvvm.features.adapter.StockTakePictureProductAdapter;
 import com.j1j2.jposmvvm.features.base.BaseActivity;
-import com.j1j2.jposmvvm.features.base.JPOSApplication;
+import com.j1j2.jposmvvm.JPOSApplication;
 import com.j1j2.jposmvvm.features.base.Navigate;
 import com.j1j2.jposmvvm.features.di.modules.StockTakePicturesModule;
 import com.j1j2.jposmvvm.features.stores.StockStore;
 import com.j1j2.jposmvvm.features.viewmodel.UIViewModel;
 import com.yatatsu.autobundle.AutoBundleField;
 
-import java.util.Collections;
 import java.util.List;
 
 import javax.inject.Inject;
@@ -49,8 +45,6 @@ public class StockTakePicturesActivity extends BaseActivity implements StockTake
     private final int REQUEST_CODE_CAMERA = 1000;
     private final int REQUEST_CODE_GALLERY = 1001;
 
-    public static final int From_SORT = 9;
-    public static final int From_SEARCH = 99;
 
     ActivityStockTakepicturesBinding binding;
 

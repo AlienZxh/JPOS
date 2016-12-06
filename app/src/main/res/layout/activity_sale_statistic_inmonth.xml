@@ -1,0 +1,247 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <data>
+
+        <variable
+            name="saleVM"
+            type="com.j1j2.jposmvvm.features.viewmodel.SaleStatisticViewModel" />
+    </data>
+
+    <com.zhy.autolayout.AutoLinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/colorLayoutBackground"
+        android:orientation="vertical">
+
+        <com.zhy.autolayout.AutoRelativeLayout
+            android:id="@+id/toolbar"
+            style="@style/actionbar_layout_style"
+            android:orientation="horizontal">
+
+            <TextView
+                style="@style/actionbar_icon_btn_style"
+                fontPath="iconfont/iconfont.ttf"
+                android:onClick="onBack"
+                android:text="@string/ic_arrow_left" />
+
+            <TextView
+                android:id="@+id/action_bar_title"
+                style="@style/actionbar_title_style" />
+
+            <TextView
+                style="@style/actionbar_text_btn_style"
+                android:layout_alignParentEnd="true"
+                android:layout_alignParentRight="true"
+                android:onClick="timePick"
+                android:text="日期" />
+
+        </com.zhy.autolayout.AutoRelativeLayout>
+
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <com.zhy.autolayout.AutoLinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical">
+
+                <com.zhy.autolayout.AutoLinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/size_480px"
+                    android:layout_marginLeft="@dimen/size_20px"
+                    android:layout_marginRight="@dimen/size_20px"
+                    android:layout_marginTop="@dimen/size_20px"
+                    android:background="@color/colorWhite"
+                    android:orientation="vertical">
+
+                    <com.zhy.autolayout.AutoLinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="@dimen/size_20px"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="营业额分析"
+                            android:textColor="@color/color333333"
+                            android:textSize="@dimen/text_28px" />
+
+                        <View
+                            android:layout_width="0dp"
+                            android:layout_height="0dp"
+                            android:layout_weight="1" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@{&quot;￥&quot;+saleVM.saleAmount}"
+                            android:textColor="@color/color333333"
+                            android:textSize="@dimen/text_28px" />
+                    </com.zhy.autolayout.AutoLinearLayout>
+
+                    <com.j1j2.jposmvvm.common.widgets.DashLineView
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/size_2px"
+                        android:layout_marginLeft="@dimen/size_20px"
+                        android:layout_marginRight="@dimen/size_20px" />
+
+                    <com.github.mikephil.charting.charts.LineChart
+                        android:id="@+id/saleLineChart"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_marginBottom="@dimen/size_10px"
+                        android:layout_marginLeft="@dimen/size_20px"
+                        android:layout_marginRight="@dimen/size_20px" />
+
+                </com.zhy.autolayout.AutoLinearLayout>
+
+                <com.zhy.autolayout.AutoLinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/size_600px"
+                    android:layout_marginLeft="@dimen/size_20px"
+                    android:layout_marginRight="@dimen/size_20px"
+                    android:layout_marginTop="@dimen/size_20px"
+                    android:background="@color/colorWhite"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="@dimen/size_20px"
+                        android:text="品类分析"
+                        android:textColor="@color/color333333"
+                        android:textSize="@dimen/text_28px" />
+
+                    <com.j1j2.jposmvvm.common.widgets.DashLineView
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/size_2px"
+                        android:layout_marginLeft="@dimen/size_20px"
+                        android:layout_marginRight="@dimen/size_20px" />
+
+                    <com.github.mikephil.charting.charts.PieChart
+                        android:id="@+id/categoryPieChart"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_marginLeft="@dimen/size_20px"
+                        android:layout_marginRight="@dimen/size_20px"
+                        android:layout_marginTop="@dimen/size_20px" />
+
+                </com.zhy.autolayout.AutoLinearLayout>
+
+                <com.zhy.autolayout.AutoLinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/size_350px"
+                    android:layout_marginLeft="@dimen/size_20px"
+                    android:layout_marginRight="@dimen/size_20px"
+                    android:layout_marginTop="@dimen/size_20px"
+                    android:background="@color/colorWhite"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="@dimen/size_20px"
+                        android:text="综合分析"
+                        android:textColor="@color/color333333"
+                        android:textSize="@dimen/text_28px" />
+
+                    <com.j1j2.jposmvvm.common.widgets.DashLineView
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/size_2px"
+                        android:layout_marginLeft="@dimen/size_20px"
+                        android:layout_marginRight="@dimen/size_20px" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="0dp"
+                        android:layout_marginLeft="@dimen/size_20px"
+                        android:layout_marginRight="@dimen/size_20px"
+                        android:layout_weight="1"
+                        android:gravity="center_vertical"
+                        android:text="@{&quot;销售额：&quot;+saleVM.saleAmount}"
+                        android:textColor="@color/color333333"
+                        android:textSize="@dimen/text_28px" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="0dp"
+                        android:layout_marginLeft="@dimen/size_20px"
+                        android:layout_marginRight="@dimen/size_20px"
+                        android:layout_weight="1"
+                        android:gravity="center_vertical"
+                        android:text="@{&quot;客单价：&quot;+saleVM.perTicketSales}"
+                        android:textColor="@color/color333333"
+                        android:textSize="@dimen/text_28px" />
+
+                    <com.zhy.autolayout.AutoLinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="0dp"
+                        android:layout_marginLeft="@dimen/size_20px"
+                        android:layout_marginRight="@dimen/size_20px"
+                        android:layout_weight="1"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent"
+                            android:gravity="center_vertical"
+                            android:text="@{&quot;客单数：&quot;+saleVM.orderCount}"
+                            android:textColor="@color/color333333"
+                            android:textSize="@dimen/text_28px" />
+
+                        <View
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent"
+                            android:gravity="center_vertical"
+                            android:text="@{&quot;会员占比：&quot;+saleVM.memberRatio}"
+                            android:textColor="@color/color333333"
+                            android:textSize="@dimen/text_28px" />
+                    </com.zhy.autolayout.AutoLinearLayout>
+
+                    <com.zhy.autolayout.AutoLinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="0dp"
+                        android:layout_marginLeft="@dimen/size_20px"
+                        android:layout_marginRight="@dimen/size_20px"
+                        android:layout_weight="1"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent"
+                            android:gravity="center_vertical"
+                            android:text="@{&quot;毛利润：&quot;+saleVM.grossProfit}"
+                            android:textColor="@color/color333333"
+                            android:textSize="@dimen/text_28px" />
+
+                        <View
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent"
+                            android:gravity="center_vertical"
+                            android:text="@{&quot;毛利率：&quot;+saleVM.grossProfitRate}"
+                            android:textColor="@color/color333333"
+                            android:textSize="@dimen/text_28px" />
+                    </com.zhy.autolayout.AutoLinearLayout>
+                </com.zhy.autolayout.AutoLinearLayout>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/size_20px" />
+
+            </com.zhy.autolayout.AutoLinearLayout>
+        </ScrollView>
+    </com.zhy.autolayout.AutoLinearLayout>
+</layout>

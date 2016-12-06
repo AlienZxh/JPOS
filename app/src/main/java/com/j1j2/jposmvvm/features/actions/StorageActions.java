@@ -1,5 +1,6 @@
 package com.j1j2.jposmvvm.features.actions;
 
+import com.j1j2.jposmvvm.data.model.ProductDetail;
 import com.j1j2.jposmvvm.data.model.StorageOrder;
 import com.j1j2.jposmvvm.data.model.StorageOrderItem;
 
@@ -15,6 +16,8 @@ public interface StorageActions {
     String QUERYSTOREORDERDETAILS = "queryStoreOrderDetails";
     String AUDITSTORAGEORDER = "auditStorageOrder";
     String REFRESHSTORAGEORDERS = "refreshStorageOrders";
+    String REFRESHLISTITEM = "refreshListItem";
+    String SCANSTOCKS = "scanStocks";
 
     void queryStorageOrders(int pageIndex);
 
@@ -31,6 +34,10 @@ public interface StorageActions {
     void auditStorageOrder(int orderId);
 
     void refreshStorageOrders();
+
+    void refreshListItem(int fromType, int position, ProductDetail productDetail);
+
+    void scanStocks(int pageIndex, String key, int orderId);
 }
 
 

@@ -16,10 +16,11 @@ import com.hardsoftstudio.rxflux.dispatcher.Dispatcher;
 import com.hardsoftstudio.rxflux.store.RxStore;
 import com.hardsoftstudio.rxflux.store.RxStoreChange;
 import com.j1j2.jposmvvm.R;
+import com.j1j2.jposmvvm.common.constants.Constants;
 import com.j1j2.jposmvvm.databinding.ActivityStockSortBinding;
 import com.j1j2.jposmvvm.features.actions.StockActionCreator;
 import com.j1j2.jposmvvm.features.base.BaseActivity;
-import com.j1j2.jposmvvm.features.base.JPOSApplication;
+import com.j1j2.jposmvvm.JPOSApplication;
 import com.j1j2.jposmvvm.features.base.Navigate;
 import com.j1j2.jposmvvm.features.di.components.StockNoPicturesComponent;
 import com.j1j2.jposmvvm.features.di.modules.StockNoPicturesModule;
@@ -196,6 +197,7 @@ public class StockSortActivity extends BaseActivity implements TextWatcher, View
 
     @Override
     public void onSearchFinish() {
+        showNormalActionBar();
         binding.editSearch.setText("");
         binding.editSearch.clearFocus();
     }
@@ -214,4 +216,19 @@ public class StockSortActivity extends BaseActivity implements TextWatcher, View
         start(stockProductSearchFragment);
     }
 
+    @Override
+    public void showSearchActionBar() {
+        binding.actionbarNewProductBtn.setVisibility(View.VISIBLE);
+        binding.actionbarNoPicBtn.setVisibility(View.GONE);
+    }
+
+
+    public void showNormalActionBar() {
+        binding.actionbarNewProductBtn.setVisibility(View.GONE);
+        binding.actionbarNoPicBtn.setVisibility(View.VISIBLE);
+    }
+
+    public void createProduct(View v) {
+        navigate.navigateToStockProductDetailActivity(this, null, false, 0, true, Constants.FROM_STOCK_SORT, 0,0,"");
+    }
 }

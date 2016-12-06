@@ -25,7 +25,8 @@
             android:layout_height="@dimen/size_300px"
             android:layout_marginTop="@dimen/size_100px"
             android:scaleType="fitCenter"
-            android:src="@drawable/login_logo" />
+            android:src="@drawable/login_logo"
+            android:transitionName="@string/logo_share_name" />
 
         <com.zhy.autolayout.AutoLinearLayout
             style="@style/edit_login_layout_style"

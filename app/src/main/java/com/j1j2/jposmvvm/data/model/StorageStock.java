@@ -129,4 +129,6 @@ public class StorageStock {
     public void setSmallImgUrl(String SmallImgUrl) {
         this.SmallImgUrl = SmallImgUrl;
     }
+
+
 }

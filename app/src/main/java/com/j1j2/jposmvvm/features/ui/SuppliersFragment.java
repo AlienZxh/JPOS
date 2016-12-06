@@ -145,6 +145,7 @@ public class SuppliersFragment extends BaseFragment implements RxViewDispatch, S
                             adapter.addAll(suppliers);
                         } else {
                             adapter.pauseMore();
+                            toastor.showSingletonToast(listWebReturn.getErrorMessage());
                         }
                         break;
                     case SupplierActions.ADDSHOPSUPPLIER:

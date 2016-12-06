@@ -11,6 +11,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.hardsoftstudio.rxflux.action.RxError;
+import com.hardsoftstudio.rxflux.dispatcher.Dispatcher;
 import com.hardsoftstudio.rxflux.dispatcher.RxViewDispatch;
 import com.hardsoftstudio.rxflux.store.RxStore;
 import com.hardsoftstudio.rxflux.store.RxStoreChange;
@@ -64,6 +65,8 @@ public class StorageOrderCreateFragment extends BaseFragment implements RxViewDi
     @Inject
     StorageStore storageStore;
     @Inject
+    Dispatcher dispatcher;
+    @Inject
     Toastor toastor;
     @Inject
     Navigate navigate;
@@ -81,10 +84,23 @@ public class StorageOrderCreateFragment extends BaseFragment implements RxViewDi
     }
 
     @Override
+    public void onStart() {
+        super.onStart();
+        dispatcher.subscribeRxView(this);
+    }
+
+    @Override
     public void onResume() {
         super.onResume();
         listener.setActionBarTitle("新增入库单");
         listener.showCreateStorageOrderActionBarBtn();
+        binding.remarkEdit.setText("");
+    }
+
+    @Override
+    public void onStop() {
+        super.onStop();
+        dispatcher.unsubscribeRxView(this);
     }
 
     @Override
@@ -218,7 +234,7 @@ public class StorageOrderCreateFragment extends BaseFragment implements RxViewDi
                     .setType(Type.MONTH_DAY_HOUR_MIN)
                     .setWheelItemTextNormalColor(getResources().getColor(R.color.timetimepicker_default_text_color))
                     .setWheelItemTextSelectorColor(getResources().getColor(R.color.timepicker_toolbar_bg))
-                    .setWheelItemTextSize(12)
+                    .setWheelItemTextSize(14)
                     .build();
         mDialogAll.show(getChildFragmentManager(), "timePick");
     }

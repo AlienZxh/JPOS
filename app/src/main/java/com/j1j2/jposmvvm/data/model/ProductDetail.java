@@ -34,10 +34,10 @@ public class ProductDetail {
     private String Spec;
     private String Unit;
     private String Mnemonic;
-    private double LastCost;
     private String Brand;
-    private double MemberPrice;
-    private double RetailPrice;
+    private Double LastCost;
+    private Double MemberPrice;
+    private Double RetailPrice;
     private int ShopId;
     private String SmallImgUrl;
     private String ThumbImgUrl;
@@ -47,8 +47,16 @@ public class ProductDetail {
         return StockId;
     }
 
-    public void setStockId(int StockId) {
-        this.StockId = StockId;
+    public void setStockId(int stockId) {
+        StockId = stockId;
+    }
+
+    public String getBarCode() {
+        return BarCode;
+    }
+
+    public void setBarCode(String barCode) {
+        BarCode = barCode;
     }
 
     public String getCategory() {
@@ -67,100 +75,92 @@ public class ProductDetail {
         SubCategory = subCategory;
     }
 
-    public String getBarCode() {
-        return BarCode;
-    }
-
-    public void setBarCode(String BarCode) {
-        this.BarCode = BarCode;
-    }
-
     public String getName() {
         return Name;
     }
 
-    public void setName(String Name) {
-        this.Name = Name;
+    public void setName(String name) {
+        Name = name;
     }
 
     public String getSpec() {
         return Spec;
     }
 
-    public void setSpec(String Spec) {
-        this.Spec = Spec;
+    public void setSpec(String spec) {
+        Spec = spec;
     }
 
     public String getUnit() {
         return Unit;
     }
 
-    public void setUnit(String Unit) {
-        this.Unit = Unit;
+    public void setUnit(String unit) {
+        Unit = unit;
     }
 
     public String getMnemonic() {
         return Mnemonic;
     }
 
-    public void setMnemonic(String Mnemonic) {
-        this.Mnemonic = Mnemonic;
-    }
-
-    public double getLastCost() {
-        return LastCost;
-    }
-
-    public void setLastCost(double LastCost) {
-        this.LastCost = LastCost;
+    public void setMnemonic(String mnemonic) {
+        Mnemonic = mnemonic;
     }
 
     public String getBrand() {
         return Brand;
     }
 
-    public void setBrand(String Brand) {
-        this.Brand = Brand;
+    public void setBrand(String brand) {
+        Brand = brand;
     }
 
-    public double getMemberPrice() {
+    public Double getLastCost() {
+        return LastCost;
+    }
+
+    public void setLastCost(Double lastCost) {
+        LastCost = lastCost;
+    }
+
+    public Double getMemberPrice() {
         return MemberPrice;
     }
 
-    public void setMemberPrice(double MemberPrice) {
-        this.MemberPrice = MemberPrice;
+    public void setMemberPrice(Double memberPrice) {
+        MemberPrice = memberPrice;
     }
 
-    public double getRetailPrice() {
+    public Double getRetailPrice() {
         return RetailPrice;
     }
 
-    public void setRetailPrice(double RetailPrice) {
-        this.RetailPrice = RetailPrice;
+    public void setRetailPrice(Double retailPrice) {
+        RetailPrice = retailPrice;
     }
 
     public int getShopId() {
         return ShopId;
     }
 
-    public void setShopId(int ShopId) {
-        this.ShopId = ShopId;
+    public void setShopId(int shopId) {
+        ShopId = shopId;
     }
 
     public String getSmallImgUrl() {
         return SmallImgUrl;
     }
 
-    public void setSmallImgUrl(String SmallImgUrl) {
-        this.SmallImgUrl = SmallImgUrl;
+    public void setSmallImgUrl(String smallImgUrl) {
+        SmallImgUrl = smallImgUrl;
     }
 
     public String getThumbImgUrl() {
         return ThumbImgUrl;
     }
 
-    public void setThumbImgUrl(String ThumbImgUrl) {
-        this.ThumbImgUrl = ThumbImgUrl;
+    public void setThumbImgUrl(String thumbImgUrl) {
+        ThumbImgUrl = thumbImgUrl;
     }
 
     public ArrayList<StockImg> getStockImgs() {
@@ -172,21 +172,27 @@ public class ProductDetail {
     }
 
     public String getProductRetailPriceRate() {
-        if (LastCost <= 0) {
+        if (LastCost != null && RetailPrice != null)
+            if (LastCost <= 0) {
+                return "";
+            } else {
+                DecimalFormat decimalFormat = new DecimalFormat("0.00");
+                return decimalFormat.format(((RetailPrice - LastCost) / RetailPrice) * 100) + "%";
+            }
+        else
             return "";
-        } else {
-            DecimalFormat decimalFormat = new DecimalFormat("0.00");
-            return decimalFormat.format(((RetailPrice - LastCost) / RetailPrice) * 100) + "%";
-        }
     }
 
     public String getProductMemberPriceRate() {
-        if (LastCost <= 0) {
+        if (MemberPrice != null && LastCost != null)
+            if (LastCost <= 0) {
+                return "";
+            } else {
+                DecimalFormat decimalFormat = new DecimalFormat("0.00");
+                return decimalFormat.format(((MemberPrice - LastCost) / MemberPrice) * 100) + "%";
+            }
+        else
             return "";
-        } else {
-            DecimalFormat decimalFormat = new DecimalFormat("0.00");
-            return decimalFormat.format(((MemberPrice - LastCost) / MemberPrice) * 100) + "%";
-        }
     }
 
     @Override

@@ -1,6 +1,7 @@
 package com.j1j2.jposmvvm.features.adapter;
 
 import android.content.Context;
+import android.graphics.drawable.Animatable;
 import android.net.Uri;
 import android.text.Editable;
 import android.text.TextUtils;
@@ -12,8 +13,10 @@ import android.widget.TextView;
 
 import com.facebook.drawee.backends.pipeline.Fresco;
 import com.facebook.drawee.controller.AbstractDraweeController;
+import com.facebook.drawee.controller.BaseControllerListener;
 import com.facebook.drawee.view.SimpleDraweeView;
 import com.facebook.imagepipeline.common.ResizeOptions;
+import com.facebook.imagepipeline.image.ImageInfo;
 import com.facebook.imagepipeline.request.ImageRequest;
 import com.facebook.imagepipeline.request.ImageRequestBuilder;
 import com.j1j2.jposmvvm.R;
@@ -21,8 +24,11 @@ import com.j1j2.jposmvvm.common.widgets.AutoExpandableLinearLayout;
 import com.j1j2.jposmvvm.common.widgets.recyclerviewadapter.BaseViewHolder;
 import com.j1j2.jposmvvm.common.widgets.recyclerviewadapter.RecyclerArrayAdapter;
 import com.j1j2.jposmvvm.data.model.StorageStockDetail;
+import com.j1j2.jposmvvm.features.ui.StockProductSearchFragment;
 import com.zhy.autolayout.AutoLinearLayout;
 import com.zhy.autolayout.utils.AutoUtils;
+
+import javax.annotation.Nullable;
 
 /**
  * Created by alienzxh on 16-7-27.
@@ -30,12 +36,16 @@ import com.zhy.autolayout.utils.AutoUtils;
 public class StorageProductAdapter extends RecyclerArrayAdapter<StorageStockDetail> {
 
     public interface StorageProductAdapterListener {
+        void imgClickAction(int position, StorageStockDetail storageStockDetail);
+
         void deleteAction(int position, StorageStockDetail storageStockDetail);
 
         void priceChangeAction(int position, StorageStockDetail storageStockDetail, double newPrice);
 
         void quantityChangeAction(int position, StorageStockDetail storageStockDetail, double newQuqntity);
     }
+
+    private int expandPosition = 0;
 
     private StorageProductAdapterListener storageProductAdapterListener;
 
@@ -45,6 +55,14 @@ public class StorageProductAdapter extends RecyclerArrayAdapter<StorageStockDeta
 
     public StorageProductAdapterListener getStorageProductAdapterListener() {
         return storageProductAdapterListener;
+    }
+
+    public int getExpandPosition() {
+        return expandPosition;
+    }
+
+    public void setExpandPosition(int expandPosition) {
+        this.expandPosition = expandPosition;
     }
 
     public void setStorageProductAdapterListener(StorageProductAdapterListener storageProductAdapterListener) {
@@ -106,7 +124,18 @@ public class StorageProductAdapter extends RecyclerArrayAdapter<StorageStockDeta
         @Override
         public void setData(final StorageStockDetail data) {
             super.setData(data);
-            expandableLayout.setOnClickListener(this);
+            expandableLayout.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    if (expandableLayout.isFocused() || productPrice.isFocused() || productQuantity.isFocused()) {
+                        expandableLayout.clearFocus();
+                        productPrice.clearFocus();
+                        productQuantity.clearFocus();
+                    } else {
+                        expandableLayout.requestFocus();
+                    }
+                }
+            });
             expandableLayout.setOnFocusChangeListener(this);
             productPrice.setOnFocusChangeListener(this);
             productQuantity.setOnFocusChangeListener(this);
@@ -128,6 +157,14 @@ public class StorageProductAdapter extends RecyclerArrayAdapter<StorageStockDeta
                     .setImageRequest(request)
                     .build();
             productImg.setController(controller);
+
+            productImg.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    if (storageProductAdapterListener != null)
+                        storageProductAdapterListener.imgClickAction(getAdapterPosition(), data);
+                }
+            });
             productName.setText(data.getProductName());
             productUnit.setText("单位：" + data.getUnit());
             productSpec.setText("规格：" + data.getSpec());
@@ -196,7 +233,7 @@ public class StorageProductAdapter extends RecyclerArrayAdapter<StorageStockDeta
             addBtn.setOnClickListener(this);
             minusBtn.setOnClickListener(this);
             //______________________________________________________________________________________
-            if (getAdapterPosition() == 0) {
+            if (getAdapterPosition() == expandPosition) {
                 expandableLayout.requestFocus();
             }
         }
@@ -219,8 +256,6 @@ public class StorageProductAdapter extends RecyclerArrayAdapter<StorageStockDeta
                 case R.id.delete:
                     if (storageProductAdapterListener != null)
                         storageProductAdapterListener.deleteAction(getAdapterPosition(), getItem(getAdapterPosition()));
-                    break;
-                case R.id.expandContent:
                     break;
                 case R.id.addBtn:
                     newQuantity = Double.parseDouble(productQuantity.getText().toString());

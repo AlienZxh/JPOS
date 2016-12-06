@@ -1,4 +1,4 @@
-package com.j1j2.jposmvvm.features.base;
+package com.j1j2.jposmvvm;
 
 import android.content.Context;
 import android.graphics.Bitmap;
@@ -7,19 +7,16 @@ import android.text.TextUtils;
 
 import com.facebook.drawee.backends.pipeline.Fresco;
 import com.facebook.imagepipeline.core.ImagePipelineConfig;
-import com.facebook.stetho.Stetho;
 import com.frogermcs.androiddevmetrics.AndroidDevMetrics;
 import com.google.gson.Gson;
-import com.google.gson.reflect.TypeToken;
 import com.hardsoftstudio.rxflux.RxFlux;
-import com.j1j2.jposmvvm.BuildConfig;
-import com.j1j2.jposmvvm.R;
 import com.j1j2.jposmvvm.common.utils.AndroidUtil;
 import com.j1j2.jposmvvm.common.utils.HttpHelper;
 import com.j1j2.jposmvvm.common.utils.ScreenUtils;
 import com.j1j2.jposmvvm.common.utils.Toastor;
+import com.j1j2.jposmvvm.common.widgets.viewstatemanager.LoadingAndRetryManager;
 import com.j1j2.jposmvvm.data.model.ShopInfo;
-import com.j1j2.jposmvvm.data.model.WebReturn;
+import com.j1j2.jposmvvm.features.base.FrescoImageLoader;
 import com.j1j2.jposmvvm.features.base.di.components.AppComponent;
 import com.j1j2.jposmvvm.features.base.di.components.DaggerAppComponent;
 import com.j1j2.jposmvvm.features.base.di.components.ShopComponent;
@@ -31,21 +28,26 @@ import com.orhanobut.logger.LogLevel;
 import com.orhanobut.logger.Logger;
 import com.squareup.leakcanary.LeakCanary;
 import com.squareup.leakcanary.RefWatcher;
-import com.uphyca.stetho_realm.RealmInspectorModulesProvider;
 
 import org.json.JSONException;
 import org.json.JSONObject;
 import org.lzh.framework.updatepluginlib.UpdateConfig;
-import org.lzh.framework.updatepluginlib.callback.EmptyCheckCB;
-import org.lzh.framework.updatepluginlib.callback.EmptyDownloadCB;
+import org.lzh.framework.updatepluginlib.business.HttpException;
+import org.lzh.framework.updatepluginlib.business.UpdateWorker;
+import org.lzh.framework.updatepluginlib.callback.UpdateCheckCB;
+import org.lzh.framework.updatepluginlib.callback.UpdateDownloadCB;
+import org.lzh.framework.updatepluginlib.model.CheckEntity;
 import org.lzh.framework.updatepluginlib.model.Update;
 import org.lzh.framework.updatepluginlib.model.UpdateParser;
 
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
+import java.io.InputStreamReader;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
+import java.net.HttpURLConnection;
+import java.net.URL;
 import java.util.HashMap;
 
 import javax.inject.Inject;
@@ -99,23 +101,21 @@ public class JPOSApplication extends MultiDexApplication {
     @Override
     public void onCreate() {
         super.onCreate();
-        if (BuildConfig.DEBUG) {
-            AndroidDevMetrics.initWith(this);
-        }
+
         String processName = getProcessName();
         if (!TextUtils.isEmpty(processName) && processName.equals(
                 this.getPackageName())) {//判断进程名，保证只有主进程运行
-            initDefendeleak();
             initLogger();
+            initAndroidDevMetrics();
+            initLoadingAndRetryManager();
+            initDefendeleak();
             initThreeTenABP();
             initRxFlux();
             initRealm();
             initComponent();
-            initStetho();
             initFresco();
             initGallyFinal();
             initEasyRecyclerView();
-            initAndroidDevMetrics();
             initLeakCanary();
             initUpdatePlugin();
         }
@@ -138,6 +138,12 @@ public class JPOSApplication extends MultiDexApplication {
         }
     }
 
+    private void initAndroidDevMetrics() {
+        if (BuildConfig.DEBUG)
+            AndroidDevMetrics.initWith(this);
+        Logger.d("AndroidDevMetrics初始化完成");
+    }
+
     private void initLogger() {
         if (BuildConfig.DEBUG) {
             Logger.init(" pifalao debug ").logLevel(LogLevel.FULL);
@@ -152,13 +158,6 @@ public class JPOSApplication extends MultiDexApplication {
         Logger.d("AndroidThreeTen初始化完成");
     }
 
-    private void initAndroidDevMetrics() {
-        if (BuildConfig.DEBUG) {
-            AndroidDevMetrics.initWith(this);
-        }
-        Logger.d("AndroidDevMetrics初始化完成");
-    }
-
 
     private void initComponent() {
         this.appComponent =
@@ -167,20 +166,11 @@ public class JPOSApplication extends MultiDexApplication {
         Logger.d("AppComponent初始化完成");
     }
 
-    private void initStetho() {
-//        Stetho.initializeWithDefaults(this);
-
-        Stetho.initialize(
-                Stetho.newInitializerBuilder(this)
-                        .enableDumpapp(Stetho.defaultDumperPluginsProvider(this))
-                        .enableWebKitInspector(RealmInspectorModulesProvider.builder(this).build())
-                        .build());
-        Logger.d("Stetho初始化完成");
-    }
 
     private void initRealm() {
         RealmConfiguration config = new RealmConfiguration.Builder(this)
-                .deleteRealmIfMigrationNeeded().build();
+//                .deleteRealmIfMigrationNeeded()
+                .build();
         Realm.setDefaultConfiguration(config);
     }
 
@@ -239,6 +229,12 @@ public class JPOSApplication extends MultiDexApplication {
 
     private void initEasyRecyclerView() {
         EasyRecyclerView.DEBUG = BuildConfig.DEBUG;
+    }
+
+    private void initLoadingAndRetryManager() {
+        LoadingAndRetryManager.BASE_RETRY_LAYOUT_ID = R.layout.view_error;
+        LoadingAndRetryManager.BASE_LOADING_LAYOUT_ID = R.layout.view_loading;
+        LoadingAndRetryManager.BASE_EMPTY_LAYOUT_ID = R.layout.view_empty;
     }
 
     private void initUpdatePlugin() {
@@ -309,7 +305,16 @@ public class JPOSApplication extends MultiDexApplication {
                     }
                 })
                 // TODO: 2016/5/11 除了以上两个参数为必填。以下的参数均为非必填项。
-                .checkCB(new EmptyCheckCB() {
+                .checkCB(new UpdateCheckCB() {
+                    @Override
+                    public void hasUpdate(Update update) {
+
+                    }
+
+                    @Override
+                    public void noUpdate() {
+                        toastor.showSingletonToast("无更新");
+                    }
 
                     @Override
                     public void onCheckError(int code, String errorMsg) {
@@ -322,17 +327,61 @@ public class JPOSApplication extends MultiDexApplication {
                     }
 
                     @Override
-                    public void noUpdate() {
+                    public void onCheckIgnore(Update update) {
+                        toastor.showSingletonToast("更新");
                     }
                 })
                 // apk下载的回调
-                .downloadCB(new EmptyDownloadCB() {
+                .downloadCB(new UpdateDownloadCB() {
+                    @Override
+                    public void onUpdateStart() {
+
+                    }
+
+                    @Override
+                    public void onUpdateComplete(File file) {
+
+                    }
+
+                    @Override
+                    public void onUpdateProgress(long current, long total) {
+
+                    }
+
                     @Override
                     public void onUpdateError(int code, String errorMsg) {
                         toastor.showSingletonToast("下载失败");
                     }
                 })
-                .downloadWorker(new APKDownloadWorker())
+                .checkWorker(new UpdateWorker() {
+                    @Override
+                    protected String check(CheckEntity url) throws Exception {
+
+                        URL getUrl = new URL(entity.getUrl());
+                        HttpURLConnection urlConn = (HttpURLConnection) getUrl.openConnection();
+                        urlConn.setDoOutput(true);
+                        urlConn.setConnectTimeout(10000);
+                        urlConn.setRequestMethod("POST");
+
+                        int responseCode = urlConn.getResponseCode();
+                        if (responseCode < 200 || responseCode >= 300) {
+                            urlConn.disconnect();
+                            throw new HttpException(responseCode,urlConn.getResponseMessage());
+                        }
+
+                        BufferedReader bis = new BufferedReader(new InputStreamReader(urlConn.getInputStream(), "utf-8"));
+
+                        StringBuilder sb = new StringBuilder();
+                        String lines;
+                        while ((lines = bis.readLine()) != null) {
+                            sb.append(lines);
+                        }
+
+                        urlConn.disconnect();
+
+                        return sb.toString();
+                    }
+                })
                 /* // 自定义更新接口的访问任务
                 .checkWorker(new UpdateWorker() {
                     @Override

@@ -24,6 +24,7 @@ public abstract class HttpHelper {
 
             sb.deleteCharAt(sb.length() - 1);
         }
+
         return sb.toString();
     }
 

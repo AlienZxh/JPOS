@@ -18,6 +18,8 @@ import com.hardsoftstudio.rxflux.dispatcher.RxViewDispatch;
 import com.hardsoftstudio.rxflux.store.RxStore;
 import com.hardsoftstudio.rxflux.store.RxStoreChange;
 import com.j1j2.jposmvvm.R;
+import com.j1j2.jposmvvm.common.constants.Constants;
+import com.j1j2.jposmvvm.common.utils.Toastor;
 import com.j1j2.jposmvvm.common.widgets.RecyclerItemClickListener;
 import com.j1j2.jposmvvm.common.widgets.recyclerviewadapter.RecyclerArrayAdapter;
 import com.j1j2.jposmvvm.data.model.PageManager;
@@ -49,6 +51,8 @@ public class StockProductSearchFragment extends BaseFragment implements RxViewDi
     public static final int FROM_TAKEPICTURE = 1;
 
     public interface StockNoPicturesSearchFragmentListener extends HasComponent<StockNoPicturesComponent> {
+        void showSearchActionBar();
+
         void onSearchFinish();
     }
 
@@ -60,6 +64,8 @@ public class StockProductSearchFragment extends BaseFragment implements RxViewDi
 
     @Inject
     StockActionCreator stockActionCreator;
+    @Inject
+    Toastor toastor;
     @Inject
     Navigate navigate;
 
@@ -90,6 +96,11 @@ public class StockProductSearchFragment extends BaseFragment implements RxViewDi
         super.onCreate(savedInstanceState);
     }
 
+    @Override
+    public void onResume() {
+        super.onResume();
+        listener.showSearchActionBar();
+    }
 
     @Override
     protected View initBinding(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -119,9 +130,9 @@ public class StockProductSearchFragment extends BaseFragment implements RxViewDi
     @Override
     public void onItemClick(RecyclerView parent, View view, int position, int id) {
         if (mFromType == FROM_SORT)
-            navigate.navigateToStockProductDetailActivity(getActivity(), null, false, adapter.getItem(position).getStockId(), StockTakePicturesActivity.From_SEARCH, position);
+            navigate.navigateToStockProductDetailActivity(getActivity(), null, false, adapter.getItem(position).getStockId(),false, Constants.FROM_STOCK_SEARCH, position,0,"");
         else if (mFromType == FROM_TAKEPICTURE)
-            navigate.navigateToStockTakePicturesActivity(getActivity(), null, false, adapter.getItem(position).getStockId(), StockTakePicturesActivity.From_SEARCH, position);
+            navigate.navigateToStockTakePicturesActivity(getActivity(), null, false, adapter.getItem(position).getStockId(), Constants.FROM_STOCK_SORT, position);
     }
 
     @Override
@@ -164,13 +175,13 @@ public class StockProductSearchFragment extends BaseFragment implements RxViewDi
                             }
                         } else {
                             adapter.pauseMore();
+                            toastor.showSingletonToast(productsWebReturn.getErrorMessage());
                         }
-
                         break;
                     case StockActions.REFRESHLIST:
                         int fromType = change.getRxAction().get(Keys.REFRESHLISTFROMTYPE);
 
-                        if (fromType == StockTakePicturesActivity.From_SEARCH) {
+                        if (fromType == Constants.FROM_STOCK_SEARCH) {
                             int position = change.getRxAction().get(Keys.REFRESHLISTPOSITION);
                             ProductDetail productDetail = change.getRxAction().get(Keys.REFRESHLISTPRODUCTDETAIL);
                             Product product = adapter.getItem(position);

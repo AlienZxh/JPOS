@@ -99,7 +99,7 @@
 }
 #对WebView的简单说明下：经过实战检验,做腾讯QQ登录，如果引用他们提供的jar，若不加防止WebChromeClient混淆的代码，oauth认证无法回调，反编译基代码后可看到他们有用到WebChromeClient，加入此代码即可。
 
-#-keepclassmembernames class com.j1j2.vo.** { *; }   #转换JSON的JavaBean，类成员名称保护，使其不被混淆
+-keepclassmembernames class com.j1j2.jposmvvm.model.** { *; }   #转换JSON的JavaBean，类成员名称保护，使其不被混淆
 
 ##################################################################
 # 下面都是项目中引入的第三方 jar 包。第三方 jar 包中的代码不是我们的目标和关心的对象，故而对此我们全部忽略不进行混淆。
@@ -151,11 +151,52 @@
  -keep class rx.** { *; }
 ##---------------End: proguard configuration for rxjava  ----------
 
+##---------------Begin: proguard configuration for galleryfinal  ----------
+-keep class cn.finalteam.galleryfinal.widget.*{*;}
+-keep class cn.finalteam.galleryfinal.widget.crop.*{*;}
+-keep class cn.finalteam.galleryfinal.widget.zoonview.*{*;}
+##---------------End: proguard configuration for galleryfinal  ----------
 
+##---------------Begin: proguard configuration for Fresco  ----------
+# Keep our interfaces so they can be used by other ProGuard rules.
+# See http://sourceforge.net/p/proguard/bugs/466/
+-keep,allowobfuscation @interface com.facebook.common.internal.DoNotStrip
 
+# Do not strip any method/class that is annotated with @DoNotStrip
+-keep @com.facebook.common.internal.DoNotStrip class *
+-keepclassmembers class * {
+    @com.facebook.common.internal.DoNotStrip *;
+}
 
+# Keep native methods
+-keepclassmembers class * {
+    native <methods>;
+}
 
+#-dontwarn okio.**
+-dontwarn com.squareup.okhttp.**
+#-dontwarn okhttp3.**
+-dontwarn javax.annotation.**
+-dontwarn com.android.volley.toolbox.**
 
+# Works around a bug in the animated GIF module which will be fixed in 0.12.0
+-keep class com.facebook.imagepipeline.animated.factory.AnimatedFactoryImpl {
+    public AnimatedFactoryImpl(com.facebook.imagepipeline.bitmaps.PlatformBitmapFactory,com.facebook.imagepipeline.core.ExecutorSupplier);
+}
+##---------------End: proguard configuration for Fresco  ----------
 
+##---------------Begin: proguard configuration for EventBus  ----------
+-keepattributes *Annotation*
+-keepclassmembers class ** {
+    @org.greenrobot.eventbus.Subscribe <methods>;
+}
+-keep enum org.greenrobot.eventbus.ThreadMode { *; }
+# Only required if you use AsyncExecutor
+-keepclassmembers class * extends org.greenrobot.eventbus.util.ThrowableFailureEvent {
+    <init>(java.lang.Throwable);
+}
+##---------------End: proguard configuration for EventBus  ----------
 
-
+##---------------Begin: proguard configuration for MPAndroidChart  ----------
+-keep class com.github.mikephil.charting.** { *; }
+##---------------End: proguard configuration for MPAndroidChart  ----------

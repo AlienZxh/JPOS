@@ -18,6 +18,7 @@ import com.hardsoftstudio.rxflux.dispatcher.RxViewDispatch;
 import com.hardsoftstudio.rxflux.store.RxStore;
 import com.hardsoftstudio.rxflux.store.RxStoreChange;
 import com.j1j2.jposmvvm.R;
+import com.j1j2.jposmvvm.common.utils.Toastor;
 import com.j1j2.jposmvvm.common.widgets.recyclerviewadapter.RecyclerArrayAdapter;
 import com.j1j2.jposmvvm.data.model.PageManager;
 import com.j1j2.jposmvvm.data.model.ShopInfo;
@@ -27,6 +28,7 @@ import com.j1j2.jposmvvm.databinding.FragmentStorageOrdersBinding;
 import com.j1j2.jposmvvm.features.actions.Keys;
 import com.j1j2.jposmvvm.features.actions.StorageActionCreator;
 import com.j1j2.jposmvvm.features.actions.StorageActions;
+import com.j1j2.jposmvvm.features.adapter.PrintLabelOrderAdapter;
 import com.j1j2.jposmvvm.features.adapter.StorageOrderAdapter;
 import com.j1j2.jposmvvm.features.base.BaseFragment;
 import com.j1j2.jposmvvm.features.base.Navigate;
@@ -71,6 +73,8 @@ public class StorageOrderFragment extends BaseFragment implements RecyclerArrayA
     @Inject
     StorageStore storageStore;
     @Inject
+    Toastor toastor;
+    @Inject
     Navigate navigate;
     @Inject
     UIViewModel uiViewModel;
@@ -78,9 +82,9 @@ public class StorageOrderFragment extends BaseFragment implements RecyclerArrayA
     Dispatcher dispatcher;
 
 
-
     private int pageIndex = 1;
     private int pageCount = 0;
+
 
     private StorageOrderAdapter adapter;
     private StorageOrderCreateFragment storageOrderCreateFragment;
@@ -180,6 +184,7 @@ public class StorageOrderFragment extends BaseFragment implements RecyclerArrayA
                             }
                         } else {
                             adapter.pauseMore();
+                            toastor.showSingletonToast(storageOrderWebReturn.getErrorMessage());
                         }
                         break;
                     case StorageActions.REFRESHSTORAGEORDERS:

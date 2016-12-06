@@ -74,6 +74,9 @@ public class StorageStore extends RxStore implements StorageStoreInterface {
             case StorageActions.QUERYSTOCKS:
 
                 break;
+            case StorageActions.SCANSTOCKS:
+
+                break;
             case StorageActions.REMOVESTOREAGEORDERDETAILITEM:
 
                 break;
@@ -81,6 +84,9 @@ public class StorageStore extends RxStore implements StorageStoreInterface {
 
                 break;
             case StorageActions.REFRESHSTORAGEORDERS:
+
+                break;
+            case StorageActions.REFRESHLISTITEM:
 
                 break;
             default: // IMPORTANT if we don't modify the store just ignore

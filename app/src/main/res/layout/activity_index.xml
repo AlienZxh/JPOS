@@ -63,119 +63,22 @@
                 android:layout_alignParentRight="true"
                 android:onClick="exitApp"
                 android:text="@string/ic_exit" />
-
         </com.zhy.autolayout.AutoRelativeLayout>
 
-        <com.j1j2.jposmvvm.common.widgets.AutoCardView
-            android:layout_width="@dimen/size_300px"
-            android:layout_height="@dimen/size_300px"
+        <android.support.design.widget.TabLayout
+            android:id="@+id/tablayout"
+            android:layout_width="match_parent"
+            android:layout_height="80px"
             android:layout_below="@id/toolbar"
-            android:layout_marginLeft="@dimen/size_56px"
-            android:layout_marginStart="@dimen/size_56px"
-            android:layout_marginTop="@dimen/size_56px"
-            android:onClick="navigateToStock"
-            app:cardBackgroundColor="#ff62c7ff"
-            app:cardCornerRadius="5dp">
+            app:tabIndicatorColor="@color/colorPrimary"
+            app:tabMode="fixed"
+            app:tabSelectedTextColor="@color/colorPrimary"
+            app:tabTextColor="@color/color666666" />
 
-            <com.zhy.autolayout.AutoLinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:orientation="vertical">
-
-                <TextView
-                    fontPath="iconfont/iconfont.ttf"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/ic_stock"
-                    android:textColor="@color/colorWhite"
-                    android:textSize="@dimen/text_120px" />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_centerHorizontal="true"
-                    android:layout_marginTop="10dp"
-                    android:text="库存管理"
-                    android:textColor="#ffffff"
-                    android:textSize="@dimen/text_32px" />
-            </com.zhy.autolayout.AutoLinearLayout>
-
-        </com.j1j2.jposmvvm.common.widgets.AutoCardView>
-
-        <com.j1j2.jposmvvm.common.widgets.AutoCardView
-            android:layout_width="@dimen/size_300px"
-            android:layout_height="@dimen/size_300px"
-            android:layout_below="@id/toolbar"
-            android:layout_marginLeft="@dimen/size_412px"
-            android:layout_marginStart="@dimen/size_412px"
-            android:layout_marginTop="@dimen/size_56px"
-            android:onClick="navigateToPhoto"
-            app:cardBackgroundColor="#ffffad33"
-            app:cardCornerRadius="5dp">
-
-            <com.zhy.autolayout.AutoLinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:orientation="vertical">
-
-                <TextView
-                    fontPath="iconfont/iconfont.ttf"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/ic_camera"
-                    android:textColor="@color/colorWhite"
-                    android:textSize="@dimen/text_120px" />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_centerHorizontal="true"
-                    android:layout_marginTop="10dp"
-                    android:text="商品拍照"
-                    android:textColor="#ffffff"
-                    android:textSize="@dimen/text_32px" />
-            </com.zhy.autolayout.AutoLinearLayout>
-
-        </com.j1j2.jposmvvm.common.widgets.AutoCardView>
-
-        <com.j1j2.jposmvvm.common.widgets.AutoCardView
-            android:layout_width="@dimen/size_300px"
-            android:layout_height="@dimen/size_300px"
-            android:layout_below="@id/toolbar"
-            android:layout_marginLeft="@dimen/size_56px"
-            android:layout_marginStart="@dimen/size_56px"
-            android:layout_marginTop="@dimen/size_412px"
-            android:onClick="navigateToStorage"
-            app:cardBackgroundColor="#fff87350"
-            app:cardCornerRadius="5dp">
-
-            <com.zhy.autolayout.AutoLinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:orientation="vertical">
-
-                <TextView
-                    fontPath="iconfont/iconfont.ttf"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/ic_storage"
-                    android:textColor="@color/colorWhite"
-                    android:textSize="@dimen/text_120px" />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_centerHorizontal="true"
-                    android:layout_marginTop="10dp"
-                    android:text="商品入库"
-                    android:textColor="#ffffff"
-                    android:textSize="@dimen/text_32px" />
-            </com.zhy.autolayout.AutoLinearLayout>
-
-        </com.j1j2.jposmvvm.common.widgets.AutoCardView>
-
+        <android.support.v4.view.ViewPager
+            android:id="@+id/viewpager"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_below="@id/tablayout" />
     </com.zhy.autolayout.AutoRelativeLayout>
 </layout>

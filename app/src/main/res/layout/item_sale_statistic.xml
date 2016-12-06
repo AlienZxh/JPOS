@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.zhy.autolayout.AutoLinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@drawable/item_bottom_divider_bg"
+    android:orientation="horizontal">
+
+    <TextView
+        android:id="@+id/time"
+        android:layout_width="wrap_content"
+        android:layout_height="@dimen/size_120px"
+        android:layout_marginLeft="@dimen/size_20px"
+        android:gravity="center_vertical"
+        android:text="asdasdasd"
+        android:textColor="@color/color333333"
+        android:textSize="@dimen/text_28px" />
+
+    <TextView
+        android:id="@+id/amount"
+        android:layout_width="0dp"
+        android:layout_height="@dimen/size_120px"
+        android:layout_marginLeft="@dimen/size_40px"
+        android:layout_weight="1"
+        android:text="asdasdasd"
+        android:gravity="center_vertical"
+        android:textColor="@color/colorRed"
+        android:textSize="@dimen/text_32px" />
+
+    <com.zhy.autolayout.AutoLinearLayout
+        android:layout_width="@dimen/size_200px"
+        android:layout_height="@dimen/size_120px"
+        android:layout_marginRight="@dimen/size_20px"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/orderSum"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/size_60px"
+            android:text="asdasdasd"
+            android:gravity="center_vertical"
+            android:textColor="@color/color333333"
+            android:textSize="@dimen/text_28px" />
+
+        <TextView
+            android:id="@+id/orderGrossProfit"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/size_60px"
+            android:text="asdasdasd"
+            android:gravity="center_vertical"
+            android:textColor="@color/color333333"
+            android:textSize="@dimen/text_28px" />
+
+    </com.zhy.autolayout.AutoLinearLayout>
+
+</com.zhy.autolayout.AutoLinearLayout>

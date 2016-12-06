@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.zhy.autolayout.AutoLinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/colorAccent"
+    android:orientation="horizontal">
+
+    <TextView
+        android:id="@+id/time"
+        android:layout_width="wrap_content"
+        android:layout_height="@dimen/size_80px"
+        android:layout_marginLeft="@dimen/size_20px"
+        android:gravity="center_vertical"
+        android:textColor="@color/colorWhite"
+        android:textSize="@dimen/text_28px" />
+
+    <TextView
+        android:layout_width="0dp"
+        android:layout_height="@dimen/size_80px"
+        android:layout_marginLeft="@dimen/size_40px"
+        android:layout_weight="1"
+        android:gravity="center_vertical"
+        android:textSize="@dimen/text_28px" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="@dimen/size_80px"
+        android:layout_marginLeft="@dimen/size_20px"
+        android:gravity="center_vertical"
+        android:text="点击查看月报表"
+        android:textColor="@color/colorWhite"
+        android:textSize="@dimen/text_28px" />
+
+    <TextView
+        fontPath="iconfont/iconfont.ttf"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_vertical"
+        android:layout_marginLeft="@dimen/size_20px"
+        android:layout_marginRight="@dimen/size_20px"
+        android:text="@string/ic_arrow_right"
+        android:textColor="@color/colorWhite"
+        android:textSize="@dimen/text_40px" />
+
+</com.zhy.autolayout.AutoLinearLayout>

@@ -1,14 +1,16 @@
 package com.j1j2.jposmvvm.features.ui;
 
 import android.databinding.DataBindingUtil;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.Snackbar;
+import android.transition.Slide;
+import android.view.Gravity;
 import android.view.View;
 
 import com.hardsoftstudio.rxflux.action.RxError;
-import com.hardsoftstudio.rxflux.dispatcher.RxViewDispatch;
 import com.hardsoftstudio.rxflux.store.RxStore;
 import com.hardsoftstudio.rxflux.store.RxStoreChange;
 import com.j1j2.jposmvvm.R;
@@ -22,7 +24,7 @@ import com.j1j2.jposmvvm.features.actions.Keys;
 import com.j1j2.jposmvvm.features.actions.ShopActionCreator;
 import com.j1j2.jposmvvm.features.actions.ShopActions;
 import com.j1j2.jposmvvm.features.base.BaseActivity;
-import com.j1j2.jposmvvm.features.base.JPOSApplication;
+import com.j1j2.jposmvvm.JPOSApplication;
 import com.j1j2.jposmvvm.features.base.Navigate;
 import com.j1j2.jposmvvm.features.di.modules.LoginModule;
 import com.j1j2.jposmvvm.features.stores.ShopStore;
@@ -42,7 +44,7 @@ import io.realm.Sort;
  * Created by alienzxh on 16-5-5.
  */
 
-public class LoginActivity extends BaseActivity  {
+public class LoginActivity extends BaseActivity {
     ActivityLoginBinding binding;
 
     private Realm realm;
@@ -75,6 +77,22 @@ public class LoginActivity extends BaseActivity  {
     }
 
     @Override
+    protected void initActivityAnimations() {
+        super.initActivityAnimations();
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            getWindow().getEnterTransition().setDuration(500);
+            //________________________________________________________________
+            Slide slideTransition = new Slide();
+            slideTransition.setSlideEdge(Gravity.LEFT);
+            slideTransition.setDuration(500);
+            getWindow().setReenterTransition(slideTransition);
+            getWindow().setExitTransition(slideTransition);
+            getWindow().getExitTransition().setDuration(500);
+        }
+
+    }
+
+    @Override
     protected void initViews() {
         RealmResults<ShopInfo> shopInfoRealmResults = realm.where(ShopInfo.class).findAllSorted("UpdateTime", Sort.DESCENDING);
         if (shopInfoRealmResults.size() > 0) {
@@ -98,7 +116,7 @@ public class LoginActivity extends BaseActivity  {
                         } else {
                             uiViewModel.setErrorMessage(userInfoWebReturn.getErrorMessage());
                             uiViewModel.setUiState(UIState.STATE_ERROR);
-                            Snackbar.make(binding.rootLayout, userInfoWebReturn.toString(),
+                            Snackbar.make(binding.rootLayout, userInfoWebReturn.getErrorMessage(),
                                     Snackbar.LENGTH_SHORT).show();
                         }
                         break;
