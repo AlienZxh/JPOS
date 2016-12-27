@@ -15,6 +15,7 @@ import com.hardsoftstudio.rxflux.dispatcher.Dispatcher;
 import com.hardsoftstudio.rxflux.store.RxStore;
 import com.hardsoftstudio.rxflux.store.RxStoreChange;
 import com.j1j2.jposmvvm.JPOSApplication;
+import com.j1j2.jposmvvm.JPOSApplicationLike;
 import com.j1j2.jposmvvm.R;
 import com.j1j2.jposmvvm.common.utils.Toastor;
 import com.j1j2.jposmvvm.common.widgets.recyclerviewadapter.RecyclerArrayAdapter;
@@ -71,7 +72,7 @@ public class SaleStatisticActivity extends BaseActivity implements RecyclerArray
     @Override
     protected void setupActivityComponent() {
 
-        JPOSApplication.get(this).getShopComponent().plus(new SaleStatisticModule(this)).inject(this);
+        JPOSApplicationLike.get().getShopComponent().plus(new SaleStatisticModule(this)).inject(this);
     }
 
     @Override

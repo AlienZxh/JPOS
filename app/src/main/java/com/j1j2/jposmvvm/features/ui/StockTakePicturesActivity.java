@@ -13,6 +13,7 @@ import com.hardsoftstudio.rxflux.action.RxError;
 import com.hardsoftstudio.rxflux.dispatcher.Dispatcher;
 import com.hardsoftstudio.rxflux.store.RxStore;
 import com.hardsoftstudio.rxflux.store.RxStoreChange;
+import com.j1j2.jposmvvm.JPOSApplicationLike;
 import com.j1j2.jposmvvm.R;
 import com.j1j2.jposmvvm.common.constants.UIState;
 import com.j1j2.jposmvvm.data.model.ProductDetail;
@@ -89,7 +90,7 @@ public class StockTakePicturesActivity extends BaseActivity implements StockTake
     @Override
     protected void setupActivityComponent() {
         StockTakePicturesActivityAutoBundle.bind(this, getIntent());
-        JPOSApplication.get(this).getShopComponent().plus(new StockTakePicturesModule(this)).inject(this);
+        JPOSApplicationLike.get().getShopComponent().plus(new StockTakePicturesModule(this)).inject(this);
     }
 
     @Override

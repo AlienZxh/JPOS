@@ -10,17 +10,12 @@ import android.view.View;
 import com.hardsoftstudio.rxflux.action.RxError;
 import com.hardsoftstudio.rxflux.store.RxStore;
 import com.hardsoftstudio.rxflux.store.RxStoreChange;
+import com.j1j2.jposmvvm.JPOSApplicationLike;
 import com.j1j2.jposmvvm.R;
 import com.j1j2.jposmvvm.databinding.ActivityLanuchBinding;
 import com.j1j2.jposmvvm.features.base.BaseActivity;
-import com.j1j2.jposmvvm.JPOSApplication;
-import com.j1j2.jposmvvm.features.base.JPOSUpdateCheckCB;
 import com.j1j2.jposmvvm.features.base.Navigate;
 import com.j1j2.jposmvvm.features.base.di.modules.ActivityModule;
-
-import org.lzh.framework.updatepluginlib.UpdateBuilder;
-import org.lzh.framework.updatepluginlib.model.Update;
-import org.lzh.framework.updatepluginlib.strategy.UpdateStrategy;
 
 import java.util.List;
 
@@ -36,9 +31,10 @@ public class LanuchActivity extends BaseActivity {
     @Inject
     Navigate navigate;
 
+
     @Override
     protected void setupActivityComponent() {
-        JPOSApplication.get(this).getAppComponent().plus(new ActivityModule(this)).inject(this);
+        JPOSApplicationLike.get().getAppComponent().plus(new ActivityModule(this)).inject(this);
     }
 
     @Override
@@ -46,26 +42,6 @@ public class LanuchActivity extends BaseActivity {
         setupActivityComponent();
         super.onCreate(savedInstanceState);
 
-        UpdateBuilder.create()
-                .strategy(new UpdateStrategy() {
-                    @Override
-                    public boolean isShowUpdateDialog(Update update) {
-                        return true;
-                    }
-
-                    @Override
-                    public boolean isAutoInstall() {
-                        return false;
-                    }
-
-
-                    @Override
-                    public boolean isShowDownloadDialog() {
-                        return true;
-                    }
-                })
-                .checkCB(new JPOSUpdateCheckCB(this, navigate))
-                .check(this);
     }
 
     @Override
@@ -75,7 +51,13 @@ public class LanuchActivity extends BaseActivity {
 
     @Override
     protected void initViews() {
-//        navigate.navigateToLoginActivity(LanuchActivity.this, null, true);
+        binding.getRoot().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                navigate.navigateToLoginActivity(LanuchActivity.this, null, true);
+            }
+        }, 2000);
+
     }
 
     @SuppressLint("InlinedApi")

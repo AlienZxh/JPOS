@@ -15,6 +15,7 @@ import com.hardsoftstudio.rxflux.action.RxError;
 import com.hardsoftstudio.rxflux.dispatcher.Dispatcher;
 import com.hardsoftstudio.rxflux.store.RxStore;
 import com.hardsoftstudio.rxflux.store.RxStoreChange;
+import com.j1j2.jposmvvm.JPOSApplicationLike;
 import com.j1j2.jposmvvm.R;
 import com.j1j2.jposmvvm.common.constants.Constants;
 import com.j1j2.jposmvvm.databinding.ActivityStockSortBinding;
@@ -59,7 +60,7 @@ public class StockSortActivity extends BaseActivity implements TextWatcher, View
 
     @Override
     protected void setupActivityComponent() {
-        stockNoPicturesComponent = JPOSApplication.get(this).getShopComponent().plus(new StockNoPicturesModule(this));
+        stockNoPicturesComponent = JPOSApplicationLike.get().getShopComponent().plus(new StockNoPicturesModule(this));
         stockNoPicturesComponent.inject(this);
     }
 

@@ -16,6 +16,7 @@ import com.hardsoftstudio.rxflux.action.RxError;
 import com.hardsoftstudio.rxflux.dispatcher.Dispatcher;
 import com.hardsoftstudio.rxflux.store.RxStore;
 import com.hardsoftstudio.rxflux.store.RxStoreChange;
+import com.j1j2.jposmvvm.JPOSApplicationLike;
 import com.j1j2.jposmvvm.R;
 import com.j1j2.jposmvvm.common.constants.Constants;
 import com.j1j2.jposmvvm.common.utils.Toastor;
@@ -79,7 +80,7 @@ public class StorageProductsActivity extends BaseActivity implements StorageProd
     @Override
     protected void setupActivityComponent() {
         StorageProductsActivityAutoBundle.bind(this, getIntent());
-        storageComponent = JPOSApplication.get(this).getShopComponent().plus(new StorageModule(this));
+        storageComponent = JPOSApplicationLike.get().getShopComponent().plus(new StorageModule(this));
         storageComponent.inject(this);
     }
 

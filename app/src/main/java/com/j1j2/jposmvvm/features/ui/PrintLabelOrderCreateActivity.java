@@ -17,7 +17,7 @@ import com.hardsoftstudio.rxflux.action.RxError;
 import com.hardsoftstudio.rxflux.dispatcher.Dispatcher;
 import com.hardsoftstudio.rxflux.store.RxStore;
 import com.hardsoftstudio.rxflux.store.RxStoreChange;
-import com.j1j2.jposmvvm.JPOSApplication;
+import com.j1j2.jposmvvm.JPOSApplicationLike;
 import com.j1j2.jposmvvm.R;
 import com.j1j2.jposmvvm.common.utils.Toastor;
 import com.j1j2.jposmvvm.common.widgets.recyclerviewadapter.RecyclerArrayAdapter;
@@ -74,7 +74,7 @@ public class PrintLabelOrderCreateActivity extends BaseActivity implements Recyc
 
     @Override
     protected void setupActivityComponent() {
-        JPOSApplication.get(this).getShopComponent().plus(new PrintProductPriceLabelModule(this)).inject(this);
+        JPOSApplicationLike.get().getShopComponent().plus(new PrintProductPriceLabelModule(this)).inject(this);
     }
 
     @Override

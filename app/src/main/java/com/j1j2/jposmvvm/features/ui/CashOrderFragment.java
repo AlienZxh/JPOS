@@ -188,7 +188,6 @@ public class CashOrderFragment extends BaseFragment implements RxViewDispatch, C
                             cashPuzzyQueryStock.setRetailPrice(productDetail.getRetailPrice());
                             cashPuzzyQueryStock.setMemberPrice(productDetail.getMemberPrice());
                             realm.commitTransaction();
-
                         }
                         break;
                     case CashActions.SETTLESALEORDER:
@@ -325,6 +324,7 @@ public class CashOrderFragment extends BaseFragment implements RxViewDispatch, C
     @Override
     public void onChange(CashOrder element) {
         if (element.isComplete()) {
+            cashOrder.removeChangeListener(this);
             cashActionCreator.querySaleOrderNO();
             return;
         }

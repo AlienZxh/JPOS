@@ -11,6 +11,7 @@ import com.hardsoftstudio.rxflux.action.RxError;
 import com.hardsoftstudio.rxflux.dispatcher.Dispatcher;
 import com.hardsoftstudio.rxflux.store.RxStore;
 import com.hardsoftstudio.rxflux.store.RxStoreChange;
+import com.j1j2.jposmvvm.JPOSApplicationLike;
 import com.j1j2.jposmvvm.R;
 import com.j1j2.jposmvvm.databinding.ActivityStorageOrderBinding;
 import com.j1j2.jposmvvm.features.actions.StorageActionCreator;
@@ -80,7 +81,7 @@ public class StorageOrderActivity extends BaseActivity implements StorageOrderFr
 
     @Override
     protected void setupActivityComponent() {
-        storageComponent = JPOSApplication.get(this).getShopComponent().plus(new StorageModule(this));
+        storageComponent = JPOSApplicationLike.get().getShopComponent().plus(new StorageModule(this));
         storageComponent.inject(this);
     }
 

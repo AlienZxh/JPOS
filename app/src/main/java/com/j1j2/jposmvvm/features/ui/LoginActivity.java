@@ -13,9 +13,11 @@ import android.view.View;
 import com.hardsoftstudio.rxflux.action.RxError;
 import com.hardsoftstudio.rxflux.store.RxStore;
 import com.hardsoftstudio.rxflux.store.RxStoreChange;
+import com.j1j2.jposmvvm.JPOSApplicationLike;
 import com.j1j2.jposmvvm.R;
 import com.j1j2.jposmvvm.common.constants.ProcessButtonState;
 import com.j1j2.jposmvvm.common.constants.UIState;
+import com.j1j2.jposmvvm.common.utils.Toastor;
 import com.j1j2.jposmvvm.data.api.body.LoginBody;
 import com.j1j2.jposmvvm.data.model.ShopInfo;
 import com.j1j2.jposmvvm.data.model.WebReturn;
@@ -57,10 +59,12 @@ public class LoginActivity extends BaseActivity {
     Navigate navigate;
     @Inject
     UIViewModel uiViewModel;
+    @Inject
+    Toastor toastor;
 
     @Override
     protected void setupActivityComponent() {
-        JPOSApplication.get(this).getAppComponent().plus(new LoginModule(this)).inject(this);
+        JPOSApplicationLike.get().getAppComponent().plus(new LoginModule(this)).inject(this);
     }
 
     @Override
@@ -89,17 +93,16 @@ public class LoginActivity extends BaseActivity {
             getWindow().setExitTransition(slideTransition);
             getWindow().getExitTransition().setDuration(500);
         }
-
     }
 
     @Override
     protected void initViews() {
+        toastor.showSingletonToast("补丁打上了12");
         RealmResults<ShopInfo> shopInfoRealmResults = realm.where(ShopInfo.class).findAllSorted("UpdateTime", Sort.DESCENDING);
         if (shopInfoRealmResults.size() > 0) {
             binding.loginEditStore.setText(shopInfoRealmResults.first().getShopName());
             binding.loginEditAccount.setText(shopInfoRealmResults.first().getClerkAccount());
         }
-
     }
 
     @Override

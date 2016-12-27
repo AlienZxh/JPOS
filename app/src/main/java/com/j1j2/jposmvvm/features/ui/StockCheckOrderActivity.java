@@ -17,6 +17,7 @@ import com.hardsoftstudio.rxflux.dispatcher.Dispatcher;
 import com.hardsoftstudio.rxflux.store.RxStore;
 import com.hardsoftstudio.rxflux.store.RxStoreChange;
 import com.j1j2.jposmvvm.JPOSApplication;
+import com.j1j2.jposmvvm.JPOSApplicationLike;
 import com.j1j2.jposmvvm.R;
 import com.j1j2.jposmvvm.common.constants.UIState;
 import com.j1j2.jposmvvm.common.utils.Toastor;
@@ -76,7 +77,7 @@ public class StockCheckOrderActivity extends BaseActivity implements RecyclerArr
 
     @Override
     protected void setupActivityComponent() {
-        JPOSApplication.get(this).getShopComponent().plus(new StockCheckModule(this)).inject(this);
+        JPOSApplicationLike.get().getShopComponent().plus(new StockCheckModule(this)).inject(this);
     }
 
     @Override

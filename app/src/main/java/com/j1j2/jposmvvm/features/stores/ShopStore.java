@@ -4,6 +4,7 @@ import com.hardsoftstudio.rxflux.action.RxAction;
 import com.hardsoftstudio.rxflux.dispatcher.Dispatcher;
 import com.hardsoftstudio.rxflux.store.RxStore;
 import com.hardsoftstudio.rxflux.store.RxStoreChange;
+import com.j1j2.jposmvvm.JPOSApplicationLike;
 import com.j1j2.jposmvvm.data.model.ShopInfo;
 import com.j1j2.jposmvvm.data.model.WebReturn;
 import com.j1j2.jposmvvm.features.actions.Keys;
@@ -51,7 +52,7 @@ public class ShopStore extends RxStore implements ShopStoreInterface {
                 if (userInfoWebReturn.isValue()) {
                     shopInfo = userInfoWebReturn.getDetail();
                     shopInfo.setUpdateTime(new Date(System.currentTimeMillis()));
-                    jposApplication.login(shopInfo);
+                    JPOSApplicationLike.get().login(shopInfo);
                     Realm realm = Realm.getDefaultInstance();
                     realm.executeTransaction(new Realm.Transaction() {
                         @Override
@@ -61,7 +62,7 @@ public class ShopStore extends RxStore implements ShopStoreInterface {
                     });
                     realm.close();
                 } else{
-                    jposApplication.logOut();
+                    JPOSApplicationLike.get().logout();
                 }
 
                 break;

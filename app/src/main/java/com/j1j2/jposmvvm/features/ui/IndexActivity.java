@@ -17,6 +17,7 @@ import com.hardsoftstudio.rxflux.action.RxError;
 import com.hardsoftstudio.rxflux.store.RxStore;
 import com.hardsoftstudio.rxflux.store.RxStoreChange;
 import com.j1j2.jposmvvm.JPOSApplication;
+import com.j1j2.jposmvvm.JPOSApplicationLike;
 import com.j1j2.jposmvvm.R;
 import com.j1j2.jposmvvm.data.model.IndexModule;
 import com.j1j2.jposmvvm.data.model.ShopInfo;
@@ -53,7 +54,7 @@ public class IndexActivity extends BaseActivity implements IndexFragment.IndexFr
     @Override
     protected void setupActivityComponent() {
         IndexActivityAutoBundle.bind(this, getIntent());
-        JPOSApplication.get(this).getAppComponent().plus(new ActivityModule(this)).inject(this);
+        JPOSApplicationLike.get().getAppComponent().plus(new ActivityModule(this)).inject(this);
     }
 
     @Override

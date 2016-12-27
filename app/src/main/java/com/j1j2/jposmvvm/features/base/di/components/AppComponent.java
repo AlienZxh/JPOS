@@ -22,8 +22,6 @@ public interface AppComponent {
 
     JPOSApplication application();
 
-    void inject(JPOSApplication jposApplication);
-
     ActivityComponent plus(ActivityModule activityModule);
 
     ShopComponent plus(ShopModule shopModule);

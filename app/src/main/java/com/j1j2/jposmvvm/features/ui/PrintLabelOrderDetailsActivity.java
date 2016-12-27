@@ -15,6 +15,7 @@ import com.hardsoftstudio.rxflux.dispatcher.Dispatcher;
 import com.hardsoftstudio.rxflux.store.RxStore;
 import com.hardsoftstudio.rxflux.store.RxStoreChange;
 import com.j1j2.jposmvvm.JPOSApplication;
+import com.j1j2.jposmvvm.JPOSApplicationLike;
 import com.j1j2.jposmvvm.R;
 import com.j1j2.jposmvvm.common.constants.Constants;
 import com.j1j2.jposmvvm.common.utils.Toastor;
@@ -75,7 +76,7 @@ public class PrintLabelOrderDetailsActivity extends BaseActivity implements Text
     @Override
     protected void setupActivityComponent() {
         PrintLabelOrderDetailsActivityAutoBundle.bind(this, getIntent());
-        printProductPriceLabelComponent = JPOSApplication.get(this).getShopComponent().plus(new PrintProductPriceLabelModule(this));
+        printProductPriceLabelComponent = JPOSApplicationLike.get().getShopComponent().plus(new PrintProductPriceLabelModule(this));
         printProductPriceLabelComponent.inject(this);
     }
 

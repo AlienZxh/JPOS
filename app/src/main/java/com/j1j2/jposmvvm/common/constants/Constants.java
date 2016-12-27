@@ -18,4 +18,6 @@ public interface Constants {
     int CASHPAY = 1;
     int ALIPAY = 2;
     int WEXINPAY = 3;
+
+    String BUGLY_ID = "900057411";
 }

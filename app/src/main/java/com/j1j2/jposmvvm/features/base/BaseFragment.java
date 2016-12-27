@@ -2,12 +2,13 @@ package com.j1j2.jposmvvm.features.base;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.j1j2.jposmvvm.JPOSApplicationLike;
 import com.j1j2.jposmvvm.features.event.BaseEvent;
+import com.squareup.leakcanary.RefWatcher;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
@@ -50,6 +51,8 @@ public abstract class BaseFragment extends SupportFragment {
     public void onDestroy() {
         super.onDestroy();
         EventBus.getDefault().unregister(this);
+        RefWatcher refWatcher = JPOSApplicationLike.get().getRefWatcher();
+        refWatcher.watch(this);
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN)
