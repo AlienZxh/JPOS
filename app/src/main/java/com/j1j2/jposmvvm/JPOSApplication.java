@@ -15,9 +15,7 @@ public class JPOSApplication extends TinkerApplication {
     }
 
     public JPOSApplication(int tinkerFlags, String delegateClassName, String loaderClassName, boolean tinkerLoadVerifyFlag) {
-        super(ShareConstants.TINKER_ENABLE_ALL,
-                "com.j1j2.jposmvvm.JPOSApplicationLike",
-                "com.tencent.tinker.loader.TinkerLoader", false);
+        super(tinkerFlags, delegateClassName, loaderClassName, tinkerLoadVerifyFlag);
     }
 
 }

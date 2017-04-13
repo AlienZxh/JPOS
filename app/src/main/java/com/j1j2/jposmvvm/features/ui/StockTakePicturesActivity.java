@@ -211,7 +211,7 @@ public class StockTakePicturesActivity extends BaseActivity implements StockTake
     }
 
     public void save(View v) {
-        onBackPressed();
+        onBackPressedSupport();
     }
 
 //    @Override

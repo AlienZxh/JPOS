@@ -36,16 +36,6 @@ import com.squareup.leakcanary.RefWatcher;
 import com.tencent.bugly.Bugly;
 import com.tencent.bugly.BuglyStrategy;
 import com.tencent.bugly.beta.Beta;
-import com.tencent.bugly.beta.tinker.TinkerManager;
-import com.tencent.tinker.lib.listener.DefaultPatchListener;
-import com.tencent.tinker.lib.listener.PatchListener;
-import com.tencent.tinker.lib.patch.AbstractPatch;
-import com.tencent.tinker.lib.patch.RepairPatch;
-import com.tencent.tinker.lib.patch.UpgradePatch;
-import com.tencent.tinker.lib.reporter.DefaultLoadReporter;
-import com.tencent.tinker.lib.reporter.DefaultPatchReporter;
-import com.tencent.tinker.lib.reporter.LoadReporter;
-import com.tencent.tinker.lib.reporter.PatchReporter;
 import com.tencent.tinker.lib.service.PatchResult;
 import com.tencent.tinker.loader.app.DefaultApplicationLike;
 
@@ -59,7 +49,6 @@ import cn.finalteam.galleryfinal.GalleryFinal;
 import cn.finalteam.galleryfinal.ImageLoader;
 import cn.finalteam.galleryfinal.ThemeConfig;
 import io.realm.Realm;
-import io.realm.RealmConfiguration;
 
 /**
  * Created by alienzxh on 16-12-6.
@@ -85,13 +74,8 @@ public class JPOSApplicationLike extends DefaultApplicationLike {
     private RxFlux rxFlux;
 
 
-    public JPOSApplicationLike(Application application, int tinkerFlags,
-                               boolean tinkerLoadVerifyFlag, long applicationStartElapsedTime,
-                               long applicationStartMillisTime, Intent tinkerResultIntent,
-                               Resources[] resources, ClassLoader[] classLoader,
-                               AssetManager[] assetManager) {
-        super(application, tinkerFlags, tinkerLoadVerifyFlag, applicationStartElapsedTime, applicationStartMillisTime, tinkerResultIntent, resources, classLoader, assetManager);
-
+    public JPOSApplicationLike(Application application, int tinkerFlags, boolean tinkerLoadVerifyFlag, long applicationStartElapsedTime, long applicationStartMillisTime, Intent tinkerResultIntent) {
+        super(application, tinkerFlags, tinkerLoadVerifyFlag, applicationStartElapsedTime, applicationStartMillisTime, tinkerResultIntent);
     }
 
     public static JPOSApplicationLike get() {
@@ -191,9 +175,9 @@ public class JPOSApplicationLike extends DefaultApplicationLike {
 
     private void initLogger() {
         if (BuildConfig.DEBUG) {
-            Logger.init(" pifalao debug ").logLevel(LogLevel.FULL);
+            Logger.init(" jposmvvm debug ").logLevel(LogLevel.FULL);
         } else {
-            Logger.init(" pifalao debug ").logLevel(LogLevel.NONE);
+            Logger.init(" jposmvvm debug ").logLevel(LogLevel.NONE);
         }
         Logger.d("Logger初始化完成");
     }
@@ -213,10 +197,10 @@ public class JPOSApplicationLike extends DefaultApplicationLike {
 
 
     private void initRealm() {
-        RealmConfiguration config = new RealmConfiguration.Builder()
-//                .deleteRealmIfMigrationNeeded()
-                .build();
-        Realm.setDefaultConfiguration(config);
+        Realm.init(getApplication().getApplicationContext());
+//        RealmConfiguration config = new RealmConfiguration.Builder()
+//                .build();
+//        Realm.setDefaultConfiguration(config);
     }
 
     private void initLeakCanary() {

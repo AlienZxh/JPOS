@@ -240,7 +240,7 @@ public class CashOrderFragment extends BaseFragment implements RxViewDispatch, C
             binding.userLayout.setVisibility(View.GONE);
             return;
         }
-        Uri uri = Uri.parse("res://com.j1j2.pifalao/" + R.drawable.img_loading);
+        Uri uri = Uri.parse("res://com.j1j2.jposmvvm/" + R.drawable.img_loading);
         ResizeOptions resizeOptions;
         ImageRequest request = ImageRequestBuilder.newBuilderWithSource(uri)
                 .setResizeOptions(resizeOptions = new ResizeOptions(AutoUtils.getPercentHeightSize(160), AutoUtils.getPercentHeightSize(160)))

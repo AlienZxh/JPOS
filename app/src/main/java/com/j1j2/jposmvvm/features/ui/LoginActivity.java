@@ -97,7 +97,6 @@ public class LoginActivity extends BaseActivity {
 
     @Override
     protected void initViews() {
-        toastor.showSingletonToast("补丁打上了12");
         RealmResults<ShopInfo> shopInfoRealmResults = realm.where(ShopInfo.class).findAllSorted("UpdateTime", Sort.DESCENDING);
         if (shopInfoRealmResults.size() > 0) {
             binding.loginEditStore.setText(shopInfoRealmResults.first().getShopName());

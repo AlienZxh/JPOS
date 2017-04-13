@@ -95,7 +95,7 @@ public class CashActivity extends BaseActivity implements CashSearchFragment.Cas
     @Override
     protected void initBinding() {
         binding = DataBindingUtil.setContentView(this, R.layout.activity_cash);
-
+        binding.setActivity(this);
     }
 
     @Override
